@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: "demo"
+
+  datasource:
+    url: ${JDBCURL}
+    username: ${HotelUserName}
+    password: ${HotelPassword}
