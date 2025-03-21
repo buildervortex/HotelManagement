@@ -27,16 +27,22 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelPhone> phoneNumbers;
 
+    @ElementCollection
+    @CollectionTable(name = "hotel_images", joinColumns = @JoinColumn(name = "hotel_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls;
+
     public Hotel() {
     }
 
-    public Hotel(Integer id, String name, String address, double longitude, double latitude, List<HotelPhone> phoneNumbers) {
+    public Hotel(Integer id, String name, String address, double longitude, double latitude, List<HotelPhone> phoneNumbers, List<String> imageUrls) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
         this.phoneNumbers = phoneNumbers;
+        this.imageUrls = imageUrls;
     }
 
     public Integer getId() {
@@ -85,5 +91,13 @@ public class Hotel {
 
     public void setPhoneNumbers(List<HotelPhone> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }
