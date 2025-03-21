@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hotelmangement/core/initialize.dart';
 
-void main() {
+void main() async {
+  // ensure the flutter is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize the project
+  await initializeProject();
+
   runApp(const MyApp());
 }
 
