@@ -18,7 +18,7 @@ void main() {
     usecase = CreateHotel(repository: mockHotelRepository);
   });
 
-  test("", () async {
+  test("should create a hotel and return the created hotel entity", () async {
     // arrange
     final Hotel hotel = Hotel(
       address: "testAddress",
