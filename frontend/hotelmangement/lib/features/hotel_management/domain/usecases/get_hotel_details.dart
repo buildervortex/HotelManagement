@@ -11,7 +11,7 @@ class GetHotelDetails extends Usecase<Hotel, Params> {
   GetHotelDetails({required this.repository});
 
   @override
-  Future<Either<Failure, Hotel>> call(Params params) {
+  Future<Either<Failure, Hotel>> call(Params params) async {
     return repository.getHotel(params.hotelId);
   }
 }

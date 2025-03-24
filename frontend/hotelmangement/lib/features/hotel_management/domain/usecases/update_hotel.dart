@@ -11,7 +11,21 @@ class UpdateHotel extends Usecase<Hotel, Params> {
   UpdateHotel({required this.repository});
 
   @override
-  Future<Either<Failure, Hotel>> call(Params params) {
+  Future<Either<Failure, Hotel>> call(Params params) async {
+    final failureOrHotel = await repository.getHotel(params.hotelId);
+
+    return failureOrHotel.fold(
+      (failure) => Left(failure),
+      (hotel) => _updateHotelIfAuthorized(hotel, params),
+    );
+  }
+
+  Future<Either<Failure, Hotel>> _updateHotelIfAuthorized(
+      Hotel hotel, Params params) {
+    if (hotel.managerId != params.managerId) {
+      return Future.value(Left(UnAuthorizedFailure()));
+    }
+
     return repository.updateHotel(
       params.hotelId,
       params.managerId,
