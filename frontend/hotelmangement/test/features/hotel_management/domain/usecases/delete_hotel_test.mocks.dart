@@ -79,6 +79,7 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
     String? address,
     double? longitude,
     double? latitude,
+    String? mainImage,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#updateHotel, [
@@ -88,6 +89,7 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
               address,
               longitude,
               latitude,
+              mainImage,
             ]),
             returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>.value(
               _FakeEither_0<_i5.Failure, _i6.Hotel>(
@@ -99,6 +101,7 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
                   address,
                   longitude,
                   latitude,
+                  mainImage,
                 ]),
               ),
             ),

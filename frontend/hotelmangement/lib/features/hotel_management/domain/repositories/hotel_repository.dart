@@ -17,6 +17,7 @@ abstract class HotelRepository {
     String? address,
     double? longitude,
     double? latitude,
+    String? mainImage,
   );
   Future<Either<Failure, Hotel>> getHotel(
     String hotelId,
@@ -25,4 +26,15 @@ abstract class HotelRepository {
     String hotelId,
     String managerId,
   );
+
+  Future<Either<Failure,int>> addImage();
+
+  // Future<Either<Failure, String>> uploadImageToSupabase(
+  //   String filePath,
+  //   String bucketName,
+  // );
+
+  // Future<Either<Failure, List<String>>> getImagesFromSupabase(
+  //   String bucketName,
+  // );
 }

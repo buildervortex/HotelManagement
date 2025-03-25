@@ -45,7 +45,7 @@ void main() {
     when(repository.getHotel(params.hotelId))
         .thenAnswer((_) async => Right(oldHotel));
     when(repository.updateHotel(params.hotelId, params.managerId, null,
-            "new address", null, params.latitude))
+            "new address", null, params.latitude, null))
         .thenAnswer((_) async => Right(newHotel));
 
     // action
@@ -54,7 +54,7 @@ void main() {
     // assert
     expect(result, Right(newHotel));
     verify(repository.updateHotel(
-            params.hotelId, params.managerId, any, any, any, any))
+            params.hotelId, params.managerId, any, any, any, any, any))
         .called(1);
     verify(repository.getHotel(params.hotelId)).called(1);
     verifyNoMoreInteractions(repository);
@@ -87,7 +87,7 @@ void main() {
     when(repository.getHotel(params.hotelId))
         .thenAnswer((_) async => Right(oldHotel));
     when(repository.updateHotel(params.hotelId, params.managerId, null,
-            "new address", null, params.latitude))
+            "new address", null, params.latitude, null))
         .thenAnswer((_) async => Right(newHotel));
 
     // action
@@ -96,7 +96,7 @@ void main() {
     // assert
     expect(result, Right(newHotel));
     verify(repository.updateHotel(
-            params.hotelId, params.managerId, any, any, any, any))
+            params.hotelId, params.managerId, any, any, any, any, any))
         .called(1);
     verify(repository.getHotel(params.hotelId)).called(1);
     verifyNoMoreInteractions(repository);
@@ -128,7 +128,7 @@ void main() {
     // assert
     expect(result, Left(UnAuthorizedFailure()));
     verifyNever(repository.updateHotel(
-        params.hotelId, params.managerId, any, any, any, any));
+        params.hotelId, params.managerId, any, any, any, any, any));
     verify(repository.getHotel(params.hotelId)).called(1);
     verifyNoMoreInteractions(repository);
   });

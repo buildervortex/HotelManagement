@@ -33,6 +33,7 @@ class UpdateHotel extends Usecase<Hotel, Params> {
       params.address,
       params.longitude,
       params.latitude,
+      params.mainImage,
     );
   }
 }
@@ -44,6 +45,7 @@ class Params extends Equatable {
   final String? address;
   final double? longitude;
   final double? latitude;
+  final String? mainImage;
 
   const Params({
     required this.hotelId,
@@ -52,8 +54,10 @@ class Params extends Equatable {
     this.address,
     this.longitude,
     this.latitude,
+    this.mainImage,
   });
 
   @override
-  List<Object?> get props => [hotelId, name, address, longitude, latitude];
+  List<Object?> get props =>
+      [hotelId, name, address, longitude, latitude, mainImage];
 }

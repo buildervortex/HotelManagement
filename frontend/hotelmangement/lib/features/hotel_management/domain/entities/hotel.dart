@@ -7,16 +7,19 @@ class Hotel extends Equatable {
   final String address;
   final double longitude;
   final double latitude;
+  final String? mainImage;
 
-  const Hotel(
-      {required this.id,
-      required this.managerId,
-      required this.name,
-      required this.address,
-      required this.latitude,
-      required this.longitude});
+  const Hotel({
+    required this.id,
+    required this.managerId,
+    required this.name,
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+    this.mainImage,
+  });
 
   @override
   List<Object?> get props =>
-      [id, managerId, name, address, longitude, latitude];
+      [id, managerId, name, address, longitude, latitude, mainImage];
 }
