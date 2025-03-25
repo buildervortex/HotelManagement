@@ -136,4 +136,66 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
             ),
           )
           as _i4.Future<_i2.Either<_i5.Failure, int>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, int>> addHotelImage(
+    String? hotelId,
+    String? managerId,
+    String? imagePath,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addHotelImage, [hotelId, managerId, imagePath]),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
+              _FakeEither_0<_i5.Failure, int>(
+                this,
+                Invocation.method(#addHotelImage, [
+                  hotelId,
+                  managerId,
+                  imagePath,
+                ]),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, int>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<String>>> getHotelImages(
+    List<String>? imageName,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getHotelImages, [imageName]),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, List<String>>>.value(
+                  _FakeEither_0<_i5.Failure, List<String>>(
+                    this,
+                    Invocation.method(#getHotelImages, [imageName]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, List<String>>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelImage(
+    String? hotelId,
+    String? managerId,
+    String? imagePath,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteHotelImage, [
+              hotelId,
+              managerId,
+              imagePath,
+            ]),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
+              _FakeEither_0<_i5.Failure, int>(
+                this,
+                Invocation.method(#deleteHotelImage, [
+                  hotelId,
+                  managerId,
+                  imagePath,
+                ]),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, int>>);
 }

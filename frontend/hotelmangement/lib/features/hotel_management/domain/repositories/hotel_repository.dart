@@ -27,7 +27,19 @@ abstract class HotelRepository {
     String managerId,
   );
 
-  Future<Either<Failure,int>> addImage();
+  Future<Either<Failure, int>> addHotelImage(
+    String hotelId,
+    String managerId,
+    String imagePath,
+  );
+
+  Future<Either<Failure, List<String>>> getHotelImages(List<String> imageName);
+
+  Future<Either<Failure, int>> deleteHotelImage(
+    String hotelId,
+    String managerId,
+    String imagePath,
+  );
 
   // Future<Either<Failure, String>> uploadImageToSupabase(
   //   String filePath,
