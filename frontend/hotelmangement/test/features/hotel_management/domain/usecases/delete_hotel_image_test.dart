@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/delete_hotel_image.dart';
@@ -48,8 +49,42 @@ void main() {
 
     // assert
     expect(result, Right(1));
-    verify(repository.getHotel(hotelId));
-    verify(repository.deleteHotelImage(hotelId, managerId, imagePath));
+    verify(repository.getHotel(hotelId)).called(1);
+    verify(repository.deleteHotelImage(hotelId, managerId, imagePath))
+        .called(1);
+    verifyNoMoreInteractions(repository);
+  });
+
+  test(
+      "should not delete the image when the manager id and the hotel id is not maching",
+      () async {
+    // arrange
+    final hotelId = "1";
+    final managerId = "2";
+    final imagePath = "imagePath";
+    final params = Params(
+      hotelId: hotelId,
+      managerId: managerId,
+      imagePath: imagePath,
+    );
+
+    final hotel = Hotel(
+        id: "1",
+        managerId: "1",
+        name: "testName",
+        address: "new address",
+        latitude: 10.2774,
+        longitude: 5.4465);
+
+    when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
+
+    // action
+    final result = await usecase(params);
+
+    // assert
+    expect(result, Left(UnAuthorizedFailure()));
+    verify(repository.getHotel(hotelId)).called(1);
+    verifyNever(repository.deleteHotelImage(hotelId, managerId, imagePath));
     verifyNoMoreInteractions(repository);
   });
 }
