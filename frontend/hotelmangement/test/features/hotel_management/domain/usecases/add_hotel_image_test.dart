@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/add_hotel_image.dart';
 import 'package:mockito/annotations.dart';
@@ -11,7 +12,7 @@ import 'add_hotel_image_test.mocks.dart';
 
 @GenerateMocks([HotelRepository])
 void main() {
-  late MockHotelRepository repository;
+  late HotelRepository repository;
   late AddHotelImage usecase;
 
   setUp(() {
@@ -23,7 +24,9 @@ void main() {
     // arrange
     final hotelId = "1";
     final managerId = "2";
-    final imagePath = "testExamplepath";
+    final localImagePath = "testExamplepath";
+    final remoteImageSaveName = "testExample1.jpg";
+
     final hotel = Hotel(
         id: "1",
         managerId: "2",
@@ -31,18 +34,31 @@ void main() {
         address: "new address",
         latitude: 10.2774,
         longitude: 5.4465);
+
+    final hotelImage = HotelImage(
+      id: "1",
+      hotelId: "1",
+      imagePath: "testExamplepath",
+    );
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
-    when(repository.addHotelImage(hotelId, managerId, imagePath))
-        .thenAnswer((_) async => Right(1));
+    when(repository.addHotelImage(
+            hotelId, managerId, localImagePath, remoteImageSaveName))
+        .thenAnswer((_) async => Right(hotelImage));
 
     // action
-    final result = await usecase(
-        Params(hotelId: hotelId, managerId: managerId, imagePath: imagePath));
+    final result = await usecase(Params(
+      hotelId: hotelId,
+      managerId: managerId,
+      localImagePath: localImagePath,
+      remoteImageSaveName: remoteImageSaveName,
+    ));
 
     // assert
-    expect(Right(1), result);
+    expect(result, Right(hotelImage));
     verify(repository.getHotel(hotelId)).called(1);
-    verify(repository.addHotelImage(hotelId, managerId, imagePath)).called(1);
+    verify(repository.addHotelImage(
+            hotelId, managerId, localImagePath, remoteImageSaveName))
+        .called(1);
     verifyNoMoreInteractions(repository);
   });
 
@@ -52,7 +68,8 @@ void main() {
     // arrange
     final hotelId = "1";
     final managerId = "10";
-    final imagePath = "testExamplepath";
+    final localImagePath = "testExamplepath";
+    final remoteImageSaveName = "testExample1.jpg";
     final hotel = Hotel(
         id: "1",
         managerId: "2",
@@ -63,13 +80,17 @@ void main() {
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
 
     // action
-    final result = await usecase(
-        Params(hotelId: hotelId, managerId: managerId, imagePath: imagePath));
+    final result = await usecase(Params(
+        hotelId: hotelId,
+        managerId: managerId,
+        localImagePath: localImagePath,
+        remoteImageSaveName: remoteImageSaveName));
 
     // assert
     expect(Left(UnAuthorizedFailure()), result);
     verify(repository.getHotel(hotelId)).called(1);
-    verifyNever(repository.addHotelImage(hotelId, managerId, imagePath));
+    verifyNever(repository.addHotelImage(
+        hotelId, managerId, localImagePath, remoteImageSaveName));
     verifyNoMoreInteractions(repository);
   });
 }

@@ -9,6 +9,8 @@ import 'package:dartz/dartz.dart' as _i2;
 import 'package:hotelmangement/core/error/failure.dart' as _i5;
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart'
     as _i6;
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart'
+    as _i7;
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -138,61 +140,73 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
           as _i4.Future<_i2.Either<_i5.Failure, int>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> addHotelImage(
+  _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>> addHotelImage(
     String? hotelId,
     String? managerId,
-    String? imagePath,
+    String? localImagePath,
+    String? remoteImageSaveName,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#addHotelImage, [hotelId, managerId, imagePath]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
-                this,
-                Invocation.method(#addHotelImage, [
-                  hotelId,
-                  managerId,
-                  imagePath,
-                ]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, List<String>>> getHotelImages(
-    List<String>? imageName,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#getHotelImages, [imageName]),
+            Invocation.method(#addHotelImage, [
+              hotelId,
+              managerId,
+              localImagePath,
+              remoteImageSaveName,
+            ]),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<String>>>.value(
-                  _FakeEither_0<_i5.Failure, List<String>>(
+                _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>>.value(
+                  _FakeEither_0<_i5.Failure, _i7.HotelImage>(
                     this,
-                    Invocation.method(#getHotelImages, [imageName]),
+                    Invocation.method(#addHotelImage, [
+                      hotelId,
+                      managerId,
+                      localImagePath,
+                      remoteImageSaveName,
+                    ]),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, List<String>>>);
+          as _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>>);
+
+  @override
+  _i4.Future<bool> isImageExists(String? imageId, String? hotelId) =>
+      (super.noSuchMethod(
+            Invocation.method(#isImageExists, [imageId, hotelId]),
+            returnValue: _i4.Future<bool>.value(false),
+          )
+          as _i4.Future<bool>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>> getHotelImages(
+    String? hotelId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getHotelImages, [hotelId]),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i7.HotelImage>>(
+                    this,
+                    Invocation.method(#getHotelImages, [hotelId]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelImage(
     String? hotelId,
     String? managerId,
-    String? imagePath,
+    String? imageId,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteHotelImage, [
-              hotelId,
-              managerId,
-              imagePath,
-            ]),
+            Invocation.method(#deleteHotelImage, [hotelId, managerId, imageId]),
             returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
               _FakeEither_0<_i5.Failure, int>(
                 this,
                 Invocation.method(#deleteHotelImage, [
                   hotelId,
                   managerId,
-                  imagePath,
+                  imageId,
                 ]),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
 
 abstract class HotelRepository {
   Future<Either<Failure, Hotel>> createHotel(
@@ -27,18 +28,21 @@ abstract class HotelRepository {
     String managerId,
   );
 
-  Future<Either<Failure, int>> addHotelImage(
+  Future<Either<Failure, HotelImage>> addHotelImage(
     String hotelId,
     String managerId,
-    String imagePath,
+    String localImagePath,
+    String remoteImageSaveName,
   );
 
-  Future<Either<Failure, List<String>>> getHotelImages(List<String> imageName);
+  Future<bool> isImageExists(String imageId, String hotelId);
+
+  Future<Either<Failure, List<HotelImage>>> getHotelImages(String hotelId);
 
   Future<Either<Failure, int>> deleteHotelImage(
     String hotelId,
     String managerId,
-    String imagePath,
+    String imageId,
   );
 
   // Future<Either<Failure, String>> uploadImageToSupabase(

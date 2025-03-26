@@ -25,11 +25,11 @@ void main() {
     // arrange
     final hotelId = "1";
     final managerId = "1";
-    final imagePath = "imagePath";
+    final imageId = "imageId";
     final params = Params(
       hotelId: hotelId,
       managerId: managerId,
-      imagePath: imagePath,
+      imageId: imageId,
     );
 
     final hotel = Hotel(
@@ -41,7 +41,9 @@ void main() {
         longitude: 5.4465);
 
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
-    when(repository.deleteHotelImage(hotelId, managerId, imagePath))
+    when(repository.isImageExists(imageId, hotelId))
+        .thenAnswer((_) async => true);
+    when(repository.deleteHotelImage(hotelId, managerId, imageId))
         .thenAnswer((_) async => Right(1));
 
     // action
@@ -50,8 +52,8 @@ void main() {
     // assert
     expect(result, Right(1));
     verify(repository.getHotel(hotelId)).called(1);
-    verify(repository.deleteHotelImage(hotelId, managerId, imagePath))
-        .called(1);
+    verify(repository.isImageExists(imageId, hotelId)).called(1);
+    verify(repository.deleteHotelImage(hotelId, managerId, imageId)).called(1);
     verifyNoMoreInteractions(repository);
   });
 
@@ -61,11 +63,11 @@ void main() {
     // arrange
     final hotelId = "1";
     final managerId = "2";
-    final imagePath = "imagePath";
+    final imageId = "imageId";
     final params = Params(
       hotelId: hotelId,
       managerId: managerId,
-      imagePath: imagePath,
+      imageId: imageId,
     );
 
     final hotel = Hotel(
@@ -84,7 +86,41 @@ void main() {
     // assert
     expect(result, Left(UnAuthorizedFailure()));
     verify(repository.getHotel(hotelId)).called(1);
-    verifyNever(repository.deleteHotelImage(hotelId, managerId, imagePath));
+    verifyNever(repository.deleteHotelImage(hotelId, managerId, imageId));
+    verifyNoMoreInteractions(repository);
+  });
+  test("should return not found failure if the image is not found in the hotel",
+      () async {
+    // arrange
+    final hotelId = "1";
+    final managerId = "1";
+    final imageId = "imageId";
+    final params = Params(
+      hotelId: hotelId,
+      managerId: managerId,
+      imageId: imageId,
+    );
+
+    final hotel = Hotel(
+        id: "1",
+        managerId: "1",
+        name: "testName",
+        address: "new address",
+        latitude: 10.2774,
+        longitude: 5.4465);
+
+    when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
+    when(repository.isImageExists(imageId, hotelId))
+        .thenAnswer((_) async => false);
+
+    // action
+    final result = await usecase(params);
+
+    // assert
+    expect(result, Left(NotFound()));
+    verify(repository.getHotel(hotelId)).called(1);
+    verify(repository.isImageExists(imageId, hotelId)).called(1);
+    verifyNever(repository.deleteHotelImage(hotelId, managerId, imageId));
     verifyNoMoreInteractions(repository);
   });
 }

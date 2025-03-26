@@ -26,10 +26,14 @@ class DeleteHotelImage extends Usecase<int, Params> {
       return Future.value(Left(UnAuthorizedFailure()));
     }
 
+    if (!await repository.isImageExists(params.imageId, params.hotelId)) {
+      return Future.value(Left(NotFound()));
+    }
+
     return repository.deleteHotelImage(
       params.hotelId,
       params.managerId,
-      params.imagePath,
+      params.imageId,
     );
   }
 }
@@ -37,13 +41,11 @@ class DeleteHotelImage extends Usecase<int, Params> {
 class Params extends Equatable {
   final String hotelId;
   final String managerId;
-  final String imagePath;
+  final String imageId;
 
   const Params(
-      {required this.hotelId,
-      required this.managerId,
-      required this.imagePath});
+      {required this.hotelId, required this.managerId, required this.imageId});
 
   @override
-  List<Object?> get props => [hotelId, managerId, imagePath];
+  List<Object?> get props => [hotelId, managerId, imageId];
 }

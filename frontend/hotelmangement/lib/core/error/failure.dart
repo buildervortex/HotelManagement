@@ -8,7 +8,11 @@ class ServerFailure extends Failure {
 }
 
 class UnAuthorizedFailure extends Failure {
-  
+  @override
+  List<Object?> get props => [];
+}
+
+class NotFound extends Failure {
   @override
   List<Object?> get props => [];
 }
