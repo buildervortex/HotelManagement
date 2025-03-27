@@ -40,8 +40,6 @@ abstract class HotelRepository {
   Future<Either<Failure, List<HotelImage>>> getHotelImages(String hotelId);
 
   Future<Either<Failure, int>> deleteHotelImage(
-    String hotelId,
-    String managerId,
     String imageId,
   );
 

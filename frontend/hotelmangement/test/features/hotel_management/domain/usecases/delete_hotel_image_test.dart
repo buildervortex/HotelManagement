@@ -11,7 +11,7 @@ import 'delete_hotel_image_test.mocks.dart';
 
 @GenerateMocks([HotelRepository])
 void main() {
-  late MockHotelRepository repository;
+  late HotelRepository repository;
   late DeleteHotelImage usecase;
 
   setUp(() {
@@ -43,7 +43,7 @@ void main() {
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
     when(repository.isImageExists(imageId, hotelId))
         .thenAnswer((_) async => true);
-    when(repository.deleteHotelImage(hotelId, managerId, imageId))
+    when(repository.deleteHotelImage(imageId))
         .thenAnswer((_) async => Right(1));
 
     // action
@@ -53,7 +53,7 @@ void main() {
     expect(result, Right(1));
     verify(repository.getHotel(hotelId)).called(1);
     verify(repository.isImageExists(imageId, hotelId)).called(1);
-    verify(repository.deleteHotelImage(hotelId, managerId, imageId)).called(1);
+    verify(repository.deleteHotelImage(imageId)).called(1);
     verifyNoMoreInteractions(repository);
   });
 
@@ -86,7 +86,7 @@ void main() {
     // assert
     expect(result, Left(UnAuthorizedFailure()));
     verify(repository.getHotel(hotelId)).called(1);
-    verifyNever(repository.deleteHotelImage(hotelId, managerId, imageId));
+    verifyNever(repository.deleteHotelImage(imageId));
     verifyNoMoreInteractions(repository);
   });
   test("should return not found failure if the image is not found in the hotel",
@@ -120,7 +120,7 @@ void main() {
     expect(result, Left(NotFound()));
     verify(repository.getHotel(hotelId)).called(1);
     verify(repository.isImageExists(imageId, hotelId)).called(1);
-    verifyNever(repository.deleteHotelImage(hotelId, managerId, imageId));
+    verifyNever(repository.deleteHotelImage(imageId));
     verifyNoMoreInteractions(repository);
   });
 }

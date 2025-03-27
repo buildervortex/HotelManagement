@@ -31,8 +31,6 @@ class DeleteHotelImage extends Usecase<int, Params> {
     }
 
     return repository.deleteHotelImage(
-      params.hotelId,
-      params.managerId,
       params.imageId,
     );
   }

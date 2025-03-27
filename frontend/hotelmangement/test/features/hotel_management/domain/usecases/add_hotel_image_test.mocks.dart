@@ -192,21 +192,13 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
           as _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelImage(
-    String? hotelId,
-    String? managerId,
-    String? imageId,
-  ) =>
+  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelImage(String? imageId) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteHotelImage, [hotelId, managerId, imageId]),
+            Invocation.method(#deleteHotelImage, [imageId]),
             returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
               _FakeEither_0<_i5.Failure, int>(
                 this,
-                Invocation.method(#deleteHotelImage, [
-                  hotelId,
-                  managerId,
-                  imageId,
-                ]),
+                Invocation.method(#deleteHotelImage, [imageId]),
               ),
             ),
           )
