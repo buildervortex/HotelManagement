@@ -70,9 +70,6 @@ void main() {
         final role = "manager";
         final managerId = "1";
 
-        final hotelPhoneNumber = HotelPhoneNumber(
-            id: "2", role: role, phoneNumber: phoneNumber, hotelId: hotelId);
-
         when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(Hotel(
               id: hotelId,
               name: "hotel",
