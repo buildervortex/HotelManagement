@@ -7,6 +7,8 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:hotelmangement/core/error/failure.dart' as _i5;
+import 'package:hotelmangement/features/hotel_management/domain/entities/hote_phone_number.dart'
+    as _i8;
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart'
     as _i6;
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart'
@@ -214,15 +216,72 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
           as _i4.Future<_i2.Either<_i5.Failure, int>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, String>> getHotelImageAuthUrl() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>>
+  getHotelPhoneNumbers(String? hotelId) =>
       (super.noSuchMethod(
-            Invocation.method(#getHotelImageAuthUrl, []),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
-              _FakeEither_0<_i5.Failure, String>(
+            Invocation.method(#getHotelPhoneNumbers, [hotelId]),
+            returnValue: _i4.Future<
+              _i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>
+            >.value(
+              _FakeEither_0<_i5.Failure, List<_i8.HotelPhoneNumber>>(
                 this,
-                Invocation.method(#getHotelImageAuthUrl, []),
+                Invocation.method(#getHotelPhoneNumbers, [hotelId]),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, String>>);
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelPhoneNumber(
+    String? hotelId,
+    String? managerId,
+    String? phoneNumberId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteHotelPhoneNumber, [
+              hotelId,
+              managerId,
+              phoneNumberId,
+            ]),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
+              _FakeEither_0<_i5.Failure, int>(
+                this,
+                Invocation.method(#deleteHotelPhoneNumber, [
+                  hotelId,
+                  managerId,
+                  phoneNumberId,
+                ]),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, int>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>> addHotelPhoneNumber(
+    String? hotelId,
+    String? managerId,
+    String? phoneNumber,
+    String? role,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addHotelPhoneNumber, [
+              hotelId,
+              managerId,
+              phoneNumber,
+              role,
+            ]),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>>.value(
+                  _FakeEither_0<_i5.Failure, _i8.HotelPhoneNumber>(
+                    this,
+                    Invocation.method(#addHotelPhoneNumber, [
+                      hotelId,
+                      managerId,
+                      phoneNumber,
+                      role,
+                    ]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>>);
 }

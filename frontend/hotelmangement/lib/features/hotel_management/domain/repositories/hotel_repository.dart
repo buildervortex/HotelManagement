@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hote_phone_number.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
 
@@ -43,5 +44,22 @@ abstract class HotelRepository {
     String hotelId,
     String managerId,
     String imageId,
+  );
+
+  Future<Either<Failure, List<HotelPhoneNumber>>> getHotelPhoneNumbers(
+    String hotelId,
+  );
+
+  Future<Either<Failure, int>> deleteHotelPhoneNumber(
+    String hotelId,
+    String managerId,
+    String phoneNumberId,
+  );
+
+  Future<Either<Failure, HotelPhoneNumber>> addHotelPhoneNumber(
+    String hotelId,
+    String managerId,
+    String phoneNumber,
+    String role,
   );
 }
