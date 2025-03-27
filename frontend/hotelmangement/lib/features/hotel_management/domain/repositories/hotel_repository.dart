@@ -44,6 +44,4 @@ abstract class HotelRepository {
     String managerId,
     String imageId,
   );
-
-  // Future<Either<Failure, String>> getHotelImageAuthUrl();
 }

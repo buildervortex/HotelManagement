@@ -212,4 +212,17 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
             ),
           )
           as _i4.Future<_i2.Either<_i5.Failure, int>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, String>> getHotelImageAuthUrl() =>
+      (super.noSuchMethod(
+            Invocation.method(#getHotelImageAuthUrl, []),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
+              _FakeEither_0<_i5.Failure, String>(
+                this,
+                Invocation.method(#getHotelImageAuthUrl, []),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, String>>);
 }
