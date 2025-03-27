@@ -45,12 +45,5 @@ abstract class HotelRepository {
     String imageId,
   );
 
-  // Future<Either<Failure, String>> uploadImageToSupabase(
-  //   String filePath,
-  //   String bucketName,
-  // );
-
-  // Future<Either<Failure, List<String>>> getImagesFromSupabase(
-  //   String bucketName,
-  // );
+  // Future<Either<Failure, String>> getHotelImageAuthUrl();
 }
