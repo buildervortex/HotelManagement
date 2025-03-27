@@ -51,7 +51,6 @@ abstract class HotelRepository {
 
   Future<Either<Failure, HotelPhoneNumber>> addHotelPhoneNumber(
     String hotelId,
-    String managerId,
     String phoneNumber,
     String role,
   );

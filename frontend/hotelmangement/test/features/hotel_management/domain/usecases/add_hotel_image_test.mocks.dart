@@ -232,14 +232,12 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>> addHotelPhoneNumber(
     String? hotelId,
-    String? managerId,
     String? phoneNumber,
     String? role,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#addHotelPhoneNumber, [
               hotelId,
-              managerId,
               phoneNumber,
               role,
             ]),
@@ -249,7 +247,6 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
                     this,
                     Invocation.method(#addHotelPhoneNumber, [
                       hotelId,
-                      managerId,
                       phoneNumber,
                       role,
                     ]),
