@@ -51,8 +51,6 @@ abstract class HotelRepository {
   );
 
   Future<Either<Failure, int>> deleteHotelPhoneNumber(
-    String hotelId,
-    String managerId,
     String phoneNumberId,
   );
 

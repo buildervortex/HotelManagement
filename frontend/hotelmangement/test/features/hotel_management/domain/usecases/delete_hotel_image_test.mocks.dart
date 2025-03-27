@@ -233,24 +233,14 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelPhoneNumber(
-    String? hotelId,
-    String? managerId,
     String? phoneNumberId,
   ) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteHotelPhoneNumber, [
-              hotelId,
-              managerId,
-              phoneNumberId,
-            ]),
+            Invocation.method(#deleteHotelPhoneNumber, [phoneNumberId]),
             returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
               _FakeEither_0<_i5.Failure, int>(
                 this,
-                Invocation.method(#deleteHotelPhoneNumber, [
-                  hotelId,
-                  managerId,
-                  phoneNumberId,
-                ]),
+                Invocation.method(#deleteHotelPhoneNumber, [phoneNumberId]),
               ),
             ),
           )
