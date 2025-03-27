@@ -144,14 +144,12 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>> addHotelImage(
     String? hotelId,
-    String? managerId,
     String? localImagePath,
     String? remoteImageSaveName,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#addHotelImage, [
               hotelId,
-              managerId,
               localImagePath,
               remoteImageSaveName,
             ]),
@@ -161,7 +159,6 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
                     this,
                     Invocation.method(#addHotelImage, [
                       hotelId,
-                      managerId,
                       localImagePath,
                       remoteImageSaveName,
                     ]),

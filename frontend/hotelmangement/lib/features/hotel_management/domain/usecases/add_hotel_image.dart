@@ -29,7 +29,6 @@ class AddHotelImage extends Usecase<HotelImage, Params> {
 
     return repository.addHotelImage(
       params.hotelId,
-      params.managerId,
       params.localImagePath,
       params.remoteImageSaveName,
     );

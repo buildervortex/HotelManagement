@@ -31,7 +31,6 @@ abstract class HotelRepository {
 
   Future<Either<Failure, HotelImage>> addHotelImage(
     String hotelId,
-    String managerId,
     String localImagePath,
     String remoteImageSaveName,
   );

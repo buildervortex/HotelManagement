@@ -41,8 +41,7 @@ void main() {
       imagePath: "testExamplepath",
     );
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(hotel));
-    when(repository.addHotelImage(
-            hotelId, managerId, localImagePath, remoteImageSaveName))
+    when(repository.addHotelImage(hotelId, localImagePath, remoteImageSaveName))
         .thenAnswer((_) async => Right(hotelImage));
 
     // action
@@ -57,7 +56,7 @@ void main() {
     expect(result, Right(hotelImage));
     verify(repository.getHotel(hotelId)).called(1);
     verify(repository.addHotelImage(
-            hotelId, managerId, localImagePath, remoteImageSaveName))
+            hotelId, localImagePath, remoteImageSaveName))
         .called(1);
     verifyNoMoreInteractions(repository);
   });
@@ -89,8 +88,8 @@ void main() {
     // assert
     expect(Left(UnAuthorizedFailure()), result);
     verify(repository.getHotel(hotelId)).called(1);
-    verifyNever(repository.addHotelImage(
-        hotelId, managerId, localImagePath, remoteImageSaveName));
+    verifyNever(
+        repository.addHotelImage(hotelId, localImagePath, remoteImageSaveName));
     verifyNoMoreInteractions(repository);
   });
 }
