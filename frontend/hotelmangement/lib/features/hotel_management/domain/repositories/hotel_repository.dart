@@ -14,7 +14,6 @@ abstract class HotelRepository {
   );
   Future<Either<Failure, Hotel>> updateHotel(
     String hotelId,
-    String managerId,
     String? name,
     String? address,
     double? longitude,

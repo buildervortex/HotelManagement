@@ -28,7 +28,6 @@ class UpdateHotel extends Usecase<Hotel, Params> {
 
     return repository.updateHotel(
       params.hotelId,
-      params.managerId,
       params.name,
       params.address,
       params.longitude,

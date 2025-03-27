@@ -78,7 +78,6 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>> updateHotel(
     String? hotelId,
-    String? managerId,
     String? name,
     String? address,
     double? longitude,
@@ -88,7 +87,6 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
       (super.noSuchMethod(
             Invocation.method(#updateHotel, [
               hotelId,
-              managerId,
               name,
               address,
               longitude,
@@ -100,7 +98,6 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
                 this,
                 Invocation.method(#updateHotel, [
                   hotelId,
-                  managerId,
                   name,
                   address,
                   longitude,
