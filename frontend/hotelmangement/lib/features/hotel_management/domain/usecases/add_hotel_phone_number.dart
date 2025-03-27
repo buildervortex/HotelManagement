@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hote_phone_number.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
 
 class AddHotelPhoneNumber extends Usecase<HotelPhoneNumber, Params> {
@@ -10,10 +11,22 @@ class AddHotelPhoneNumber extends Usecase<HotelPhoneNumber, Params> {
 
   AddHotelPhoneNumber({required this.repository});
   @override
-  Future<Either<Failure, HotelPhoneNumber>> call(Params params) {
-    
-    return repository.addHotelPhoneNumber(
-        params.hotelId, params.phoneNumber, params.role);
+  Future<Either<Failure, HotelPhoneNumber>> call(Params params) async {
+    final hotelOrFailure = await repository.getHotel(params.hotelId);
+
+    return hotelOrFailure.fold(
+      (failure) => Left(failure),
+      (hotel) => _ifValidAddPhoneNumber(hotel, params),
+    );
+  }
+
+  Future<Either<Failure, HotelPhoneNumber>> _ifValidAddPhoneNumber(
+      Hotel hotel, Params params) async {
+    if (hotel.managerId == params.managerId) {
+      return repository.addHotelPhoneNumber(
+          params.hotelId, params.phoneNumber, params.role);
+    }
+    return Left(UnAuthorizedFailure());
   }
 }
 
