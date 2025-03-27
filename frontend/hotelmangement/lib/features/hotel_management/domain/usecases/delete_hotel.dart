@@ -26,7 +26,7 @@ class DeleteHotel extends Usecase<void, Params> {
       return Future.value(Left(UnAuthorizedFailure()));
     }
 
-    return repository.deleteHotel(params.hotelId, params.managerId);
+    return repository.deleteHotel(params.hotelId);
   }
 }
 

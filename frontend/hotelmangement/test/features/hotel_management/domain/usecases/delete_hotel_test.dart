@@ -11,7 +11,7 @@ import 'delete_hotel_test.mocks.dart';
 
 @GenerateMocks([HotelRepository])
 void main() {
-  late MockHotelRepository repository;
+  late HotelRepository repository;
   late DeleteHotel usecase;
 
   setUp(() {
@@ -34,7 +34,7 @@ void main() {
         longitude: 5.4465);
 
     when(repository.getHotel(hotelId)).thenAnswer((_) async => Right(oldHotel));
-    when(repository.deleteHotel(hotelId, managerId))
+    when(repository.deleteHotel(hotelId))
         .thenAnswer((_) async => Right(1));
 
     // action
@@ -44,7 +44,7 @@ void main() {
     // assert
     expect(Right(1), result);
     verify(repository.getHotel(hotelId)).called(1);
-    verify(repository.deleteHotel(any, any)).called(1);
+    verify(repository.deleteHotel(hotelId)).called(1);
     verifyNoMoreInteractions(repository);
   });
 
@@ -72,7 +72,7 @@ void main() {
     // assert
     expect(result, Left(UnAuthorizedFailure()));
     verify(repository.getHotel(hotelId)).called(1);
-    verifyNever(repository.deleteHotel(any, any));
+    verifyNever(repository.deleteHotel(hotelId));
     verifyNoMoreInteractions(repository);
   });
 }

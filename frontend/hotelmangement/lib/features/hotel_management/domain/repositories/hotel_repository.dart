@@ -26,7 +26,6 @@ abstract class HotelRepository {
   );
   Future<Either<Failure, int>> deleteHotel(
     String hotelId,
-    String managerId,
   );
 
   Future<Either<Failure, HotelImage>> addHotelImage(
