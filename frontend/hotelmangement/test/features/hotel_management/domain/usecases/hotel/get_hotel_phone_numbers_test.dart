@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hotelmangement/features/hotel_management/domain/entities/hote_phone_number.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_phone_number.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_phone_numbers.dart';
 import 'package:mockito/annotations.dart';

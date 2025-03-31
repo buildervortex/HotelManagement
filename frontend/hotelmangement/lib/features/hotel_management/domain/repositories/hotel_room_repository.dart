@@ -1,1 +1,14 @@
-abstract class HotelRoomRepository {}
+import 'package:dartz/dartz.dart';
+import 'package:hotelmangement/core/error/failure.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/room.dart';
+
+abstract class HotelRoomRepository {
+  Future<Either<Failure, Room>> createRoom({
+    required String hotelId,
+    required String roomNumber,
+    required String description,
+    required String space,
+    required String floor,
+    required double price,
+  });
+}
