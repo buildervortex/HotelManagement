@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/file_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/get_hotel_image_auth_url.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_image_auth_url.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

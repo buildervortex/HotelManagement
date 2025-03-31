@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/get_hotel_details.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_details.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

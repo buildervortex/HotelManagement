@@ -4,7 +4,7 @@ import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/add_hotel_image.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/add_hotel_image.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

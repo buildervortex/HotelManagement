@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/update_hotel.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/update_hotel.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
