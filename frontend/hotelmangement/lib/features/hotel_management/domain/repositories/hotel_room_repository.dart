@@ -11,4 +11,14 @@ abstract class HotelRoomRepository {
     required String floor,
     required double price,
   });
+
+  Future<Either<Failure, Room>> updateRoom({
+    required String roomId,
+    required String hotelId,
+    String? roomNumber,
+    String? description,
+    String? space,
+    String? floor,
+    double? price,
+  });
 }

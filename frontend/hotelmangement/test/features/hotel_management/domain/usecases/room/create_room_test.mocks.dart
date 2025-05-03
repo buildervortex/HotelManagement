@@ -74,4 +74,41 @@ class MockHotelRoomRepository extends _i1.Mock
             ),
           )
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Room>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Room>> updateRoom({
+    required String? roomId,
+    required String? hotelId,
+    String? roomNumber,
+    String? description,
+    String? space,
+    String? floor,
+    double? price,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateRoom, [], {
+              #roomId: roomId,
+              #hotelId: hotelId,
+              #roomNumber: roomNumber,
+              #description: description,
+              #space: space,
+              #floor: floor,
+              #price: price,
+            }),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Room>>.value(
+              _FakeEither_0<_i5.Failure, _i6.Room>(
+                this,
+                Invocation.method(#updateRoom, [], {
+                  #roomId: roomId,
+                  #hotelId: hotelId,
+                  #roomNumber: roomNumber,
+                  #description: description,
+                  #space: space,
+                  #floor: floor,
+                  #price: price,
+                }),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Room>>);
 }
