@@ -1,14 +1,16 @@
+import 'package:dartz/dartz.dart';
+import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/table.dart';
 
 abstract class HotelTableRepository {
-  Future<void> createTable({
+  Future<Either<Failure, Table>> createTable({
     required String hotelId,
     required String tableNumber,
-    required String space,
+    required int space,
     required String floor,
   });
 
-  Future<void> updateTable({
+  Future<Either<Failure, Table>> updateTable({
     required String tableId,
     required String hotelId,
     String? tableNumber,
@@ -22,7 +24,7 @@ abstract class HotelTableRepository {
     required String hotelId,
   });
 
-  Future<List<Table>> getTables({
+  Future<Either<Failure, List<Table>>> getTables({
     required String hotelId,
   });
 }

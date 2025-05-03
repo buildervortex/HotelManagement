@@ -16,3 +16,8 @@ class NotFound extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class UnKnownFailure extends Failure {
+  @override
+  List<Object?> get props => [];
+}
