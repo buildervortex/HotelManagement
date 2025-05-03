@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
@@ -25,7 +26,7 @@ class HotelAuthorize extends Usecase<Hotel, Params> {
   }
 }
 
-class Params {
+class Params extends Equatable {
   final String hotelId;
   final String managerId;
 
@@ -33,4 +34,10 @@ class Params {
     required this.hotelId,
     required this.managerId,
   });
+
+  @override
+  List<Object?> get props => [
+        hotelId,
+        managerId,
+      ];
 }
