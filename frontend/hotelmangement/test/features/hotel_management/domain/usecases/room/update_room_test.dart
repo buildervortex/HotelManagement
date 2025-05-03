@@ -9,7 +9,6 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/validat
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'create_room_test.mocks.dart';
 import 'update_room_test.mocks.dart';
 
 @GenerateMocks([HotelRoomRepository, ha.HotelAuthorize])

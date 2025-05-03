@@ -123,17 +123,17 @@ class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
           as _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotel(String? hotelId) =>
+  _i4.Future<_i2.Either<_i5.Failure, void>> deleteHotel(String? hotelId) =>
       (super.noSuchMethod(
             Invocation.method(#deleteHotel, [hotelId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+              _FakeEither_0<_i5.Failure, void>(
                 this,
                 Invocation.method(#deleteHotel, [hotelId]),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
+          as _i4.Future<_i2.Either<_i5.Failure, void>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>> addHotelImage(

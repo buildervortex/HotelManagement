@@ -21,4 +21,13 @@ abstract class HotelRoomRepository {
     String? floor,
     double? price,
   });
+
+  Future<Either<Failure, void>> deleteRoom({
+    required String roomId,
+    required String hotelId,
+  });
+
+  Future<Either<Failure, List<Room>>> getRooms({
+    required String hotelId,
+  });
 }

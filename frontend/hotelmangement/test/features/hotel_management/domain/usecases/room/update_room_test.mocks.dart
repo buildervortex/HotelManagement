@@ -3,20 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:hotelmangement/core/error/failure.dart' as _i5;
+import 'package:hotelmangement/core/error/failure.dart' as _i6;
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart'
-    as _i6;
-import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart'
+    as _i9;
+import 'package:hotelmangement/features/hotel_management/domain/entities/room.dart'
     as _i7;
-import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_phone_number.dart'
-    as _i8;
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart'
     as _i3;
+import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_room_repository.dart'
+    as _i4;
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
-    as _i9;
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -44,230 +44,129 @@ class _FakeHotelRepository_1 extends _i1.SmartFake
     : super(parent, parentInvocation);
 }
 
-/// A class which mocks [HotelRepository].
+/// A class which mocks [HotelRoomRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHotelRepository extends _i1.Mock implements _i3.HotelRepository {
-  MockHotelRepository() {
+class MockHotelRoomRepository extends _i1.Mock
+    implements _i4.HotelRoomRepository {
+  MockHotelRoomRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>> createHotel(
-    String? name,
-    String? address,
-    double? longitude,
-    double? latitude,
-    String? managerId,
-  ) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Room>> createRoom({
+    required String? hotelId,
+    required String? roomNumber,
+    required String? description,
+    required String? space,
+    required String? floor,
+    required double? price,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#createHotel, [
-              name,
-              address,
-              longitude,
-              latitude,
-              managerId,
-            ]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Hotel>(
+            Invocation.method(#createRoom, [], {
+              #hotelId: hotelId,
+              #roomNumber: roomNumber,
+              #description: description,
+              #space: space,
+              #floor: floor,
+              #price: price,
+            }),
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Room>>.value(
+              _FakeEither_0<_i6.Failure, _i7.Room>(
                 this,
-                Invocation.method(#createHotel, [
-                  name,
-                  address,
-                  longitude,
-                  latitude,
-                  managerId,
-                ]),
+                Invocation.method(#createRoom, [], {
+                  #hotelId: hotelId,
+                  #roomNumber: roomNumber,
+                  #description: description,
+                  #space: space,
+                  #floor: floor,
+                  #price: price,
+                }),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>);
+          as _i5.Future<_i2.Either<_i6.Failure, _i7.Room>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>> updateHotel(
-    String? hotelId,
-    String? name,
-    String? address,
-    double? longitude,
-    double? latitude,
-    String? mainImage,
-  ) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Room>> updateRoom({
+    required String? roomId,
+    required String? hotelId,
+    String? roomNumber,
+    String? description,
+    String? space,
+    String? floor,
+    double? price,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#updateHotel, [
-              hotelId,
-              name,
-              address,
-              longitude,
-              latitude,
-              mainImage,
-            ]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Hotel>(
+            Invocation.method(#updateRoom, [], {
+              #roomId: roomId,
+              #hotelId: hotelId,
+              #roomNumber: roomNumber,
+              #description: description,
+              #space: space,
+              #floor: floor,
+              #price: price,
+            }),
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Room>>.value(
+              _FakeEither_0<_i6.Failure, _i7.Room>(
                 this,
-                Invocation.method(#updateHotel, [
-                  hotelId,
-                  name,
-                  address,
-                  longitude,
-                  latitude,
-                  mainImage,
-                ]),
+                Invocation.method(#updateRoom, [], {
+                  #roomId: roomId,
+                  #hotelId: hotelId,
+                  #roomNumber: roomNumber,
+                  #description: description,
+                  #space: space,
+                  #floor: floor,
+                  #price: price,
+                }),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>);
+          as _i5.Future<_i2.Either<_i6.Failure, _i7.Room>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>> getHotel(String? hotelId) =>
+  _i5.Future<_i2.Either<_i6.Failure, void>> deleteRoom({
+    required String? roomId,
+    required String? hotelId,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#getHotel, [hotelId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Hotel>(
+            Invocation.method(#deleteRoom, [], {
+              #roomId: roomId,
+              #hotelId: hotelId,
+            }),
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, void>>.value(
+              _FakeEither_0<_i6.Failure, void>(
                 this,
-                Invocation.method(#getHotel, [hotelId]),
+                Invocation.method(#deleteRoom, [], {
+                  #roomId: roomId,
+                  #hotelId: hotelId,
+                }),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>);
+          as _i5.Future<_i2.Either<_i6.Failure, void>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotel(String? hotelId) =>
+  _i5.Future<_i2.Either<_i6.Failure, List<_i7.Room>>> getRooms({
+    required String? hotelId,
+  }) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteHotel, [hotelId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
-                this,
-                Invocation.method(#deleteHotel, [hotelId]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>> addHotelImage(
-    String? hotelId,
-    String? localImagePath,
-    String? remoteImageSaveName,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#addHotelImage, [
-              hotelId,
-              localImagePath,
-              remoteImageSaveName,
-            ]),
+            Invocation.method(#getRooms, [], {#hotelId: hotelId}),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>>.value(
-                  _FakeEither_0<_i5.Failure, _i7.HotelImage>(
+                _i5.Future<_i2.Either<_i6.Failure, List<_i7.Room>>>.value(
+                  _FakeEither_0<_i6.Failure, List<_i7.Room>>(
                     this,
-                    Invocation.method(#addHotelImage, [
-                      hotelId,
-                      localImagePath,
-                      remoteImageSaveName,
-                    ]),
+                    Invocation.method(#getRooms, [], {#hotelId: hotelId}),
                   ),
                 ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i7.HotelImage>>);
-
-  @override
-  _i4.Future<bool> isImageExists(String? imageId, String? hotelId) =>
-      (super.noSuchMethod(
-            Invocation.method(#isImageExists, [imageId, hotelId]),
-            returnValue: _i4.Future<bool>.value(false),
-          )
-          as _i4.Future<bool>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>> getHotelImages(
-    String? hotelId,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#getHotelImages, [hotelId]),
-            returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i7.HotelImage>>(
-                    this,
-                    Invocation.method(#getHotelImages, [hotelId]),
-                  ),
-                ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i7.HotelImage>>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelImage(String? imageId) =>
-      (super.noSuchMethod(
-            Invocation.method(#deleteHotelImage, [imageId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
-                this,
-                Invocation.method(#deleteHotelImage, [imageId]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>>
-  getHotelPhoneNumbers(String? hotelId) =>
-      (super.noSuchMethod(
-            Invocation.method(#getHotelPhoneNumbers, [hotelId]),
-            returnValue: _i4.Future<
-              _i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>
-            >.value(
-              _FakeEither_0<_i5.Failure, List<_i8.HotelPhoneNumber>>(
-                this,
-                Invocation.method(#getHotelPhoneNumbers, [hotelId]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i8.HotelPhoneNumber>>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteHotelPhoneNumber(
-    String? phoneNumberId,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#deleteHotelPhoneNumber, [phoneNumberId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
-                this,
-                Invocation.method(#deleteHotelPhoneNumber, [phoneNumberId]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>> addHotelPhoneNumber(
-    String? hotelId,
-    String? phoneNumber,
-    String? role,
-  ) =>
-      (super.noSuchMethod(
-            Invocation.method(#addHotelPhoneNumber, [
-              hotelId,
-              phoneNumber,
-              role,
-            ]),
-            returnValue:
-                _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>>.value(
-                  _FakeEither_0<_i5.Failure, _i8.HotelPhoneNumber>(
-                    this,
-                    Invocation.method(#addHotelPhoneNumber, [
-                      hotelId,
-                      phoneNumber,
-                      role,
-                    ]),
-                  ),
-                ),
-          )
-          as _i4.Future<_i2.Either<_i5.Failure, _i8.HotelPhoneNumber>>);
+          as _i5.Future<_i2.Either<_i6.Failure, List<_i7.Room>>>);
 }
 
 /// A class which mocks [HotelAuthorize].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHotelAuthorize extends _i1.Mock implements _i9.HotelAuthorize {
+class MockHotelAuthorize extends _i1.Mock implements _i8.HotelAuthorize {
   MockHotelAuthorize() {
     _i1.throwOnMissingStub(this);
   }
@@ -284,15 +183,15 @@ class MockHotelAuthorize extends _i1.Mock implements _i9.HotelAuthorize {
           as _i3.HotelRepository);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>> call(_i9.Params? params) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>> call(_i8.Params? params) =>
       (super.noSuchMethod(
             Invocation.method(#call, [params]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>.value(
-              _FakeEither_0<_i5.Failure, _i6.Hotel>(
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>>.value(
+              _FakeEither_0<_i6.Failure, _i9.Hotel>(
                 this,
                 Invocation.method(#call, [params]),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.Hotel>>);
+          as _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>>);
 }

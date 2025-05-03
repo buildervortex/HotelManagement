@@ -23,7 +23,7 @@ abstract class HotelRepository {
   Future<Either<Failure, Hotel>> getHotel(
     String hotelId,
   );
-  Future<Either<Failure, int>> deleteHotel(
+  Future<Either<Failure, void>> deleteHotel(
     String hotelId,
   );
 
