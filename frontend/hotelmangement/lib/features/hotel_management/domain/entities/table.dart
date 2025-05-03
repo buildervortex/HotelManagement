@@ -5,12 +5,14 @@ class Table extends Equatable {
   final String hotelId;
   final int space;
   final String floor;
+  final String tableNumber;
 
   const Table({
     required this.id,
     required this.hotelId,
     required this.space,
     required this.floor,
+    required this.tableNumber,
   });
 
   @override
@@ -19,5 +21,6 @@ class Table extends Equatable {
         hotelId,
         space,
         floor,
+        tableNumber,
       ];
 }
