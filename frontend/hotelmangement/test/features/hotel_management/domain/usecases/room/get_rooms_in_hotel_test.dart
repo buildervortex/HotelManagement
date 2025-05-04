@@ -1,27 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/core/error/failure.dart';
-import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/room.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_room_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/room/delete_room.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
-    as ha;
+import 'package:hotelmangement/features/hotel_management/domain/usecases/room/get_rooms_in_hotel.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'update_room_test.mocks.dart';
 
-@GenerateMocks([HotelRoomRepository, ha.HotelAuthorize])
+@GenerateMocks([HotelRoomRepository])
 void main() {
-  late DeleteRoom usecase;
+  late GetRoomsInHotel usecase;
   late HotelRoomRepository repository;
-  late MockHotelAuthorize hotelAuthorize;
 
   setUp(() {
     repository = MockHotelRoomRepository();
-    hotelAuthorize = MockHotelAuthorize();
-    usecase =
-        DeleteRoom(repository: repository, hotelAuthorize: hotelAuthorize);
+    usecase = GetRoomsInHotel(repository: repository);
   });
 
   group("hotelRoom", () {
@@ -30,32 +25,36 @@ void main() {
       () async {
         // arrange
         final params = Params(
-          managerId: 'managerId',
-          roomId: 'roomId',
           hotelId: 'hotelId',
         );
-        when(hotelAuthorize.call(ha.Params(hotelId: params.hotelId, managerId: params.managerId))).thenAnswer((_) async => Right(Hotel(
-            id: "1",
-            managerId: "1",
-            name: "name",
-            address: "address",
-            latitude: 25.4,
-            longitude: 52.5)));
-        when(repository.deleteRoom(
-          roomId: params.roomId,
+        const rooms = [
+          Room(
+              id: "1",
+              hotelId: "hotelId",
+              roomNumber: "roomNumber",
+              description: "description",
+              floor: "f1",
+              price: 24.5,
+              space: "4"),
+          Room(
+              id: "2",
+              hotelId: "hotelId",
+              roomNumber: "roomNumber",
+              description: "description",
+              floor: "f1",
+              price: 24.5,
+              space: "4"),
+        ];
+        when(repository.getRooms(
           hotelId: params.hotelId,
-        )).thenAnswer((_) async => const Right(null));
+        )).thenAnswer((_) async => const Right(rooms));
 
         // act
         final result = await usecase(params);
 
         // assert
-        expect(result, const Right(null));
-        verify(hotelAuthorize.call(ha.Params(
-                hotelId: params.hotelId, managerId: params.managerId)))
-            .called(1);
-        verify(repository.deleteRoom(
-          roomId: params.roomId,
+        expect(result, const Right(rooms));
+        verify(repository.getRooms(
           hotelId: params.hotelId,
         )).called(1);
         verifyNoMoreInteractions(repository);
@@ -63,63 +62,25 @@ void main() {
     );
 
     test(
-      'should return UnAuthorizedFailure when authorization fails',
-      () async {
-      // arrange
-      final params = Params(
-        managerId: 'managerId',
-        roomId: 'roomId',
-        hotelId: 'hotelId',
-      );
-      when(hotelAuthorize.call(ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
-        .thenAnswer((_) async => Left(UnAuthorizedFailure()));
-
-      // act
-      final result = await usecase(params);
-
-      // assert
-      expect(result, Left(UnAuthorizedFailure()));
-      verify(hotelAuthorize.call(ha.Params(
-          hotelId: params.hotelId, managerId: params.managerId)))
-        .called(1);
-      verifyNoMoreInteractions(repository);
-      },
-    );
-
-    test(
       'should return ServerFailure when repository fails to delete the room',
       () async {
-      // arrange
-      final params = Params(
-        managerId: 'managerId',
-        roomId: 'roomId',
-        hotelId: 'hotelId',
-      );
-      when(hotelAuthorize.call(ha.Params(hotelId: params.hotelId, managerId: params.managerId))).thenAnswer((_) async => Right(Hotel(
-        id: "1",
-        managerId: "1",
-        name: "name",
-        address: "address",
-        latitude: 25.4,
-        longitude: 52.5)));
-      when(repository.deleteRoom(
-        roomId: params.roomId,
-        hotelId: params.hotelId,
-      )).thenAnswer((_) async => Left(ServerFailure()));
+        // arrange
+        final params = Params(
+          hotelId: 'hotelId',
+        );
+        when(repository.getRooms(
+          hotelId: params.hotelId,
+        )).thenAnswer((_) async => Left(ServerFailure()));
 
-      // act
-      final result = await usecase(params);
+        // act
+        final result = await usecase(params);
 
-      // assert
-      expect(result, Left(ServerFailure()));
-      verify(hotelAuthorize.call(ha.Params(
-          hotelId: params.hotelId, managerId: params.managerId)))
-        .called(1);
-      verify(repository.deleteRoom(
-        roomId: params.roomId,
-        hotelId: params.hotelId,
-      )).called(1);
-      verifyNoMoreInteractions(repository);
+        // assert
+        expect(result, Left(ServerFailure()));
+        verify(repository.getRooms(
+          hotelId: params.hotelId,
+        )).called(1);
+        verifyNoMoreInteractions(repository);
       },
     );
   });
