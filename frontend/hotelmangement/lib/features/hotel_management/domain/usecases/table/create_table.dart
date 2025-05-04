@@ -2,11 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hotelmangement/core/authorized_usecase.dart';
 import 'package:hotelmangement/core/error/failure.dart';
-import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/table.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_table_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
-    as ha;
 
 class CreateTable extends AuthorizedUsecase<Table, Params> {
   final HotelTableRepository repository;
@@ -26,18 +23,6 @@ class CreateTable extends AuthorizedUsecase<Table, Params> {
         floor: params.floor,
       );
     });
-    // final failureOrHotel = await hotelAuthorize(
-    //     ha.Params(hotelId: params.hotelId, managerId: params.managerId));
-
-    // if (failureOrHotel.isLeft()) {
-    //   return Left(failureOrHotel.fold((l) => l, (r) => UnKnownFailure()));
-    // }
-    // return repository.createTable(
-    //   hotelId: params.hotelId,
-    //   tableNumber: params.tableNumber,
-    //   space: params.space,
-    //   floor: params.floor,
-    // );
   }
 }
 

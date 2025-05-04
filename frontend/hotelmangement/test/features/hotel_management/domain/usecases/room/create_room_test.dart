@@ -13,7 +13,7 @@ void main() {
   late CreateRoom usecase;
   late HotelRoomRepository repository;
 
-  setUp(() {
+    setUp(() {
     repository = MockHotelRoomRepository();
     usecase = CreateRoom(repository);
   });
