@@ -7,7 +7,7 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/table/g
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'get_tables_in_hotel.mocks.dart';
+import 'get_tables_in_hotel_test.mocks.dart';
 
 @GenerateMocks([HotelTableRepository])
 void main() {

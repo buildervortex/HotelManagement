@@ -9,6 +9,8 @@ import 'package:dartz/dartz.dart' as _i2;
 import 'package:hotelmangement/core/error/failure.dart' as _i5;
 import 'package:hotelmangement/features/hotel_management/domain/entities/room.dart'
     as _i6;
+import 'package:hotelmangement/features/hotel_management/domain/entities/room_image.dart'
+    as _i7;
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_room_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -149,4 +151,67 @@ class MockHotelRoomRepository extends _i1.Mock
                 ),
           )
           as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Room>>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.RoomImage>> addRoomImage(
+    String? roomId,
+    String? localImagePath,
+    String? remoteImageSaveName,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addRoomImage, [
+              roomId,
+              localImagePath,
+              remoteImageSaveName,
+            ]),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, _i7.RoomImage>>.value(
+                  _FakeEither_0<_i5.Failure, _i7.RoomImage>(
+                    this,
+                    Invocation.method(#addRoomImage, [
+                      roomId,
+                      localImagePath,
+                      remoteImageSaveName,
+                    ]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, _i7.RoomImage>>);
+
+  @override
+  _i4.Future<bool> isImageExists(String? imageId, String? roomId) =>
+      (super.noSuchMethod(
+            Invocation.method(#isImageExists, [imageId, roomId]),
+            returnValue: _i4.Future<bool>.value(false),
+          )
+          as _i4.Future<bool>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i7.RoomImage>>> getRoomImages(
+    String? roomId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getRoomImages, [roomId]),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, List<_i7.RoomImage>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i7.RoomImage>>(
+                    this,
+                    Invocation.method(#getRoomImages, [roomId]),
+                  ),
+                ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i7.RoomImage>>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> deleteRoomImage(String? imageId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteRoomImage, [imageId]),
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+              _FakeEither_0<_i5.Failure, void>(
+                this,
+                Invocation.method(#deleteRoomImage, [imageId]),
+              ),
+            ),
+          )
+          as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }

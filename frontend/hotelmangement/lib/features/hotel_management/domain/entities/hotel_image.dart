@@ -1,12 +1,10 @@
-import 'package:equatable/equatable.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/image.dart';
 
-class HotelImage extends Equatable {
-  final String id;
-  final String imagePath;
+class HotelImage extends Image {
   final String hotelId;
 
   const HotelImage(
-      {required this.id, required this.imagePath, required this.hotelId});
+      {required super.id, required super.imagePath, required this.hotelId});
 
   @override
   List<Object?> get props => [id, imagePath, hotelId];

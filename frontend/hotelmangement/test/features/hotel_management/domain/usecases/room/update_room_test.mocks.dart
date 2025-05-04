@@ -8,15 +8,17 @@ import 'dart:async' as _i5;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:hotelmangement/core/error/failure.dart' as _i6;
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart'
-    as _i9;
+    as _i10;
 import 'package:hotelmangement/features/hotel_management/domain/entities/room.dart'
     as _i7;
+import 'package:hotelmangement/features/hotel_management/domain/entities/room_image.dart'
+    as _i8;
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart'
     as _i3;
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_room_repository.dart'
     as _i4;
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
-    as _i8;
+    as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -161,12 +163,75 @@ class MockHotelRoomRepository extends _i1.Mock
                 ),
           )
           as _i5.Future<_i2.Either<_i6.Failure, List<_i7.Room>>>);
+
+  @override
+  _i5.Future<_i2.Either<_i6.Failure, _i8.RoomImage>> addRoomImage(
+    String? roomId,
+    String? localImagePath,
+    String? remoteImageSaveName,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#addRoomImage, [
+              roomId,
+              localImagePath,
+              remoteImageSaveName,
+            ]),
+            returnValue:
+                _i5.Future<_i2.Either<_i6.Failure, _i8.RoomImage>>.value(
+                  _FakeEither_0<_i6.Failure, _i8.RoomImage>(
+                    this,
+                    Invocation.method(#addRoomImage, [
+                      roomId,
+                      localImagePath,
+                      remoteImageSaveName,
+                    ]),
+                  ),
+                ),
+          )
+          as _i5.Future<_i2.Either<_i6.Failure, _i8.RoomImage>>);
+
+  @override
+  _i5.Future<bool> isImageExists(String? imageId, String? roomId) =>
+      (super.noSuchMethod(
+            Invocation.method(#isImageExists, [imageId, roomId]),
+            returnValue: _i5.Future<bool>.value(false),
+          )
+          as _i5.Future<bool>);
+
+  @override
+  _i5.Future<_i2.Either<_i6.Failure, List<_i8.RoomImage>>> getRoomImages(
+    String? roomId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getRoomImages, [roomId]),
+            returnValue:
+                _i5.Future<_i2.Either<_i6.Failure, List<_i8.RoomImage>>>.value(
+                  _FakeEither_0<_i6.Failure, List<_i8.RoomImage>>(
+                    this,
+                    Invocation.method(#getRoomImages, [roomId]),
+                  ),
+                ),
+          )
+          as _i5.Future<_i2.Either<_i6.Failure, List<_i8.RoomImage>>>);
+
+  @override
+  _i5.Future<_i2.Either<_i6.Failure, void>> deleteRoomImage(String? imageId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteRoomImage, [imageId]),
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, void>>.value(
+              _FakeEither_0<_i6.Failure, void>(
+                this,
+                Invocation.method(#deleteRoomImage, [imageId]),
+              ),
+            ),
+          )
+          as _i5.Future<_i2.Either<_i6.Failure, void>>);
 }
 
 /// A class which mocks [HotelAuthorize].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHotelAuthorize extends _i1.Mock implements _i8.HotelAuthorize {
+class MockHotelAuthorize extends _i1.Mock implements _i9.HotelAuthorize {
   MockHotelAuthorize() {
     _i1.throwOnMissingStub(this);
   }
@@ -183,15 +248,15 @@ class MockHotelAuthorize extends _i1.Mock implements _i8.HotelAuthorize {
           as _i3.HotelRepository);
 
   @override
-  _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>> call(_i8.Params? params) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i10.Hotel>> call(_i9.Params? params) =>
       (super.noSuchMethod(
             Invocation.method(#call, [params]),
-            returnValue: _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>>.value(
-              _FakeEither_0<_i6.Failure, _i9.Hotel>(
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, _i10.Hotel>>.value(
+              _FakeEither_0<_i6.Failure, _i10.Hotel>(
                 this,
                 Invocation.method(#call, [params]),
               ),
             ),
           )
-          as _i5.Future<_i2.Either<_i6.Failure, _i9.Hotel>>);
+          as _i5.Future<_i2.Either<_i6.Failure, _i10.Hotel>>);
 }

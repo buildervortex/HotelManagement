@@ -26,4 +26,5 @@ abstract class HotelTableRepository {
   Future<Either<Failure, List<Table>>> getTables({
     required String hotelId,
   });
+  
 }
