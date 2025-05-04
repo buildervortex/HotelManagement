@@ -2,19 +2,18 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
-import 'package:hotelmangement/features/hotel_management/domain/entities/table.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_table_repository.dart';
-import 'package:hotelmangement/features/hotel_management/domain/usecases/table/update_table.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/table/delete_table.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
     as ha;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'update_table_test.mocks.dart';
+import 'delete_table_test.mocks.dart';
 
 @GenerateMocks([HotelTableRepository, ha.HotelAuthorize])
 void main() {
-  late UpdateTable usecase;
+  late DeleteTable usecase;
   late HotelTableRepository repository;
   late ha.HotelAuthorize hotelAuthorize;
 
@@ -22,19 +21,16 @@ void main() {
     repository = MockHotelTableRepository();
     hotelAuthorize = MockHotelAuthorize();
     usecase =
-        UpdateTable(repository: repository, hotelAuthorize: hotelAuthorize);
+        DeleteTable(repository: repository, hotelAuthorize: hotelAuthorize);
   });
 
   group("hotelTable", () {
-    test('should update table successfully when authorized', () async {
+    test('should delete table successfully when authorized', () async {
       // arrange
       const params = Params(
         managerId: 'manager123',
         hotelId: 'hotel456',
         tableId: 'table789',
-        tableNumber: 'T1',
-        space: 4,
-        floor: '1st',
       );
       when(hotelAuthorize.call(
               ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
@@ -46,40 +42,23 @@ void main() {
                 latitude: 24.4,
                 longitude: 45.5,
               )));
-      when(repository.updateTable(
+      when(repository.deleteTable(
         tableId: params.tableId,
         hotelId: params.hotelId,
-        tableNumber: params.tableNumber,
-        space: params.space,
-        floor: params.floor,
-      )).thenAnswer((_) async => Right(Table(
-            id: params.tableId,
-            tableNumber: params.tableNumber!,
-            space: params.space!,
-            floor: params.floor!,
-            hotelId: params.hotelId,
-          )));
+      )).thenAnswer((_) async => Right(null));
 
       // act
       final result = await usecase(params);
 
       // assert
-      expect(result, Right(Table(
-            id: params.tableId,
-            tableNumber: params.tableNumber!,
-            space: params.space!,
-            floor: params.floor!,
-            hotelId: params.hotelId,
-          )));
+      expect(result, Right(null));
       verify(hotelAuthorize.call(
-          ha.Params(hotelId: params.hotelId, managerId: params.managerId)));
-      verify(repository.updateTable(
+              ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
+          .called(1);
+      verify(repository.deleteTable(
         tableId: params.tableId,
         hotelId: params.hotelId,
-        tableNumber: params.tableNumber,
-        space: params.space,
-        floor: params.floor,
-      ));
+      )).called(1);
       verifyNoMoreInteractions(repository);
       verifyNoMoreInteractions(hotelAuthorize);
     });
@@ -90,9 +69,6 @@ void main() {
         managerId: 'manager123',
         hotelId: 'hotel456',
         tableId: 'table789',
-        tableNumber: 'T1',
-        space: 4,
-        floor: '1st',
       );
       when(hotelAuthorize.call(
               ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
@@ -104,7 +80,8 @@ void main() {
       // assert
       expect(result, Left(UnAuthorizedFailure()));
       verify(hotelAuthorize.call(
-          ha.Params(hotelId: params.hotelId, managerId: params.managerId)));
+              ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
+          .called(1);
       verifyNoMoreInteractions(repository);
       verifyNoMoreInteractions(hotelAuthorize);
     });
@@ -115,9 +92,6 @@ void main() {
         managerId: 'manager123',
         hotelId: 'hotel456',
         tableId: 'table789',
-        tableNumber: 'T1',
-        space: 4,
-        floor: '1st',
       );
       when(hotelAuthorize.call(
               ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
@@ -129,12 +103,9 @@ void main() {
                 latitude: 24.4,
                 longitude: 45.5,
               )));
-      when(repository.updateTable(
+      when(repository.deleteTable(
         tableId: params.tableId,
         hotelId: params.hotelId,
-        tableNumber: params.tableNumber,
-        space: params.space,
-        floor: params.floor,
       )).thenAnswer((_) async => Left(ServerFailure()));
 
       // act
@@ -143,14 +114,12 @@ void main() {
       // assert
       expect(result, Left(ServerFailure()));
       verify(hotelAuthorize.call(
-          ha.Params(hotelId: params.hotelId, managerId: params.managerId)));
-      verify(repository.updateTable(
+              ha.Params(hotelId: params.hotelId, managerId: params.managerId)))
+          .called(1);
+      verify(repository.deleteTable(
         tableId: params.tableId,
         hotelId: params.hotelId,
-        tableNumber: params.tableNumber,
-        space: params.space,
-        floor: params.floor,
-      ));
+      )).called(1);
       verifyNoMoreInteractions(repository);
       verifyNoMoreInteractions(hotelAuthorize);
     });

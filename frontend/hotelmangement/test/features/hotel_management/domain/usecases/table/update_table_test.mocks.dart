@@ -113,7 +113,7 @@ class MockHotelTableRepository extends _i1.Mock
           as _i5.Future<_i2.Either<_i6.Failure, _i7.Table>>);
 
   @override
-  _i5.Future<void> deleteTable({
+  _i5.Future<_i2.Either<_i6.Failure, void>> deleteTable({
     required String? tableId,
     required String? hotelId,
   }) =>
@@ -122,10 +122,17 @@ class MockHotelTableRepository extends _i1.Mock
               #tableId: tableId,
               #hotelId: hotelId,
             }),
-            returnValue: _i5.Future<void>.value(),
-            returnValueForMissingStub: _i5.Future<void>.value(),
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, void>>.value(
+              _FakeEither_0<_i6.Failure, void>(
+                this,
+                Invocation.method(#deleteTable, [], {
+                  #tableId: tableId,
+                  #hotelId: hotelId,
+                }),
+              ),
+            ),
           )
-          as _i5.Future<void>);
+          as _i5.Future<_i2.Either<_i6.Failure, void>>);
 
   @override
   _i5.Future<_i2.Either<_i6.Failure, List<_i7.Table>>> getTables({

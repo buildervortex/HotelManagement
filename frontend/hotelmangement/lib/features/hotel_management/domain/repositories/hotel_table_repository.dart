@@ -18,7 +18,7 @@ abstract class HotelTableRepository {
     String? floor,
   });
 
-  Future<void> deleteTable({
+  Future<Either<Failure, void>> deleteTable({
     required String tableId,
     required String hotelId,
   });
