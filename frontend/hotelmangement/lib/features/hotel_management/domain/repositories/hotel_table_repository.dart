@@ -14,8 +14,7 @@ abstract class HotelTableRepository {
     required String tableId,
     required String hotelId,
     String? tableNumber,
-    String? description,
-    String? space,
+    int? space,
     String? floor,
   });
 

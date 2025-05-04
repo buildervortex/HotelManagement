@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hotelmangement/core/authorized_usecase.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/table.dart';
@@ -7,29 +8,36 @@ import 'package:hotelmangement/features/hotel_management/domain/repositories/hot
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
     as ha;
 
-class CreateTable extends Usecase<Table, Params> {
+class CreateTable extends AuthorizedUsecase<Table, Params> {
   final HotelTableRepository repository;
-  final ha.HotelAuthorize hotelAuthorize;
 
   CreateTable({
     required this.repository,
-    required this.hotelAuthorize,
+    required super.hotelAuthorize,
   });
 
   @override
   Future<Either<Failure, Table>> call(Params params) async {
-    final failureOrHotel = await hotelAuthorize(
-        ha.Params(hotelId: params.hotelId, managerId: params.managerId));
+    return super.executeAuthorized(params.managerId, params.hotelId, () async {
+      return repository.createTable(
+        hotelId: params.hotelId,
+        tableNumber: params.tableNumber,
+        space: params.space,
+        floor: params.floor,
+      );
+    });
+    // final failureOrHotel = await hotelAuthorize(
+    //     ha.Params(hotelId: params.hotelId, managerId: params.managerId));
 
-    if (failureOrHotel.isLeft()) {
-      return Left(failureOrHotel.fold((l) => l, (r) => UnKnownFailure()));
-    }
-    return repository.createTable(
-      hotelId: params.hotelId,
-      tableNumber: params.tableNumber,
-      space: params.space,
-      floor: params.floor,
-    );
+    // if (failureOrHotel.isLeft()) {
+    //   return Left(failureOrHotel.fold((l) => l, (r) => UnKnownFailure()));
+    // }
+    // return repository.createTable(
+    //   hotelId: params.hotelId,
+    //   tableNumber: params.tableNumber,
+    //   space: params.space,
+    //   floor: params.floor,
+    // );
   }
 }
 
