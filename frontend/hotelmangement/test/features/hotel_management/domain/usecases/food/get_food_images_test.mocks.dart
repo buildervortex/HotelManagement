@@ -187,18 +187,18 @@ class MockHotelFoodRepository extends _i1.Mock
           as _i4.Future<_i2.Either<_i5.Failure, List<_i7.FoodImage>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, int>> deleteFoodImage(
+  _i4.Future<_i2.Either<_i5.Failure, void>> deleteFoodImage(
     String? imageId,
     String? foodId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#deleteFoodImage, [imageId, foodId]),
-            returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
-              _FakeEither_0<_i5.Failure, int>(
+            returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+              _FakeEither_0<_i5.Failure, void>(
                 this,
                 Invocation.method(#deleteFoodImage, [imageId, foodId]),
               ),
             ),
           )
-          as _i4.Future<_i2.Either<_i5.Failure, int>>);
+          as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }

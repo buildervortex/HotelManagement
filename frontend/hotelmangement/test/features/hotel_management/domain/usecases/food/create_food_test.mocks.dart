@@ -199,20 +199,20 @@ class MockHotelFoodRepository extends _i1.Mock
           as _i5.Future<_i2.Either<_i6.Failure, List<_i8.FoodImage>>>);
 
   @override
-  _i5.Future<_i2.Either<_i6.Failure, int>> deleteFoodImage(
+  _i5.Future<_i2.Either<_i6.Failure, void>> deleteFoodImage(
     String? imageId,
     String? foodId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#deleteFoodImage, [imageId, foodId]),
-            returnValue: _i5.Future<_i2.Either<_i6.Failure, int>>.value(
-              _FakeEither_0<_i6.Failure, int>(
+            returnValue: _i5.Future<_i2.Either<_i6.Failure, void>>.value(
+              _FakeEither_0<_i6.Failure, void>(
                 this,
                 Invocation.method(#deleteFoodImage, [imageId, foodId]),
               ),
             ),
           )
-          as _i5.Future<_i2.Either<_i6.Failure, int>>);
+          as _i5.Future<_i2.Either<_i6.Failure, void>>);
 }
 
 /// A class which mocks [HotelAuthorize].

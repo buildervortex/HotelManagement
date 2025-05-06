@@ -32,5 +32,5 @@ abstract class HotelFoodRepository {
 
   Future<Either<Failure, List<FoodImage>>> getFoodImages(String foodId);
 
-  Future<Either<Failure, int>> deleteFoodImage(String imageId, String foodId);
+  Future<Either<Failure, void>> deleteFoodImage(String imageId, String foodId);
 }
