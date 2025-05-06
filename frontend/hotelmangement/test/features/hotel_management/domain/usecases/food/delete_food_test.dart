@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_food_repository.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/food/delete_food.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart'
@@ -18,7 +19,13 @@ void main() {
     usecase = DeleteFood(repository: repository, hotelAuthorize: authorize);
   });
 
-  group("hotelFood", (){
-
+  group("hotelFood", () {
+    final hotel = Hotel(
+        id: "hotel123",
+        managerId: "manager123",
+        name: "name",
+        address: "address",
+        latitude: 25.45,
+        longitude: 45.7);
   });
 }
