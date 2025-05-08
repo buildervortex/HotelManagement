@@ -11,7 +11,7 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   List<Map<String, dynamic>> bookings = [
     {
-      "image": "assets/hotel1.jpg",
+      "image": "assets/booking_history/hotel1.jpg",
       "name": "Heden Golf",
       "rating": 3.9,
       "reviews": 200,
@@ -20,7 +20,7 @@ class _HistoryState extends State<History> {
       "price": "\$127",
     },
     {
-      "image": "assets/hotel2.jpg",
+      "image": "assets/booking_history/hotel2.jpg",
       "name": "Sunset Resort",
       "rating": 4.5,
       "reviews": 320,
@@ -29,7 +29,7 @@ class _HistoryState extends State<History> {
       "price": "\$99",
     },
     {
-      "image": "assets/hotel5.jpg",
+      "image": "assets/booking_history/hotel5.jpg",
       "name": "Ocean View Hotel",
       "rating": 4.2,
       "reviews": 150,
@@ -38,7 +38,7 @@ class _HistoryState extends State<History> {
       "price": "\$150",
     },
     {
-      "image": "assets/hotel4.jpg",
+      "image": "assets/booking_history/hotel4.jpg",
       "name": "Ocean View Hotel",
       "rating": 4.2,
       "reviews": 150,
@@ -47,7 +47,7 @@ class _HistoryState extends State<History> {
       "price": "\$150",
     },
     {
-      "image": "assets/hotel3.jpg",
+      "image": "assets/booking_history/hotel3.jpg",
       "name": "Ocean View Hotel",
       "rating": 4.2,
       "reviews": 150,
