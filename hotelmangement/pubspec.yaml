@@ -45,6 +45,7 @@ dependencies:
   connectivity_plus: ^6.1.3
   flutter_bloc: ^9.1.0
   image_picker: ^1.1.2
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,14 @@ flutter:
     - assets/profile/logout.png
     - assets/profile/profile.png
     # - images/a_dot_burr.jpeg
+    - assets/booking_history/hotel1.jpg
+    - assets/booking_history/hotel2.jpg
+    - assets/booking_history/hotel3.jpg
+    - assets/booking_history/hotel4.jpg
+    - assets/booking_history/room1.jpg
+    - assets/booking_history/room2.jpg
+    - assets/booking_history/room3.jpg
+    - assets/booking_history/room4.jpg
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
