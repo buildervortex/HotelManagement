@@ -73,6 +73,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/.env
+    - assets/auth/welcome.png
+    - assets/profile/logout.png
+    - assets/profile/profile.png
+    # - images/a_dot_burr.jpeg
     - assets/booking_history/hotel1.jpg
     - assets/booking_history/hotel2.jpg
     - assets/booking_history/hotel3.jpg
