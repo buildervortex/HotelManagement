@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MaterialApp(home: booking_details()));
-}
 
 class booking_details extends StatefulWidget {
   const booking_details({super.key});
