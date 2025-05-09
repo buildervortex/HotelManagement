@@ -1,170 +1,89 @@
 import 'package:flutter/material.dart';
 
 
-class booking_details extends StatefulWidget {
-  const booking_details({super.key});
+class BookingDetails extends StatefulWidget {
+  const BookingDetails({super.key});
 
   @override
-  State<booking_details> createState() => _booking_detailsState();
+  State<BookingDetails> createState() => _BookingDetailsState();
 }
 
-class _booking_detailsState extends State<booking_details> {
+class _BookingDetailsState extends State<BookingDetails> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final baseFontSize = screenWidth * 0.040; // adjusts based on screen width
+    final boldStyle = TextStyle(fontSize: baseFontSize, fontWeight: FontWeight.bold);
+    final normalStyle = TextStyle(fontSize: baseFontSize);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Booking Details')),
-      body: Column(
+      appBar: AppBar(
+        title: const Text("Booking details"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(children: [Text("Room details", style: boldStyle)]),
+            const SizedBox(height: 16),
+            buildRow("Checkin date & time", "23 July 2019, 10:00 AM", normalStyle),
+            buildRow("Checkout date & time", "25 July 2019, 10:00 AM", normalStyle),
+            buildRow("No. of Adults", "2", normalStyle),
+            buildRow("No. of Children", "2", normalStyle),
+            buildRow("No. of room", "1", normalStyle),
+            const Divider(height: 32),
+            buildRow("Price", "\$125", normalStyle),
+            buildRow("Tax", "\$20", normalStyle),
+            buildRow("Total", "\$145", boldStyle),
+            const Divider(height: 32),
+            Row(children: [Text("Food details", style: boldStyle)]),
+            const SizedBox(height: 16),
+            buildRow("Bagels with turkey and bacon", "\$10", normalStyle),
+            buildRow("Sandwich", "\$5", normalStyle),
+            const Divider(height: 32),
+            buildRow("Sub total", "\$15", normalStyle),
+            buildRow("Service tax", "\$2", normalStyle),
+            const Divider(height: 32),
+            buildRow("Total", "\$17", boldStyle),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 50, 98, 243),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  ),
+                  child: Text("Book again", style: TextStyle(fontSize: baseFontSize)),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildRow(String label, String value, TextStyle style) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(children: [Text("Room Details")]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Checkin data & time")]),
-              Column(children: [Text("23 july 2019,10:00 AM ")]),
-            ],
-          ),
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Checkout data & time")]),
-              Column(children: [Text("25 july 2019,10:00 AM ")]),
-            ],
-          ),
-
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("No. of Adults")]),
-              Column(children: [Text("2")]),
-            ],
-          ),
-
-
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("No. of children")]),
-              Column(children: [Text("2")]),
-            ],
-          ),
-
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("No.of room")]),
-              Column(children: [Text("1")]),
-            ],
-          ),
-
-
-           Divider(),
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Price")]),
-              Column(children: [Text("'\$125'")]),
-            ],
-          ),
-
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Tax")]),
-              Column(children: [Text("'\$20'")]),
-            ],
-          ),
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Total")]),
-              Column(children: [Text("'\$145'")]),
-            ],
-          ),
-          
-          Divider(),
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Food details")]),
-            
-            ],
-          ),
-
-
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Bagels with turkey and bacon")]),
-              Column(children: [Text("'\$10'")]),
-            ],
-          ),
-
-
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Sandwich")]),
-              Column(children: [Text("'\$5'")]),
-            ],
-          ),
-          
-          Divider(),
-
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Sub total")]),
-              Column(children: [Text("'\$15'")]),
-            ],
-          ),
-
-          Divider(),
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Service tax")]),
-              Column(children: [Text("'\$2'")]),
-            ],
-          ),
-
-
-          Divider(),
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [Text("Total")]),
-              Column(children: [Text("'\$17'")]),
-            ],
-          ),
-
-
-            Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-             ElevatedButton(onPressed: (){}, child: Text("Book again"))
-            ],
-          ),
-
-         
-
-          
+          Expanded(child: Text(label, style: style)),
+          Text(value, style: style),
         ],
       ),
     );
