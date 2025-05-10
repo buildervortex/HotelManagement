@@ -1,14 +1,8 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hotelmangement/features/auth/auth.dart';
 import 'package:hotelmangement/features/auth/login.dart';
-
-void main() {
-  runApp(MaterialApp(
-    home: RegisterScreen(),
-  ));
-}
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -29,26 +23,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _registerUser() async {
+    setState(() => _isLoading = true);
+    final supabase = Supabase.instance.client;
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    final role = selectedValue;
+
+    try {
+      // Register with Supabase Auth
+      final response = await supabase.auth.signUp(
+        email: email,
+        password: password,
+      );
+      final user = response.user;
+      if (user == null) throw Exception("Registration failed. Try again!");
+
+      // Insert into profiles table
+      await supabase.from('profiles').insert({
+        'id': user.id,
+        'first_name': firstName,
+        'last_name': lastName,
+        'role': role,
+      });
+
+      // Navigate to Login screen
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration successful! Please login.')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+      }
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration failed: $e')),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      // AppBar
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 88, 3, 4),
         leading: BackButton(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white,
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => AuthScreen()), // Navigate to MainScreen
+              MaterialPageRoute(builder: (context) => AuthScreen()),
             );
           },
         ),
       ),
 
-      // Body
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -60,10 +113,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     "Welcome! Create your new account",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Color.fromARGB(255, 88, 3, 4) ),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 88, 3, 4)),
                   ),
                 ),
-
                 SizedBox(height: 30),
 
                 // First Name
@@ -118,7 +170,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
 
-
                 // Select Role
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -146,24 +197,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: OutlinedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
-                        );
-                      }
-                    },
+                    onPressed: _isLoading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              _registerUser();
+                            }
+                          },
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 88, 3, 4),
                       side: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
                       elevation: 4,
                       minimumSize: Size(500, 50),
                     ),
-                    child: Text(
-                      "Create Account",
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            "Create Account",
+                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
                   ),
                 ),
 
@@ -173,19 +225,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   children: [
                     Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
-                    Text(" OR " ,style: TextStyle(
-                color: Color.fromARGB(255, 88, 3, 4))),
+                    Text(" OR ", style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
                     Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
                   ],
                 ),
 
                 SizedBox(height: 10),
 
-                // Sign Up with Google Button
+                // Sign Up with Google Button (not implemented)
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Google sign up not implemented')),
+                      );
+                    },
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white,
                       side: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
@@ -209,18 +264,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         TextSpan(
                           text: "Login here",
-                          style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 88, 3, 4), decoration: TextDecoration.underline),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 88, 3, 4),
+                            decoration: TextDecoration.underline,
+                          ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginScreen()),
+                              );
                             },
                         ),
                       ],
                     ),
                   ),
                 ),
-
-                
               ],
             ),
           ),
@@ -242,7 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
-        style: TextStyle(fontSize: 18, height: 0),
+        style: TextStyle(fontSize: 18, height: 1.2),
         decoration: _inputDecoration(hintText),
         validator: validator,
       ),
@@ -261,11 +321,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
       ),
-      errorBorder: OutlineInputBorder( // Keeps the original style
+      errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 1.5),
       ),
-      focusedErrorBorder: OutlineInputBorder( // Keeps the original style
+      focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
       ),

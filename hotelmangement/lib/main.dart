@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
+import 'package:hotelmangement/features/auth/auth.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  AuthScreen(),
     );
   }
 }
