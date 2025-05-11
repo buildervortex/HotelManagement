@@ -75,7 +75,41 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                 },
               ),
             ),
-           
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Hotel Name & Rating
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.hotelItem.name,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.star,
+                              color: Color.fromARGB(255, 236, 213, 7),
+                              size: 18),
+                          const SizedBox(width: 5),
+                          Text(
+                            widget.hotelItem.rating.toString(),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  
+          ],
+        ),
       ),
     );
   }
