@@ -229,7 +229,51 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
           ],
         ),
       ),
-    
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 147, 113, 113),
+          border: Border(
+            top: BorderSide(color: Colors.grey.shade300),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Price",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "Rs: ${widget.hotelItem.price}",
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.brown,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+              ),
+              child: const Text(
+                "Book Now",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
