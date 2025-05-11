@@ -107,8 +107,66 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
+                  // Location
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on,
+                          color: Colors.blueGrey, size: 18),
+                      const SizedBox(width: 5),
+                      Text(
+                        widget.hotelItem.location,
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  // Mobile
+                  Row(
+                    children: [
+                      const Icon(Icons.phone, color: Colors.blueGrey, size: 18),
+                      const SizedBox(width: 5),
+                      Text(
+                        widget.hotelItem.Mobile.toString(),
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  // Toggle Buttons
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: ToggleButtons(
+                      borderRadius: BorderRadius.circular(25),
+                      borderColor: Colors.brown,
+                      selectedBorderColor: Colors.brown,
+                      fillColor: Colors.brown,
+                      selectedColor: Colors.white,
+                      color: Colors.black,
+                      constraints:
+                          const BoxConstraints(minWidth: 110, minHeight: 40),
+                      isSelected: List.generate(
+                          labels.length, (index) => index == _selectedIndex),
+                      onPressed: (index) {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
+                      children: labels
+                          .map((label) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(label),
+                              ))
+                          .toList(),
+                    ),
+                  ),
                   
-          ],
         ),
       ),
     );
