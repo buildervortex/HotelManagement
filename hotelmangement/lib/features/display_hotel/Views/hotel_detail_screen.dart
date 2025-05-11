@@ -166,8 +166,70 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
                           .toList(),
                     ),
                   ),
-                  
+                  const SizedBox(height: 15),
+                  // Common Facilities
+                  const Text(
+                    "Common Facilities",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: widget.hotelItem.Facilities.map((facility) {
+                        return Container(
+                          margin: const EdgeInsets.only(right: 10, top: 10),
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.brown),
+                          ),
+                          child: Center(
+                            child: Text(
+                              facility,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  // Description
+                  const Text(
+                    "Description",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    widget.hotelItem.description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black38,
+                      letterSpacing: -.5,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
         ),
+      ),
+    
       ),
     );
   }
