@@ -92,6 +92,48 @@ class _SearchHotelState extends State<SearchHotel> {
 
             SizedBox(height: 20),
 
+            // Hotel Category Selection
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: hotelcategory.map((category) {
+                    bool isSelected = selectedCategory == category.name;
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = category.name;
+                        });
+                        _filterHotels();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          decoration: BoxDecoration(
+                            color: isSelected ? Colors.brown : Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.black12),
+                          ),
+                          child: Text(
+                            category.name,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black87,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+
+       
+
+          
             )
           ],
         ),
