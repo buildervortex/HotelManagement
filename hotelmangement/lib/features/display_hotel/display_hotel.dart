@@ -131,9 +131,42 @@ class _SearchHotelState extends State<SearchHotel> {
               ),
             ),
 
-       
+            SizedBox(height: 10),
 
-          
+            // Hotel List with "No hotels found" message
+            Expanded(
+              child: filteredHotels.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No hotels found",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredHotels.length,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      itemBuilder: (context, index) {
+                        final hotelItems = filteredHotels[index];
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => HotelDetailScreen(hotelItem: hotelItems),
+                                ),
+                              );
+                            },
+                            child: HotelCard(hotelItems: hotelItems, size: size),
+                          ),
+                        );
+                      },
+                    ),
             )
           ],
         ),
