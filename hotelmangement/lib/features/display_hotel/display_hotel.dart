@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_management/Model/hotel_category_model.dart';
-import 'package:hotel_management/Model/hotel_model.dart';
-import 'package:hotel_management/Views/Widgects/hotel_card.dart';
-import 'package:hotel_management/Views/hotel_detail_screen.dart';
+import 'package:hotelmangement/features/display_hotel/Model/hotel_category_model.dart';
+import 'package:hotelmangement/features/display_hotel/Model/hotel_model.dart';
+import 'package:hotelmangement/features/display_hotel/Views/Widgects/hotel_card.dart';
+import 'package:hotelmangement/features/display_hotel/Views/hotel_detail_screen.dart';
 
 void main() {
   runApp(MaterialApp(

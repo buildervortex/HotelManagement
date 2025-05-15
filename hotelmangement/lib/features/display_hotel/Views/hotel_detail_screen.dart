@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_management/Model/hotel_model.dart';
+import 'package:hotelmangement/features/display_hotel/Model/hotel_model.dart';
 
 class HotelDetailScreen extends StatefulWidget {
   final HotelModel hotelItem;
