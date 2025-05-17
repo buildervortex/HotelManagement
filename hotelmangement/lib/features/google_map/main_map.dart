@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_map/google_map.dart';
+import 'package:google_map/google_map_polygon.dart';
+import 'package:google_map/google_map_polyline.dart';
 
 void main() {
   runApp(const MyApp());
