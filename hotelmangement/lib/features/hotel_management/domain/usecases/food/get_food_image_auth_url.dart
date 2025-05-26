@@ -10,7 +10,7 @@ class GetFoodImageAuthUrl extends Usecase<String, Params> {
   GetFoodImageAuthUrl({required this.repository});
   @override
   Future<Either<Failure, String>> call(Params params) async {
-    return await repository.getFileAuthUrl(params.imagePath, "foodImage");
+    return await repository.getFileAuthUrl(params.imagePath, "foodimage");
   }
 }
 
