@@ -12,19 +12,17 @@ class ManagerSignUp extends Usecase<Manager, Params> {
 
   @override
   Future<Either<Failure, Manager>> call(Params params) async {
-    return repository.updateManager(
-        params.role, params.username, params.phoneNumber);
+    return repository.addManager(params.id);
   }
 }
 
 class Params extends Equatable {
-  final String username;
-  final String phoneNumber;
-  final String role;
+  final String id;
 
-  const Params(
-      {required this.username, required this.phoneNumber, required this.role});
+  const Params({
+    required this.id,
+  });
 
   @override
-  List<Object?> get props => [username, phoneNumber, role];
+  List<Object?> get props => [id];
 }

@@ -41,21 +41,13 @@ class MockManagerRepository extends _i1.Mock implements _i3.ManagerRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Manager>> updateManager(
-    String? role,
-    String? username,
-    String? phoneNumber,
-  ) =>
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Manager>> addManager(String? id) =>
       (super.noSuchMethod(
-            Invocation.method(#updateManager, [role, username, phoneNumber]),
+            Invocation.method(#addManager, [id]),
             returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Manager>>.value(
               _FakeEither_0<_i5.Failure, _i6.Manager>(
                 this,
-                Invocation.method(#updateManager, [
-                  role,
-                  username,
-                  phoneNumber,
-                ]),
+                Invocation.method(#addManager, [id]),
               ),
             ),
           )

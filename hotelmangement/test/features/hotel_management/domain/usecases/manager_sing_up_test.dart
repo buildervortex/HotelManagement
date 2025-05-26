@@ -12,7 +12,7 @@ import 'manager_sing_up_test.mocks.dart';
 @GenerateMocks([ManagerRepository])
 void main() {
   late ManagerSignUp usecase;
-  late MockManagerRepository mockManagerRepository;
+  late ManagerRepository mockManagerRepository;
 
   setUp(() {
     mockManagerRepository = MockManagerRepository();
@@ -23,28 +23,25 @@ void main() {
       "should update manager details and return the updated manager when the repository call is successful",
       () async {
     // arrange
-    final String role = "user";
+    final String id = "1";
     final String username = "testUser";
     final String phoneNumber = "testPhoneNumber";
 
     final Manager manager = Manager(
-        id: "1",
+        id: id,
         username: username,
         phoneNumber: phoneNumber,
-        email: "testEmail@test.com",
-        role: role);
+        email: "testEmail@test.com");
 
-    when(mockManagerRepository.updateManager(role, username, phoneNumber))
+    when(mockManagerRepository.addManager(id))
         .thenAnswer((_) async => Right(manager));
 
     // act
-    final result = await usecase(
-        Params(username: username, phoneNumber: phoneNumber, role: role));
+    final result = await usecase(Params(id: id));
 
     //assert
     expect(Right(manager), result);
-    verify(mockManagerRepository.updateManager(role, username, phoneNumber))
-        .called(1);
+    verify(mockManagerRepository.addManager(id)).called(1);
     verifyNoMoreInteractions(mockManagerRepository);
   });
 }
