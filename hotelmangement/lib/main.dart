@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
-
+import 'package:hotelmangement/features/booking/room_booking.dart';
+import 'package:hotelmangement/features/booking/table_booking.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -20,11 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ChatListScreen(),
+      home: RoomBookingPage(),
     );
   }
 }
