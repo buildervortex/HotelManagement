@@ -4,11 +4,6 @@ import 'package:hotelmangement/features/display_hotel/Model/hotel_model.dart';
 import 'package:hotelmangement/features/display_hotel/Views/Widgects/hotel_card.dart';
 import 'package:hotelmangement/features/display_hotel/Views/hotel_detail_screen.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: SearchHotel(),
-  ));
-}
 
 class SearchHotel extends StatefulWidget {
   const SearchHotel({super.key});

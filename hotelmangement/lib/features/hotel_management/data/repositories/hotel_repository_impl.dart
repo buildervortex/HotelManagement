@@ -39,9 +39,15 @@ class HotelRepositoryImpl implements HotelRepository {
 
   @override
   Future<Either<Failure, HotelPhoneNumber>> addHotelPhoneNumber(
-      String hotelId, String phoneNumber, String role) {
-    // TODO: implement addHotelPhoneNumber
-    throw UnimplementedError();
+      String hotelId, String phoneNumber, String role) async {
+    try {
+      final hotelPhoneNumber =
+          await dataSource.addHotelPhoneNumber(hotelId, phoneNumber, role);
+      return Right(hotelPhoneNumber);
+    } catch (e) {
+      print("Error adding hotel phone number: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override

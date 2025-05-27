@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
+<<<<<<< HEAD
 import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/booking/table_booking.dart';
+=======
+import 'package:hotelmangement/features/google_map/google_map.dart';
+import 'package:hotelmangement/features/google_map/google_map_polygon.dart';
+// import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
+import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
+// import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
+import 'package:hotelmangement/features/auth/login.dart';
+import "package:hotelmangement/features/booking_history/booking_history.dart";
+
+import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_management_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+>>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
 
 void main() async {
   // ensure the flutter is initialized
@@ -10,6 +26,9 @@ void main() async {
 
   // initialize the project
   await initializeProject();
+
+  // testing porpose only
+  // await testCall();
 
   runApp(const MyApp());
 }
@@ -26,7 +45,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+<<<<<<< HEAD
       home: RoomBookingPage(),
+=======
+      home: History(),
+>>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
     );
   }
 }
@@ -77,4 +100,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+Future<void> testCall() async {
+  final hotelId = "550e8400-e29b-41d4-a716-446655440001";
+  final managerId = "e8b2c4e6-353a-450d-ab3a-08a0676fd773";
+
+  final fileRepo = FileDataSourceImpl(client: Supabase.instance.client);
+  final hotelDataSource =
+      HotelManagementDataSourceImpl(client: Supabase.instance.client);
+
+  final repo = HotelRepositoryImpl(
+      dataSource: hotelDataSource, fileDataSource: fileRepo);
+
+  await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
 }
