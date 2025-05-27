@@ -88,9 +88,15 @@ class HotelRepositoryImpl implements HotelRepository {
   }
 
   @override
-  Future<Either<Failure, int>> deleteHotelPhoneNumber(String phoneNumberId) {
-    // TODO: implement deleteHotelPhoneNumber
-    throw UnimplementedError();
+  Future<Either<Failure, int>> deleteHotelPhoneNumber(
+      String phoneNumberId) async {
+    try {
+      await dataSource.deleteHotelPhoneNumber(phoneNumberId);
+      return const Right(1);
+    } catch (e) {
+      print("Error deleting hotel phone number: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override

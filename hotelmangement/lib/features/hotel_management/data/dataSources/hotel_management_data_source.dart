@@ -15,6 +15,7 @@ abstract class HotelManagementDataSource {
 
   Future<void> deleteHotel(String hotelId);
   Future<HotelImageModel> deleteHotelImage(String hotelImageId);
+  Future<void> deleteHotelPhoneNumber(String phoneNumberId);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -91,6 +92,15 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
     }
   }
 
-  // @override
-  // Future<
+  @override
+  Future<void> deleteHotelPhoneNumber(String phoneNumberId) async {
+    final response = await client
+        .from("hotel_phone_number")
+        .delete()
+        .eq("id", phoneNumberId);
+
+    if (response != null) {
+      throw Exception("Failed to delete hotel: ${response.toString()}");
+    }
+  }
 }

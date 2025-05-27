@@ -51,6 +51,7 @@ Future<void> testCall() async {
   // await repo.createHotel("hotel1", "hoteladdress", 25.5, 12.5, managerId);
   // final hotelId1 = "5d2cf06c-ea08-48af-886e-0f798bb5b6ee";
   // await repo.deleteHotel(hotelId1);
-  await repo.deleteHotelImage("572da875-1025-44ac-be16-2ddc42aca36c");
+  // await repo.deleteHotelImage("572da875-1025-44ac-be16-2ddc42aca36c");
+  // await repo.deleteHotelPhoneNumber("998f39a5-a20e-4ddd-a2b3-d88608894547");
   await Future.delayed(const Duration(seconds: 4));
 }
