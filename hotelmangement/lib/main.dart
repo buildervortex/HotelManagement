@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
-<<<<<<< HEAD
 import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/booking/table_booking.dart';
-=======
 import 'package:hotelmangement/features/google_map/google_map.dart';
 import 'package:hotelmangement/features/google_map/google_map_polygon.dart';
 // import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
@@ -18,7 +16,6 @@ import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
->>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
 
 void main() async {
   // ensure the flutter is initialized
@@ -45,11 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
       home: RoomBookingPage(),
-=======
-      home: History(),
->>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
     );
   }
 }
