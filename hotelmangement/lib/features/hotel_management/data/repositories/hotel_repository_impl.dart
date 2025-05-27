@@ -141,9 +141,20 @@ class HotelRepositoryImpl implements HotelRepository {
   }
 
   @override
-  Future<Either<Failure, Hotel>> updateHotel(String hotelId, String? name,
-      String? address, double? longitude, double? latitude, String? mainImage) {
-    // TODO: implement updateHotel
-    throw UnimplementedError();
+  Future<Either<Failure, Hotel>> updateHotel(
+      String hotelId,
+      String? name,
+      String? address,
+      double? longitude,
+      double? latitude,
+      String? mainImage) async {
+    try {
+      final hotel = await dataSource.updateHotel(
+          hotelId, name, address, longitude, latitude, mainImage);
+      return Right(hotel);
+    } catch (e) {
+      print("Error adding hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 }

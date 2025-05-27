@@ -20,6 +20,8 @@ abstract class HotelManagementDataSource {
   Future<List<HotelImageModel>> getHotelImages(String hotelId);
   Future<List<HotelPhoneNumberModel>> getHotelPhoneNumbers(String hotelId);
   Future<bool> isImageExists(String imageId, String hotelId);
+  Future<HotelModel> updateHotel(String hotelId, String? name, String? address,
+      double? longitude, double? latitude, String? mainImage);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -168,6 +170,29 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
     } catch (e) {
       print("Error checking if image exists: $e");
       return false;
+    }
+  }
+
+  @override
+  Future<HotelModel> updateHotel(String hotelId, String? name, String? address,
+      double? longitude, double? latitude, String? mainImage) async {
+    final Map<String, dynamic> updates = {};
+    if (name != null) updates["name"] = name;
+    if (address != null) updates["address"] = address;
+    if (longitude != null) updates["longitude"] = longitude;
+    if (latitude != null) updates["latitude"] = latitude;
+    if (mainImage != null) updates["mainimage"] = mainImage;
+    if (updates.isEmpty) {
+      throw Exception("No fields to update");
+    }
+
+    final response =
+        await client.from("hotel").update(updates).eq("id", hotelId).select();
+    if (response.isEmpty) {
+      throw Exception("Failed to create hotel");
+    } else {
+      final data = response.first;
+      return HotelModel.fromJson(data);
     }
   }
 }

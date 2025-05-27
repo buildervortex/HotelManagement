@@ -58,5 +58,7 @@ Future<void> testCall() async {
   // print(await repo.getHotelPhoneNumbers(hotelId));
   // print(await repo.isImageExists(
   //     "45b5f312-bd6e-4c32-bf22-4be676521e94", hotelId));
+  // print(await repo.updateHotel("422abcee-b131-402f-8bc9-20c97d5e6970",
+  //     "updatedhotel", "hoteladdress2", null, null, "newmainimage.png"));
   await Future.delayed(const Duration(seconds: 4));
 }
