@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
-import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
+import 'package:hotelmangement/features/auth/login.dart';
 
 
 void main() async {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ChatListScreen(),
+      home: LoginScreen(),
     );
   }
 }
