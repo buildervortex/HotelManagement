@@ -19,6 +19,7 @@ abstract class HotelManagementDataSource {
   Future<HotelModel> getHotel(String hotelId);
   Future<List<HotelImageModel>> getHotelImages(String hotelId);
   Future<List<HotelPhoneNumberModel>> getHotelPhoneNumbers(String hotelId);
+  Future<bool> isImageExists(String imageId, String hotelId);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -148,6 +149,25 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
           .map<HotelPhoneNumberModel>(
               (data) => HotelPhoneNumberModel.fromJson(data))
           .toList();
+    }
+  }
+
+  @override
+  Future<bool> isImageExists(String imageId, String hotelId) async {
+    try {
+      final response = await client
+          .from("hotel_image")
+          .select()
+          .eq("id", imageId)
+          .eq("hotel_id", hotelId)
+          .single();
+      if (response.isEmpty) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print("Error checking if image exists: $e");
+      return false;
     }
   }
 }
