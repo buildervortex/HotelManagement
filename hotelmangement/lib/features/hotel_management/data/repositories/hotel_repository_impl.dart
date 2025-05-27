@@ -124,9 +124,14 @@ class HotelRepositoryImpl implements HotelRepository {
 
   @override
   Future<Either<Failure, List<HotelPhoneNumber>>> getHotelPhoneNumbers(
-      String hotelId) {
-    // TODO: implement getHotelPhoneNumbers
-    throw UnimplementedError();
+      String hotelId) async {
+    try {
+      final hotelPhoneNumbers = await dataSource.getHotelPhoneNumbers(hotelId);
+      return Right(hotelPhoneNumbers);
+    } catch (e) {
+      print("Error getting hotel phone numbers: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
