@@ -97,6 +97,8 @@ flutter:
     - assets/booking_history/room3.jpg
     - assets/booking_history/room4.jpg
     # - images/a_dot_ham.jpeg
+    # - image/home_page
+    - assets/home_page_pic/hotel_background.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
