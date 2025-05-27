@@ -97,18 +97,12 @@ flutter:
     - assets/booking_history/room3.jpg
     - assets/booking_history/room4.jpg
     # - images/a_dot_ham.jpeg
-<<<<<<< HEAD
     # - image/home_page
     - assets/home_page_pic/hotel_background.jpg
-=======
-<<<<<<< HEAD
     - assets/booking/room1.jpg
     - assets/booking/room2.jpg
     - assets/booking/room3.jpg
-=======
     - assets/hotels/
->>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
->>>>>>> d493832a82b24cf34aa1cbb8ad2898809ac5327d
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

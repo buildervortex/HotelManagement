@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
-<<<<<<< HEAD
-import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/home_page_main.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/view_ratings_main.dart';
-=======
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/booking/table_booking.dart';
 import 'package:hotelmangement/features/google_map/google_map.dart';
@@ -21,7 +18,6 @@ import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
->>>>>>> d493832a82b24cf34aa1cbb8ad2898809ac5327d
 
 void main() async {
   // ensure the flutter is initialized
@@ -48,11 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
       home: RatingApp(),
-=======
-      home: RoomBookingPage(),
->>>>>>> d493832a82b24cf34aa1cbb8ad2898809ac5327d
     );
   }
 }
