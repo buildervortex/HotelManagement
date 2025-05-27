@@ -17,7 +17,7 @@ import 'package:hotelmangement/features/hotel_management/data/repositories/hotel
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> initTest() async {
-  bool isTest = true;
+  bool isTest = false;
   if (!isTest) {
     return;
   }
