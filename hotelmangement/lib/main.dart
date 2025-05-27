@@ -13,7 +13,7 @@ void main() async {
   // testing porpose only
   await initTest();
 
-  runApp(const MyApp());
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

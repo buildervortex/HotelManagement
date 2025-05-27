@@ -80,8 +80,8 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
   Future<void> deleteHotelImage(String hotelImageId) async {
     final response =
         await client.from("hotel_image").delete().eq("id", hotelImageId);
-    if (response.error != null) {
-      throw Exception("Failed to delete hotel image: ${response.toString()}");
-    }
   }
+
+  // @override
+  // Future<
 }
