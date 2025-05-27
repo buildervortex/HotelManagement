@@ -52,21 +52,37 @@ class HotelRepositoryImpl implements HotelRepository {
 
   @override
   Future<Either<Failure, Hotel>> createHotel(String name, String address,
-      double longitude, double latitude, String managerId) {
-    // TODO: implement createHotel
-    throw UnimplementedError();
+      double longitude, double latitude, String managerId) async {
+    try {
+      final hotel = await dataSource.createHotel(
+          name, address, longitude, latitude, managerId);
+      return Right(hotel);
+    } catch (e) {
+      print("Error adding hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, void>> deleteHotel(String hotelId) {
-    // TODO: implement deleteHotel
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteHotel(String hotelId) async {
+    try {
+      await dataSource.deleteHotel(hotelId);
+      return const Right(null);
+    } catch (e) {
+      print("Error deleting hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, int>> deleteHotelImage(String imageId) {
-    // TODO: implement deleteHotelImage
-    throw UnimplementedError();
+  Future<Either<Failure, int>> deleteHotelImage(String imageId) async {
+    try {
+      await dataSource.deleteHotelImage(imageId);
+      return const Right(1);
+    } catch (e) {
+      print("Error deleting hotel image: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
