@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -68,7 +67,7 @@ dev_dependencies:
   build_runner: ^2.4.15
   mockito: ^5.4.5
 
-dependency_overrides: 
+dependency_overrides:
   analyzer: ^6.2.0
 
 # For information on the generic Dart part of this file, see the
@@ -92,13 +91,24 @@ flutter:
     - assets/booking_history/hotel2.jpg
     - assets/booking_history/hotel3.jpg
     - assets/booking_history/hotel4.jpg
+    - assets/booking_history/hotel5.jpg
     - assets/booking_history/room1.jpg
     - assets/booking_history/room2.jpg
     - assets/booking_history/room3.jpg
     - assets/booking_history/room4.jpg
     # - images/a_dot_ham.jpeg
+<<<<<<< HEAD
     # - image/home_page
     - assets/home_page_pic/hotel_background.jpg
+=======
+<<<<<<< HEAD
+    - assets/booking/room1.jpg
+    - assets/booking/room2.jpg
+    - assets/booking/room3.jpg
+=======
+    - assets/hotels/
+>>>>>>> cf36b8b60cdc90cdb0685cdf7eda2aeed47f48b9
+>>>>>>> d493832a82b24cf34aa1cbb8ad2898809ac5327d
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

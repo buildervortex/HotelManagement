@@ -8,6 +8,7 @@ class Hotel extends Equatable {
   final double longitude;
   final double latitude;
   final String? mainImage;
+  final DateTime? createdAt;
 
   const Hotel({
     required this.id,
@@ -16,10 +17,11 @@ class Hotel extends Equatable {
     required this.address,
     required this.latitude,
     required this.longitude,
+    required this.createdAt,
     this.mainImage,
   });
 
   @override
   List<Object?> get props =>
-      [id, managerId, name, address, longitude, latitude, mainImage];
+      [id, managerId, name, address, longitude, latitude, mainImage, createdAt];
 }
