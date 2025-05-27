@@ -20,7 +20,7 @@ Future<void> initializeProject() async {
   }
 
   // initialize the superbase
-  Supabase.initialize(
+  await Supabase.initialize(
     url: dotenv.env["SUPABASE_URL"]!,
     anonKey: dotenv.env["SUPABASE_API_TOKEN"]!,
   );
