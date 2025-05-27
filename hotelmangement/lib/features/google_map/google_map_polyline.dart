@@ -62,3 +62,4 @@ class _GoogleMapPolylineState extends State<GoogleMapPolyline> {
     );
   }
 }
+
