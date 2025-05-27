@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
-import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/booking/table_booking.dart';
 import 'package:hotelmangement/features/google_map/google_map.dart';
