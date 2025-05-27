@@ -53,6 +53,7 @@ dependencies:
   custom_info_window: ^1.0.1
   mime: ^2.0.0
   path: ^1.9.0
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:

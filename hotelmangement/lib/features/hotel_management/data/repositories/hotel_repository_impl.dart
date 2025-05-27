@@ -2,25 +2,39 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
+import 'package:hotelmangement/core/fileUtils.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_management_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_phone_number.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_repository.dart';
-import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
 class HotelRepositoryImpl implements HotelRepository {
+  final HotelManagementDataSource dataSource;
+  final FileDataSource fileDataSource;
+
+  HotelRepositoryImpl({required this.dataSource, required this.fileDataSource});
+
   @override
   Future<Either<Failure, HotelImage>> addHotelImage(
-      String hotelId, String localImagePath, String remoteImageSaveName) {
+      String hotelId, String localImagePath) async {
     // create file object
     File file = File(localImagePath);
 
-    // get file base name
-    String fileBasName = basename(localImagePath);
+    // get renamed file name
+    String uploadFileName = Fileutils.uuidRenamedFile(basename(localImagePath));
 
-    // get content MIME type
-    String contentType = lookupMimeType(fileBasName) ?? 'image/jpeg';
+    try {
+      await fileDataSource.uploadFile(file, uploadFileName, "hotelimage");
+      final hotelImage =
+          await dataSource.addHotelImage(uploadFileName, hotelId);
+      return Right(hotelImage);
+    } catch (e) {
+      print("Error adding hotel image: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override

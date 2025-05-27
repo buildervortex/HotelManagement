@@ -30,7 +30,6 @@ abstract class HotelRepository {
   Future<Either<Failure, HotelImage>> addHotelImage(
     String hotelId,
     String localImagePath,
-    String remoteImageSaveName,
   );
 
   Future<bool> isImageExists(String imageId, String hotelId);
