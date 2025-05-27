@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/home_page_main.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/view_ratings_main.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
@@ -16,12 +17,21 @@ import 'package:hotelmangement/features/hotel_management/data/repositories/file_
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<void> initTest() async {
-  bool isTest = false;
-  if (!isTest) {
-    return;
+Future<int> initTest() async {
+  await dotenv.load(fileName: "assets/.env");
+
+  final test = dotenv.env["TESTING"];
+
+  if (test == null) {
+    return 0;
   }
-  await testCall();
+
+  if (test == "true") {
+    await testCall();
+    return 1; // Not in test mode
+  }
+
+  return 0;
 }
 
 Future<void> testCall() async {
