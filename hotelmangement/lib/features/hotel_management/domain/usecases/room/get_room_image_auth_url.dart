@@ -11,7 +11,7 @@ class GetRoomImageAuthUrl extends Usecase<String, Params> {
 
   @override
   Future<Either<Failure, String>> call(Params params) async {
-    return await repository.getFileAuthUrl(params.imagePath, "roomImage");
+    return await repository.getFileAuthUrl(params.imagePath, "roomimage");
   }
 }
 
