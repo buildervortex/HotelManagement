@@ -17,6 +17,7 @@ abstract class HotelManagementDataSource {
   Future<HotelImageModel> deleteHotelImage(String hotelImageId);
   Future<void> deleteHotelPhoneNumber(String phoneNumberId);
   Future<HotelModel> getHotel(String hotelId);
+  Future<List<HotelImageModel>> getHotelImages(String hotelId);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -114,6 +115,20 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
       throw Exception("Hotel not found");
     } else {
       return HotelModel.fromJson(response);
+    }
+  }
+
+  @override
+  Future<List<HotelImageModel>> getHotelImages(String hotelId) async {
+    final response =
+        await client.from("hotel_image").select().eq("hotel_id", hotelId);
+
+    if (response.isEmpty) {
+      throw Exception("Hotel not found");
+    } else {
+      return response
+          .map<HotelImageModel>((data) => HotelImageModel.fromJson(data))
+          .toList();
     }
   }
 }
