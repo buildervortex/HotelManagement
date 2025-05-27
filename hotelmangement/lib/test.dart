@@ -37,7 +37,7 @@ Future<void> testCall() async {
 
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
 
-  await repo.createHotel("hotel1", "hoteladdress", 25.5, 12.5, managerId);
-  final hotelId1 = "06c25869-2af2-46e4-916b-800e6f00e419";
-  await repo.deleteHotel(hotelId1);
+  // await repo.createHotel("hotel1", "hoteladdress", 25.5, 12.5, managerId);
+  // final hotelId1 = "06c25869-2af2-46e4-916b-800e6f00e419";
+  // await repo.deleteHotel(hotelId1);
 }
