@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
-import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
-
+import 'package:hotelmangement/features/google_map/google_map.dart';
+import 'package:hotelmangement/features/google_map/google_map_polygon.dart';
+// import 'package:hotelmangement/features/live_chat/screens/chat_list_screen.dart';
+import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
+// import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ChatListScreen(),
+      home: SearchHotel(),
     );
   }
 }
