@@ -14,7 +14,7 @@ abstract class HotelManagementDataSource {
       double latitude, String managerId);
 
   Future<void> deleteHotel(String hotelId);
-  Future<void> deleteHotelImage(String hotelImageId);
+  Future<HotelImageModel> deleteHotelImage(String hotelImageId);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -77,9 +77,18 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
   }
 
   @override
-  Future<void> deleteHotelImage(String hotelImageId) async {
-    final response =
-        await client.from("hotel_image").delete().eq("id", hotelImageId);
+  Future<HotelImageModel> deleteHotelImage(String hotelImageId) async {
+    final response = await client
+        .from("hotel_image")
+        .delete()
+        .eq("id", hotelImageId)
+        .select();
+    if (response.isEmpty) {
+      throw Exception("Failed to delete hotel image");
+    } else {
+      final data = response.first;
+      return HotelImageModel.fromJson(data);
+    }
   }
 
   // @override

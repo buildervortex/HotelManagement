@@ -45,9 +45,13 @@ Future<void> testCall() async {
   final repo = HotelRepositoryImpl(
       dataSource: hotelDataSource, fileDataSource: fileRepo);
 
+  // await repo.addHotelImage(
+  //     hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
 
   // await repo.createHotel("hotel1", "hoteladdress", 25.5, 12.5, managerId);
-  // final hotelId1 = "06c25869-2af2-46e4-916b-800e6f00e419";
+  // final hotelId1 = "5d2cf06c-ea08-48af-886e-0f798bb5b6ee";
   // await repo.deleteHotel(hotelId1);
+  await repo.deleteHotelImage("f30763c7-3f45-432d-815b-8fddedb2789f");
+  await Future.delayed(const Duration(seconds: 4));
 }

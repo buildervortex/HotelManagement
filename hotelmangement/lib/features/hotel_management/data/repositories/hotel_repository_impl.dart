@@ -77,7 +77,9 @@ class HotelRepositoryImpl implements HotelRepository {
   @override
   Future<Either<Failure, int>> deleteHotelImage(String imageId) async {
     try {
-      await dataSource.deleteHotelImage(imageId);
+      final deletedHotelImage = await dataSource.deleteHotelImage(imageId);
+      await fileDataSource.deleteFile(
+          "hotelimage", deletedHotelImage.imagePath);
       return const Right(1);
     } catch (e) {
       print("Error deleting hotel image: $e");
