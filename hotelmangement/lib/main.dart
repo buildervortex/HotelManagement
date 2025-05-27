@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/auth/login.dart';
+import "package:hotelmangement/features/booking_history/booking_history.dart";
 
 
 void main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: History(),
     );
   }
 }
