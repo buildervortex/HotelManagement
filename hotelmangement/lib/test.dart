@@ -53,5 +53,6 @@ Future<void> testCall() async {
   // await repo.deleteHotel(hotelId1);
   // await repo.deleteHotelImage("572da875-1025-44ac-be16-2ddc42aca36c");
   // await repo.deleteHotelPhoneNumber("998f39a5-a20e-4ddd-a2b3-d88608894547");
+  // print(await repo.getHotel(hotelId));
   await Future.delayed(const Duration(seconds: 4));
 }
