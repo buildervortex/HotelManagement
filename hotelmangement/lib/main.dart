@@ -14,11 +14,9 @@ void main() async {
 
   // testing porpose only
   final testResult = await initTest();
-  if (testResult == 1) {
-    exit(1);
+  if (testResult != 1) {
+    runApp(const MyApp());
   }
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
