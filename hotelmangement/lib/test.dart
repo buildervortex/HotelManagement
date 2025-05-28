@@ -85,7 +85,7 @@ Future<void> testCall() async {
   //     price: 100.0,
   //     available: true));
   // await rrepo.deleteRoom(
-  //     roomId: "59e83e47-714f-4ebb-b848-08d19fb0133c",
+  //     roomId: "4225588e-707d-4ebe-b4c5-e5fb10670f73",
   //     hotelId: "550e8400-e29b-41d4-a716-446655440001");
   // print("done");
   // await rrepo.deleteRoomImage("b1538c36-f2f2-4ab5-b72a-39a60901fb7d");
@@ -93,13 +93,13 @@ Future<void> testCall() async {
   // print(await rrepo.getRooms(hotelId: hotelId));
   // print(await rrepo.isImageExists(
   //     "389c8a6e-a14d-49ff-8882-c981e80a5a95", roomId));
-  print(await rrepo.updateRoom(
-      roomId: "4225588e-707d-4ebe-b4c5-e5fb10670f73",
-      hotelId: hotelId,
-      roomNumber: "102",
-      space: 50,
-      price: 120.0,
-      available: false));
+  // print(await rrepo.updateRoom(
+  //     roomId: "4225588e-707d-4ebe-b4c5-e5fb10670f73",
+  //     hotelId: hotelId,
+  //     roomNumber: "102",
+  //     space: 50,
+  //     price: 120.0,
+  //     available: false));
 
   await Future.delayed(const Duration(seconds: 4));
 }
