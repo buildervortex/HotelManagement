@@ -8,6 +8,7 @@ abstract class HotelFoodDataSource {
   Future<HotelFoodModel> createFood(
       String hotelId, String name, double price, bool available, String type);
   Future<void> deleteFood(String foodId);
+  Future<HotelFoodImageModel> deleteFoodImage(String imageId, String foodId);
 }
 
 class HotelFoodDataSourceImpl implements HotelFoodDataSource {
@@ -53,6 +54,19 @@ class HotelFoodDataSourceImpl implements HotelFoodDataSource {
     final response = await client.from("hotel_food").delete().eq("id", foodId);
     if (response != null) {
       throw Exception("Failed to delete hotel food: ${response.toString()}");
+    }
+  }
+
+  @override
+  Future<HotelFoodImageModel> deleteFoodImage(
+      String imageId, String foodId) async {
+    final response =
+        await client.from("food_image").delete().eq("id", imageId).select();
+    if (response.isEmpty) {
+      throw Exception("Failed to delete food image");
+    } else {
+      final data = response.first;
+      return HotelFoodImageModel.fromJson(data);
     }
   }
 }

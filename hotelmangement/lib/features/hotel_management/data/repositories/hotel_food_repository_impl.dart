@@ -65,9 +65,18 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteFoodImage(String imageId, String foodId) {
-    // TODO: implement deleteFoodImage
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteFoodImage(
+      String imageId, String foodId) async {
+    try {
+      final deletedHotelImage =
+          await dataSource.deleteFoodImage(imageId, foodId);
+      await fileDataSource.deleteFile(
+          "foodimages", deletedHotelImage.imagePath);
+      return const Right(1);
+    } catch (e) {
+      print("Error deleting food image: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
