@@ -118,6 +118,7 @@ Future<void> testCall() async {
   // await frepo.deleteFood(foodId: "ced4b416-aa8f-4937-b57b-ee4795ce5d62");
   // frepo.deleteFoodImage("a7ee0a31-e342-4055-9d62-44d6019908fe", "770e8400-e29b-41d4-a716-446655440001");
   // print(await frepo.getFoodImages(foodId));
-  print(await frepo.getFoods(hotelId: hotelId));
+  // print(await frepo.getFoods(hotelId: hotelId));
+  // print(await frepo.isImageExists("054e7174-c909-480a-a673-7e934cd01254", "770e8400-e29b-41d4-a716-446655440010"));
   await Future.delayed(const Duration(seconds: 4));
 }

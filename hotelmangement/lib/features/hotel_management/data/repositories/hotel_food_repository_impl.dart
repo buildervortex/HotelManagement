@@ -103,9 +103,9 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
   }
 
   @override
-  Future<bool> isImageExists(String imageId, String foodId) {
-    // TODO: implement isImageExists
-    throw UnimplementedError();
+  Future<bool> isImageExists(String imageId, String foodId) async {
+    final state = await dataSource.isImageExists(imageId, foodId);
+    return state;
   }
 
   @override
