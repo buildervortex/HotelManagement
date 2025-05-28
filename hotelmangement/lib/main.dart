@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
 import 'package:hotelmangement/test.dart';
+import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
+import 'package:hotelmangement/features/booking_history/booking_test.dart';
+
 
 void main() async {
   // ensure the flutter is initialized
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: RatingApp(),
+      home: History(),
     );
   }
 }

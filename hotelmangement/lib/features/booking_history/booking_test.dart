@@ -10,14 +10,22 @@ class BookingDetails extends StatefulWidget {
 
 class _BookingDetailsState extends State<BookingDetails> {
   final supabase = Supabase.instance.client;
+
   List<dynamic> phoneNumbers = [];
   bool isLoading = true;
   String? error;
+
+  DateTime? checkInDate;
+  DateTime? checkOutDate;
+
+  final String hotelId = '550e8400-e29b-41d4-a716-446655440001';
+  final String bookingId = '880e8400-e29b-41d4-a716-446655440002';
 
   @override
   void initState() {
     super.initState();
     fetchHotelPhoneNumbers();
+    fetchRoomBookingDetails();
   }
 
   Future<void> fetchHotelPhoneNumbers() async {
@@ -25,18 +33,47 @@ class _BookingDetailsState extends State<BookingDetails> {
       final response = await supabase
           .from('hotel_phone_number')
           .select()
-          .eq('hotel_id', '0e41e5c0-7861-47ac-812a-447efd1c0bff'); // <- replace this with actual ID
+          .eq('hotel_id', hotelId);
 
       setState(() {
         phoneNumbers = response;
-        isLoading = false;
       });
     } catch (e) {
       setState(() {
-        error = e.toString();
+        error = 'Phone fetch error: $e';
+      });
+    } finally {
+      setState(() {
         isLoading = false;
       });
     }
+  }
+
+  Future<void> fetchRoomBookingDetails() async {
+    try {
+      final response = await supabase
+          .from('room_booking')
+          .select('check_in, check_out')
+          .eq('booking_id', bookingId)
+          .limit(1)
+          .maybeSingle();
+
+      if (response != null) {
+        setState(() {
+          checkInDate = DateTime.parse(response['check_in']);
+          checkOutDate = DateTime.parse(response['check_out']);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Booking fetch error: $e';
+      });
+    }
+  }
+
+  String formatDateTime(DateTime dateTime) {
+    return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
   }
 
   @override
@@ -61,7 +98,7 @@ class _BookingDetailsState extends State<BookingDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Booking details"),
+        title: const Text("Booking Details"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -76,11 +113,23 @@ class _BookingDetailsState extends State<BookingDetails> {
           children: [
             Row(children: [Text("Room details", style: boldStyle)]),
             const SizedBox(height: 16),
-            buildRow("Checkin date & time", "23 July 2019, 10:00 AM", normalStyle),
-            buildRow("Checkout date & time", "25 July 2019, 10:00 AM", normalStyle),
+            buildRow(
+              "Checkin date & time",
+              checkInDate != null
+                  ? formatDateTime(checkInDate!)
+                  : "Loading...",
+              normalStyle,
+            ),
+            buildRow(
+              "Checkout date & time",
+              checkOutDate != null
+                  ? formatDateTime(checkOutDate!)
+                  : "Loading...",
+              normalStyle,
+            ),
             buildRow("No. of Adults", "2", normalStyle),
             buildRow("No. of Children", "2", normalStyle),
-            buildRow("No. of room", "1", normalStyle),
+            buildRow("No. of Rooms", "1", normalStyle),
             const Divider(height: 32),
             buildRow("Price", "\$125", normalStyle),
             buildRow("Tax", "\$20", normalStyle),
@@ -91,7 +140,7 @@ class _BookingDetailsState extends State<BookingDetails> {
             buildRow("Bagels with turkey and bacon", "\$10", normalStyle),
             buildRow("Sandwich", "\$5", normalStyle),
             const Divider(height: 32),
-            buildRow("Sub total", "\$15", normalStyle),
+            buildRow("Subtotal", "\$15", normalStyle),
             buildRow("Service tax", "\$2", normalStyle),
             const Divider(height: 32),
             buildRow("Total", "\$17", boldStyle),
@@ -99,22 +148,26 @@ class _BookingDetailsState extends State<BookingDetails> {
             Row(children: [Text("Phone Numbers", style: boldStyle)]),
             const SizedBox(height: 10),
             ...phoneNumbers.map((phone) => buildRow(
-                phone['role'] ?? 'Unknown Role',
-                phone['number'] ?? 'N/A',
-                normalStyle)),
+                  phone['role'] ?? 'Unknown Role',
+                  phone['number'] ?? 'N/A',
+                  normalStyle,
+                )),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Implement booking logic or redirection
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 50, 98, 243),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
                   ),
                   child: Text("Book again", style: TextStyle(fontSize: baseFontSize)),
                 )
