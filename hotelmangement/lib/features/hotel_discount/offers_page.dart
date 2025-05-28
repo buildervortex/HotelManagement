@@ -1,6 +1,7 @@
-import 'package:discount_page/discounts_screens/hotel_offers_details_page.dart';
-import 'package:discount_page/discounts_screens/visit_oceanografic_page.dart';
 import 'package:flutter/material.dart';
+
+import 'hotel_offers_details_page.dart';
+import 'visit_oceanografic_page.dart';
 
 class OffersDiscountsPage extends StatefulWidget {
   const OffersDiscountsPage({super.key});
