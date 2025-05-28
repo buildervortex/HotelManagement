@@ -15,11 +15,13 @@ import 'package:hotelmangement/features/hotel_management/data/dataSources/file_d
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_food_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_management_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_room_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_table_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/manager_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_food_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_room_repository_impl.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_table_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/manager_repository_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -55,6 +57,8 @@ Future<void> testCall() async {
       HotelRoomDataSourceImpl(client: Supabase.instance.client);
   final foodDataSource =
       HotelFoodDataSourceImpl(client: Supabase.instance.client);
+  final tableDataSource =
+      HotelTableDataSourceImpl(client: Supabase.instance.client);
 
   final repo = HotelRepositoryImpl(
       dataSource: hotelDataSource, fileDataSource: fileRepo);
@@ -63,6 +67,7 @@ Future<void> testCall() async {
       dataSource: roomDataSource, fileDataSource: fileRepo);
   final frepo = HotelFoodRepositoryImpl(
       dataSource: foodDataSource, fileDataSource: fileRepo);
+  final trepo = HotelTableRepositoryImpl(dataSource: tableDataSource);
 
   // await repo.addHotelImage(hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
@@ -125,5 +130,12 @@ Future<void> testCall() async {
   //     name: "Updated Pasta",
   //     price: 15.99,
   //     ));
+
+  // print(await trepo.createTable(
+  //     hotelId: hotelId,
+  //     tableNumber: "T1",
+  //     space: 4,
+  //     floor: "1st Floor",
+  //     available: true));
   await Future.delayed(const Duration(seconds: 4));
 }
