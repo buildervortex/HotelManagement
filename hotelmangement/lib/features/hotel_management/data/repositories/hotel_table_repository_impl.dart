@@ -39,9 +39,15 @@ class HotelTableRepositoryImpl implements HotelTableRepository {
   }
 
   @override
-  Future<Either<Failure, List<Table>>> getTables({required String hotelId}) {
-    // TODO: implement getTables
-    throw UnimplementedError();
+  Future<Either<Failure, List<Table>>> getTables(
+      {required String hotelId}) async {
+    try {
+      final hotelImages = await dataSource.getTables(hotelId);
+      return Right(hotelImages);
+    } catch (e) {
+      print("Error getting tables: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override

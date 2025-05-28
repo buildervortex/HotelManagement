@@ -6,6 +6,7 @@ abstract class HotelTableDataSource {
       int space, String floor, bool available);
 
   Future<void> deleteTable(String tableId, String hotelId);
+  Future<List<HotelTableModel>> getTables(String hotelId);
 }
 
 class HotelTableDataSourceImpl implements HotelTableDataSource {
@@ -40,6 +41,20 @@ class HotelTableDataSourceImpl implements HotelTableDataSource {
         .eq("hotel_id", hotelId);
     if (response != null) {
       throw Exception("Failed to delete table: ${response.toString()}");
+    }
+  }
+
+  @override
+  Future<List<HotelTableModel>> getTables(String hotelId) async {
+    final response =
+        await client.from("hotel_table").select().eq("hotel_id", hotelId);
+
+    if (response.isEmpty) {
+      throw Exception("Tables not found");
+    } else {
+      return response
+          .map<HotelTableModel>((data) => HotelTableModel.fromJson(data))
+          .toList();
     }
   }
 }

@@ -139,5 +139,6 @@ Future<void> testCall() async {
   //     available: true));
   // await trepo.deleteTable(
   //     tableId: "7990be0d-13c2-43ac-80a3-48bdd3a59185", hotelId: hotelId);
+  print(await trepo.getTables(hotelId: hotelId));
   await Future.delayed(const Duration(seconds: 4));
 }
