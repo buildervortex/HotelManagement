@@ -60,7 +60,7 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   Future<Either<Failure, void>> deleteRoom(
       {required String roomId, required String hotelId}) async {
     try {
-      await dataSource.deleteRoom(roomId: roomId, hotelId: hotelId);
+      await dataSource.deleteRoom(roomId, hotelId);
       return const Right(null);
     } catch (e) {
       print("Error deleting hotel room: $e");
@@ -96,7 +96,7 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   Future<Either<Failure, List<Room>>> getRooms(
       {required String hotelId}) async {
     try {
-      final hotelImages = await dataSource.getRooms(hotelId: hotelId);
+      final hotelImages = await dataSource.getRooms(hotelId);
       return Right(hotelImages);
     } catch (e) {
       print("Error getting rooms: $e");
@@ -120,8 +120,14 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
     String? floor,
     double? price,
     bool? available,
-  }) {
-    // TODO: implement updateRoom
-    throw UnimplementedError();
+  }) async {
+    try {
+      final hotel = await dataSource.updateRoom(roomId, hotelId, roomNumber,
+          description, space, floor, price, available);
+      return Right(hotel);
+    } catch (e) {
+      print("Error adding hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 }

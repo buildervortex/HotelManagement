@@ -93,6 +93,13 @@ Future<void> testCall() async {
   // print(await rrepo.getRooms(hotelId: hotelId));
   // print(await rrepo.isImageExists(
   //     "389c8a6e-a14d-49ff-8882-c981e80a5a95", roomId));
+  print(await rrepo.updateRoom(
+      roomId: "4225588e-707d-4ebe-b4c5-e5fb10670f73",
+      hotelId: hotelId,
+      roomNumber: "102",
+      space: 50,
+      price: 120.0,
+      available: false));
 
   await Future.delayed(const Duration(seconds: 4));
 }

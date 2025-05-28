@@ -12,11 +12,21 @@ abstract class HotelRoomDataSource {
       String floor,
       double price,
       bool available);
-  Future<void> deleteRoom({required String roomId, required String hotelId});
+  Future<void> deleteRoom(String roomId, String hotelId);
   Future<RoomImageModel> deleteRoomImage(String imageId);
   Future<List<RoomImageModel>> getRoomImages(String roomId);
-  Future<List<HotelRoomModel>> getRooms({required String hotelId});
+  Future<List<HotelRoomModel>> getRooms(String hotelId);
   Future<bool> isImageExists(String imageId, String roomId);
+  Future<HotelRoomModel> updateRoom(
+    String roomId,
+    String hotelId,
+    String? roomNumber,
+    String? description,
+    int? space,
+    String? floor,
+    double? price,
+    bool? available,
+  );
 }
 
 class HotelRoomDataSourceImpl implements HotelRoomDataSource {
@@ -66,8 +76,7 @@ class HotelRoomDataSourceImpl implements HotelRoomDataSource {
   }
 
   @override
-  Future<void> deleteRoom(
-      {required String roomId, required String hotelId}) async {
+  Future<void> deleteRoom(roomId, String hotelId) async {
     final response = await client
         .from("hotel_room")
         .delete()
@@ -105,7 +114,7 @@ class HotelRoomDataSourceImpl implements HotelRoomDataSource {
   }
 
   @override
-  Future<List<HotelRoomModel>> getRooms({required String hotelId}) async {
+  Future<List<HotelRoomModel>> getRooms(String hotelId) async {
     final response =
         await client.from("hotel_room").select().eq("hotel_id", hotelId);
 
@@ -135,5 +144,27 @@ class HotelRoomDataSourceImpl implements HotelRoomDataSource {
       print("Error checking if room image exists: $e");
       return false;
     }
+  }
+  
+  @override
+  Future<HotelRoomModel> updateRoom(String roomId, String hotelId, String? roomNumber, String? description, int? space, String? floor, double? price, bool? available) {
+    final Map<String, dynamic> updates = {};
+    if (roomNumber != null) updates["room_number"] = roomNumber;
+    if (description != null) updates["description"] = description;
+    if (space != null) updates["space"] = space;
+    if (floor != null) updates["floor"] = floor;
+    if (price != null) updates["price"] = price;
+    if (available != null) updates["available"] = available;
+    if (updates.isEmpty) {
+      throw Exception("No fields to update");
+    }
+    return client.from("hotel_room").update(updates).eq("id", roomId).eq("hotel_id", hotelId).select().then((response) {
+      if (response.isEmpty) {
+        throw Exception("Failed to update hotel room");
+      } else {
+        final data = response.first;
+        return HotelRoomModel.fromJson(data);
+      }
+    });
   }
 }
