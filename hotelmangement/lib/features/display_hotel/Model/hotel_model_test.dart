@@ -13,48 +13,36 @@ class _DisplayHotelDetailsState extends State<DisplayHotelDetails> {
 
   List<Hotel> hotels = [];
 
-  List<dynamic> prices = [];
-  bool isLoading = true;
-  String? error;
-
-  final String hotelId = '550e8400-e29b-41d4-a716-446655440002';
-
   @override
-  void initState() async {
+  void initState() {
     super.initState();
+    _loadHotels();
+  }
+
+  void _loadHotels() async {
     final hotelList = await supabase.from("hotel").select();
-    hotels = hotelList.map((hotel) => Hotel.fromJson(hotel)).toList();
+    setState(() {
+      hotels = hotelList.map((hotel) => Hotel.fromJson(hotel)).toList();
+    });
     print(hotels);
     print(hotelList);
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    if (error != null) {
-      return Scaffold(
-        body: Center(child: Text(error!)),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(title: const Text("Hotel Room Prices")),
       body: ListView.builder(
-        itemCount: prices.length,
+        itemCount: hotels.length,
         itemBuilder: (context, index) {
-          final room = prices[index];
-          final price = room['price'] ?? 'N/A';
-          final roomType = room['room_type'] ?? 'Room ${index + 1}';
+          final hotel = hotels[index];
           return Card(
             margin: const EdgeInsets.all(10),
             child: ListTile(
-              title: Text(roomType),
-              subtitle: Text('Price: \$${price.toString()}'),
+              title: Text(hotel.name),
+              subtitle: Text("Address: ${hotel.address}"),
             ),
           );
         },
