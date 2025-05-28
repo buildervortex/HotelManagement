@@ -36,12 +36,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
       home: DisplayHotelDetails(),
       // home: GoogleMapPolyline(),
-=======
-      home: BookingDetailsPage(),
->>>>>>> 86cbf1864e096b9f28c617c6fc42083843375f97
     );
   }
 }
