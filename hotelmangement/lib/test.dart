@@ -69,6 +69,14 @@ Future<void> testCall() async {
       dataSource: foodDataSource, fileDataSource: fileRepo);
   final trepo = HotelTableRepositoryImpl(dataSource: tableDataSource);
 
+  final response = await Supabase.instance.client.rpc("get_booking_room_image",
+      params: {"room_booking_id": '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143'}).single();
+
+  print("Response: $response");
+  print("booking_id ${response['booking_id']}");
+  print("room_id ${response['room_id']}");
+  print("file ${response['file']}");
+
   // await repo.addHotelImage(hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
 
@@ -146,5 +154,6 @@ Future<void> testCall() async {
   //     tableNumber: "T2",
   //     space: 60,
   //     available: false));
+
   await Future.delayed(const Duration(seconds: 4));
 }
