@@ -77,7 +77,9 @@ class HotelRepositoryImpl implements HotelRepository {
   @override
   Future<Either<Failure, int>> deleteHotelImage(String imageId) async {
     try {
-      await dataSource.deleteHotelImage(imageId);
+      final deletedHotelImage = await dataSource.deleteHotelImage(imageId);
+      await fileDataSource.deleteFile(
+          "hotelimage", deletedHotelImage.imagePath);
       return const Right(1);
     } catch (e) {
       print("Error deleting hotel image: $e");
@@ -86,40 +88,73 @@ class HotelRepositoryImpl implements HotelRepository {
   }
 
   @override
-  Future<Either<Failure, int>> deleteHotelPhoneNumber(String phoneNumberId) {
-    // TODO: implement deleteHotelPhoneNumber
-    throw UnimplementedError();
+  Future<Either<Failure, int>> deleteHotelPhoneNumber(
+      String phoneNumberId) async {
+    try {
+      await dataSource.deleteHotelPhoneNumber(phoneNumberId);
+      return const Right(1);
+    } catch (e) {
+      print("Error deleting hotel phone number: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, Hotel>> getHotel(String hotelId) {
-    // TODO: implement getHotel
-    throw UnimplementedError();
+  Future<Either<Failure, Hotel>> getHotel(String hotelId) async {
+    try {
+      final hotel = await dataSource.getHotel(hotelId);
+      return Right(hotel);
+    } catch (e) {
+      print("Error getting hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, List<HotelImage>>> getHotelImages(String hotelId) {
-    // TODO: implement getHotelImages
-    throw UnimplementedError();
+  Future<Either<Failure, List<HotelImage>>> getHotelImages(
+      String hotelId) async {
+    try {
+      final hotelImages = await dataSource.getHotelImages(hotelId);
+      return Right(hotelImages);
+    } catch (e) {
+      print("Error getting hotel images: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<HotelPhoneNumber>>> getHotelPhoneNumbers(
-      String hotelId) {
-    // TODO: implement getHotelPhoneNumbers
-    throw UnimplementedError();
+      String hotelId) async {
+    try {
+      final hotelPhoneNumbers = await dataSource.getHotelPhoneNumbers(hotelId);
+      return Right(hotelPhoneNumbers);
+    } catch (e) {
+      print("Error getting hotel phone numbers: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<bool> isImageExists(String imageId, String hotelId) {
-    // TODO: implement isImageExists
-    throw UnimplementedError();
+  Future<bool> isImageExists(String imageId, String hotelId) async {
+    final state = await dataSource.isImageExists(imageId, hotelId);
+    return state;
   }
 
   @override
-  Future<Either<Failure, Hotel>> updateHotel(String hotelId, String? name,
-      String? address, double? longitude, double? latitude, String? mainImage) {
-    // TODO: implement updateHotel
-    throw UnimplementedError();
+  Future<Either<Failure, Hotel>> updateHotel(
+      String hotelId,
+      String? name,
+      String? address,
+      double? longitude,
+      double? latitude,
+      String? mainImage) async {
+    try {
+      final hotel = await dataSource.updateHotel(
+          hotelId, name, address, longitude, latitude, mainImage);
+      return Right(hotel);
+    } catch (e) {
+      print("Error adding hotel: $e");
+      return Left(ServerFailure());
+    }
   }
 }

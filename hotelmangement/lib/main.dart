@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
@@ -11,9 +13,10 @@ void main() async {
   await initializeProject();
 
   // testing porpose only
-  await initTest();
-
-  // runApp(const MyApp());
+  final testResult = await initTest();
+  if (testResult != 1) {
+    runApp(const MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {

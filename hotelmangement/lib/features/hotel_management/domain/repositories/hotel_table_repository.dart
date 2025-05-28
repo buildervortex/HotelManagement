@@ -8,6 +8,7 @@ abstract class HotelTableRepository {
     required String tableNumber,
     required int space,
     required String floor,
+    required bool available,
   });
 
   Future<Either<Failure, Table>> updateTable({
@@ -16,6 +17,7 @@ abstract class HotelTableRepository {
     String? tableNumber,
     int? space,
     String? floor,
+    bool? available,
   });
 
   Future<Either<Failure, void>> deleteTable({
@@ -26,5 +28,4 @@ abstract class HotelTableRepository {
   Future<Either<Failure, List<Table>>> getTables({
     required String hotelId,
   });
-  
 }

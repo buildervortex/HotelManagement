@@ -5,9 +5,10 @@ class Room extends Equatable {
   final String hotelId;
   final String roomNumber;
   final String description;
-  final String space;
+  final int space;
   final String floor;
   final double price;
+  final bool available;
 
   const Room({
     required this.id,
@@ -17,6 +18,7 @@ class Room extends Equatable {
     required this.space,
     required this.floor,
     required this.price,
+    required this.available,
   });
 
   @override
@@ -28,5 +30,6 @@ class Room extends Equatable {
         space,
         floor,
         price,
+        available,
       ];
 }

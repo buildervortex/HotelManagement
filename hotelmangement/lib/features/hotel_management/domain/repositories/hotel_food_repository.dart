@@ -25,7 +25,6 @@ abstract class HotelFoodRepository {
   Future<Either<Failure, FoodImage>> addFoodImage(
     String foodId,
     String localImagePath,
-    String remoteImageSaveName,
   );
 
   Future<bool> isImageExists(String imageId, String foodId);

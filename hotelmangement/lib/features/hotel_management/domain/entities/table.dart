@@ -6,6 +6,7 @@ class Table extends Equatable {
   final int space;
   final String floor;
   final String tableNumber;
+  final bool available;
 
   const Table({
     required this.id,
@@ -13,6 +14,7 @@ class Table extends Equatable {
     required this.space,
     required this.floor,
     required this.tableNumber,
+    required this.available,
   });
 
   @override
@@ -22,5 +24,6 @@ class Table extends Equatable {
         space,
         floor,
         tableNumber,
+        available,
       ];
 }
