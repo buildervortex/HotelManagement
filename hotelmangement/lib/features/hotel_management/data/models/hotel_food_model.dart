@@ -14,7 +14,7 @@ class HotelFoodModel extends Food {
       id: json['id'] as String,
       name: json['name'] as String,
       price: (json['price'] as num).toDouble(),
-      availability: json['availability'] as bool,
+      availability: json['available'] as bool,
       type: json['type'] as String,
       hotelId: json['hotel_id'] as String,
     );

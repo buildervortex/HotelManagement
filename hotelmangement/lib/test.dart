@@ -108,5 +108,11 @@ Future<void> testCall() async {
   //     price: 120.0,
   //     available: false));
   // frepo.addFoodImage(foodId, "assets/profile/logout.png");
+  print(await frepo.createFood(
+      hotelId: hotelId,
+      name: "Pasta",
+      price: 12.99,
+      available: true,
+      type: "food"));
   await Future.delayed(const Duration(seconds: 4));
 }

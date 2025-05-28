@@ -42,9 +42,15 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
       required String name,
       required double price,
       required bool available,
-      required String type}) {
-    // TODO: implement createFood
-    throw UnimplementedError();
+      required String type}) async {
+    try {
+      final room =
+          await dataSource.createFood(hotelId, name, price, available, type);
+      return Right(room);
+    } catch (e) {
+      print("Error adding food: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
