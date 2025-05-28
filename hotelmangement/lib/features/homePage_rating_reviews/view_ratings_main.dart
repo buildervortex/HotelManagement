@@ -13,7 +13,7 @@ class RatingReviewsPage extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(),
         title: Text('Rating & Reviews'),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 250, 224, 254),
         foregroundColor: Colors.black,
         elevation: 0,
       ),
@@ -94,8 +94,7 @@ class RatingReviewsPage extends StatelessWidget {
                       ),
                     ),
                     Row(
-                      children:
-                          List.generate(
+                      children: List.generate(
                             4,
                             (_) => Icon(
                               Icons.star,

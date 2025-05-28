@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
+import 'package:hotelmangement/features/homePage_rating_reviews/view_ratings_main.dart';
+import 'package:hotelmangement/features/homePage_rating_reviews/home_page_main.dart';
 import 'package:hotelmangement/test.dart';
 import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BookingDetailsPage(),
+      home: HotelApp(),
     );
   }
 }

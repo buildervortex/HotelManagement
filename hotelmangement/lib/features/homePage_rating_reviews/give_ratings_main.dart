@@ -30,8 +30,8 @@ class _RatingPageState extends State<RatingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Give rating & Review'),
-        backgroundColor: Colors.white,
+        title: Text('Give Rating & Review'),
+        backgroundColor: const Color.fromARGB(255, 250, 224, 254),
         elevation: 0,
         foregroundColor: Colors.black,
         leading: IconButton(
@@ -76,7 +76,7 @@ class _RatingPageState extends State<RatingPage> {
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: TextField(
                 controller: _controller,
-                maxLines: 5,
+                maxLines: 8,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Write your review',
@@ -95,6 +95,8 @@ class _RatingPageState extends State<RatingPage> {
                   print("Review: ${_controller.text}");
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 50, 98, 243),
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
