@@ -90,7 +90,9 @@ Future<void> testCall() async {
   // print("done");
   // await rrepo.deleteRoomImage("b1538c36-f2f2-4ab5-b72a-39a60901fb7d");
   // print(await rrepo.getRoomImages(roomId));
-  print(await rrepo.getRooms(hotelId: hotelId));
+  // print(await rrepo.getRooms(hotelId: hotelId));
+  // print(await rrepo.isImageExists(
+  //     "389c8a6e-a14d-49ff-8882-c981e80a5a95", roomId));
 
   await Future.delayed(const Duration(seconds: 4));
 }

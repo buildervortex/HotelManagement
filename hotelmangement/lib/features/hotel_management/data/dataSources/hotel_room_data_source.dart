@@ -16,6 +16,7 @@ abstract class HotelRoomDataSource {
   Future<RoomImageModel> deleteRoomImage(String imageId);
   Future<List<RoomImageModel>> getRoomImages(String roomId);
   Future<List<HotelRoomModel>> getRooms({required String hotelId});
+  Future<bool> isImageExists(String imageId, String roomId);
 }
 
 class HotelRoomDataSourceImpl implements HotelRoomDataSource {
@@ -114,6 +115,25 @@ class HotelRoomDataSourceImpl implements HotelRoomDataSource {
       return response
           .map<HotelRoomModel>((data) => HotelRoomModel.fromJson(data))
           .toList();
+    }
+  }
+
+  @override
+  Future<bool> isImageExists(String imageId, String roomId) async {
+    try {
+      final response = await client
+          .from("room_image")
+          .select()
+          .eq("id", imageId)
+          .eq("room_id", roomId)
+          .single();
+      if (response.isEmpty) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print("Error checking if room image exists: $e");
+      return false;
     }
   }
 }
