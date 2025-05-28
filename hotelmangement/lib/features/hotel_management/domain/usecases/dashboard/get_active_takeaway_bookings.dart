@@ -5,11 +5,11 @@ import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/active_booking.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/dashboard_repository.dart';
 
-class GetActiveTakeawayBookings extends Usecase<ActiveBooking, Params> {
+class GetActiveTakeawayBookings extends Usecase<List<ActiveBooking>, Params> {
   final DashboardRepository repository;
   GetActiveTakeawayBookings({required this.repository});
   @override
-  Future<Either<Failure, ActiveBooking>> call(Params params) {
+  Future<Either<Failure, List<ActiveBooking>>> call(Params params) {
     return repository.activeTakeAwayBookings(
       datetime: params.datetime,
       managerId: params.managerId,

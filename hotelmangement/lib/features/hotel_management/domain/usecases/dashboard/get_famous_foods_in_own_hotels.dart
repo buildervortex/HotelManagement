@@ -5,13 +5,13 @@ import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/famous_food.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/dashboard_repository.dart';
 
-class GetFamousFoodsInOwnHotels extends Usecase<FamousFood, Params> {
+class GetFamousFoodsInOwnHotels extends Usecase<List<FamousFood>, Params> {
   final DashboardRepository repository;
 
   GetFamousFoodsInOwnHotels({required this.repository});
 
   @override
-  Future<Either<Failure, FamousFood>> call(Params params) {
+  Future<Either<Failure, List<FamousFood>>> call(Params params) {
     return repository.getFamousFoodsInCurrentManagerHotels(
         managerId: params.managerId);
   }

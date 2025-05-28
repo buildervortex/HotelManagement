@@ -5,11 +5,11 @@ import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_state.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/dashboard_repository.dart';
 
-class GetHotelState extends Usecase<HotelState, Params> {
+class GetHotelState extends Usecase<List<HotelState>, Params> {
   final DashboardRepository repository;
   GetHotelState({required this.repository});
   @override
-  Future<Either<Failure, HotelState>> call(Params params) {
+  Future<Either<Failure, List<HotelState>>> call(Params params) {
     return repository.getHotelState(managerId: params.managerId);
   }
 }
