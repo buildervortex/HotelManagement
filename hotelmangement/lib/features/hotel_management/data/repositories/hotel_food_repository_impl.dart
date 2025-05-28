@@ -80,9 +80,14 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
   }
 
   @override
-  Future<Either<Failure, List<FoodImage>>> getFoodImages(String foodId) {
-    // TODO: implement getFoodImages
-    throw UnimplementedError();
+  Future<Either<Failure, List<FoodImage>>> getFoodImages(String foodId) async {
+    try {
+      final hotelImages = await dataSource.getFoodImages(foodId);
+      return Right(hotelImages);
+    } catch (e) {
+      print("Error getting food images: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
