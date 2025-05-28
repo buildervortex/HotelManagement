@@ -11,7 +11,9 @@ class HotelBooking extends StatefulWidget {
 
 class _HotelBookingState extends State<HotelBooking> {
   final supabase = Supabase.instance.client;
+
   bool isLoading = true;
+
   String? error;
 
   DateTime? checkInDate;
@@ -24,7 +26,6 @@ class _HotelBookingState extends State<HotelBooking> {
   void initState() {
     super.initState();
     fetchRoomBookingDetails();
-
   }
 
   Future<void> fetchRoomBookingDetails() async {
@@ -36,21 +37,21 @@ class _HotelBookingState extends State<HotelBooking> {
           .limit(1)
           .maybeSingle();
 
-      if (response != null) {
+      final imageNetworkData = await supabase.rpc("get_booking_room_image",
+          params: {"room_booking_id": bookingId}).single();
+
+      var newImageUrl = await supabase.storage
+          .from("roomimages")
+          .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
+
+      if (response != null && newImageUrl.isNotEmpty) {
         setState(() {
           checkInDate = DateTime.parse(response['check_in']);
           checkOutDate = DateTime.parse(response['check_out']);
+          imageUrl = newImageUrl;
+          isLoading = false;
         });
       }
-       final imagedata = await supabase.rpc("get_booking_room_image",
-      params: {"room_booking_id": bookingId}).single();
-      var  imageUrlData = await supabase.storage.from("roomimages").createSignedUrl(imagedata["file"], 60*60*60);
-
-
-      setState(() {
-        imageUrl=imageUrlData;
-      });
-
     } catch (e) {
       setState(() {
         error = 'Booking fetch error: $e';
@@ -71,6 +72,27 @@ class _HotelBookingState extends State<HotelBooking> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return inLoading();
+    } else {
+      return inLoaded();
+    }
+  }
+
+  Widget inLoading() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 20),
+          Text("Loading booking details..."),
+        ],
+      ),
+    );
+  }
+
+  Widget inLoaded() {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Hotel Details"),
@@ -111,8 +133,7 @@ class _HotelBookingState extends State<HotelBooking> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: const [
-                      Icon(Icons.location_on,
-                          size: 20, color: Colors.white),
+                      Icon(Icons.location_on, size: 20, color: Colors.white),
                       SizedBox(width: 8),
                       Text(
                         "MAP",
