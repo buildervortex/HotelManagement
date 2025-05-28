@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
+import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
+import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
+import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
 import 'package:hotelmangement/test.dart';
 import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
 import 'package:hotelmangement/features/booking_history/booking_test.dart';
 
+import 'package:hotelmangement/features/booking/table_details.dart';
+import 'package:hotelmangement/features/booking/room_booking_details.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -17,11 +22,9 @@ void main() async {
 
   // testing porpose only
   final testResult = await initTest();
-  if (testResult == 1) {
-    exit(1);
+  if (testResult != 1) {
+    runApp(const MyApp());
   }
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,6 +40,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: History(),
+     
+      // home: GoogleMapPolyline(),
     );
   }
 }
