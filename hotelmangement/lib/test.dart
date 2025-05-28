@@ -89,7 +89,8 @@ Future<void> testCall() async {
   //     hotelId: "550e8400-e29b-41d4-a716-446655440001");
   // print("done");
   // await rrepo.deleteRoomImage("b1538c36-f2f2-4ab5-b72a-39a60901fb7d");
-  print(await rrepo.getRoomImages(roomId));
+  // print(await rrepo.getRoomImages(roomId));
+  print(await rrepo.getRooms(hotelId: hotelId));
 
   await Future.delayed(const Duration(seconds: 4));
 }

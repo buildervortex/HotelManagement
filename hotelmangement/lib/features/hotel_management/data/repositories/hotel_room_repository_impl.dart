@@ -93,9 +93,15 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   }
 
   @override
-  Future<Either<Failure, List<Room>>> getRooms({required String hotelId}) {
-    // TODO: implement getRooms
-    throw UnimplementedError();
+  Future<Either<Failure, List<Room>>> getRooms(
+      {required String hotelId}) async {
+    try {
+      final hotelImages = await dataSource.getRooms(hotelId: hotelId);
+      return Right(hotelImages);
+    } catch (e) {
+      print("Error getting rooms: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
