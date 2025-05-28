@@ -13,8 +13,10 @@ import "package:hotelmangement/features/booking_history/booking_history.dart";
 
 import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_management_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/manager_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/manager_repository_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<int> initTest() async {
@@ -41,9 +43,12 @@ Future<void> testCall() async {
   final fileRepo = FileDataSourceImpl(client: Supabase.instance.client);
   final hotelDataSource =
       HotelManagementDataSourceImpl(client: Supabase.instance.client);
+  final managerDataSource =
+      ManagerDataSourceImpl(client: Supabase.instance.client);
 
   final repo = HotelRepositoryImpl(
       dataSource: hotelDataSource, fileDataSource: fileRepo);
+  final mrepo = ManagerRepositoryImpl(dataSource: managerDataSource);
 
   // await repo.addHotelImage(hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
@@ -60,5 +65,7 @@ Future<void> testCall() async {
   //     "45b5f312-bd6e-4c32-bf22-4be676521e94", hotelId));
   // print(await repo.updateHotel("422abcee-b131-402f-8bc9-20c97d5e6970",
   //     "updatedhotel", "hoteladdress2", null, null, "newmainimage.png"));
+  print(await mrepo.addManager("dbd0ffcf-6bc2-477a-8b24-da53dc8baefc"));
+
   await Future.delayed(const Duration(seconds: 4));
 }
