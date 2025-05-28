@@ -16,7 +16,6 @@ class AddRoomImage extends AuthorizedUsecase<RoomImage, Params> {
       return repository.addRoomImage(
         params.roomId,
         params.localImagePath,
-        params.remoteImageSaveName,
       );
     });
   }

@@ -11,7 +11,7 @@ class HotelPhoneNumberModel extends HotelPhoneNumber {
     return HotelPhoneNumberModel(
       id: json['id'] as String,
       role: json['role'] as String,
-      phoneNumber: json['numer'] as String,
+      phoneNumber: json['number'] as String,
       hotelId: json['hotel_id'] as String,
     );
   }

@@ -20,7 +20,7 @@ class HotelModel extends Hotel {
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
       managerId: json['manager_id'] as String,
-      mainImage: json['mainimage'] as String,
+      mainImage: json['mainimage'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }

@@ -21,6 +21,7 @@ class CreateTable extends AuthorizedUsecase<Table, Params> {
         tableNumber: params.tableNumber,
         space: params.space,
         floor: params.floor,
+        available: params.available,
       );
     });
   }
@@ -32,6 +33,7 @@ class Params extends Equatable {
   final int space;
   final String floor;
   final String tableNumber;
+  final bool available;
 
   const Params({
     required this.managerId,
@@ -39,6 +41,7 @@ class Params extends Equatable {
     required this.space,
     required this.floor,
     required this.tableNumber,
+    required this.available,
   });
 
   @override
@@ -48,5 +51,6 @@ class Params extends Equatable {
         tableNumber,
         space,
         floor,
+        available,
       ];
 }
