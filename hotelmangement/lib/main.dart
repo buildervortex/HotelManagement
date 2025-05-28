@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
+import 'package:hotelmangement/features/booking_history/hotel_booking_history_test.dart';
 import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
 import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
 import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
@@ -41,7 +42,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: RatingPage(),
+      home: HotelBooking(),
+
+      // home: GoogleMapPolyline(),
     );
   }
 }
