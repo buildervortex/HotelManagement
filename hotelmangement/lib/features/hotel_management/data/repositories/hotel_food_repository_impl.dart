@@ -54,9 +54,14 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteFood({required String foodId}) {
-    // TODO: implement deleteFood
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteFood({required String foodId}) async {
+    try {
+      await dataSource.deleteFood(foodId);
+      return const Right(null);
+    } catch (e) {
+      print("Error deleting hotel food: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
