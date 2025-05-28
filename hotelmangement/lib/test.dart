@@ -84,10 +84,11 @@ Future<void> testCall() async {
   //     floor: "1st Floor",
   //     price: 100.0,
   //     available: true));
-  await rrepo.deleteRoom(
-      roomId: "59e83e47-714f-4ebb-b848-08d19fb0133c",
-      hotelId: "550e8400-e29b-41d4-a716-446655440001");
-  print("done");
+  // await rrepo.deleteRoom(
+  //     roomId: "59e83e47-714f-4ebb-b848-08d19fb0133c",
+  //     hotelId: "550e8400-e29b-41d4-a716-446655440001");
+  // print("done");
+  await rrepo.deleteRoomImage("b1538c36-f2f2-4ab5-b72a-39a60901fb7d");
 
   await Future.delayed(const Duration(seconds: 4));
 }

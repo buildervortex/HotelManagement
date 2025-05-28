@@ -13,6 +13,7 @@ abstract class HotelRoomDataSource {
       double price,
       bool available);
   Future<void> deleteRoom({required String roomId, required String hotelId});
+  Future<RoomImageModel> deleteRoomImage(String imageId);
 }
 
 class HotelRoomDataSourceImpl implements HotelRoomDataSource {
@@ -71,6 +72,18 @@ class HotelRoomDataSourceImpl implements HotelRoomDataSource {
         .eq("hotel_id", hotelId);
     if (response != null) {
       throw Exception("Failed to delete hotel room: ${response.toString()}");
+    }
+  }
+
+  @override
+  Future<RoomImageModel> deleteRoomImage(String imageId) async {
+    final response =
+        await client.from("room_image").delete().eq("id", imageId).select();
+    if (response.isEmpty) {
+      throw Exception("Failed to delete hotel image");
+    } else {
+      final data = response.first;
+      return RoomImageModel.fromJson(data);
     }
   }
 }

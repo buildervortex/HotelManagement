@@ -69,9 +69,16 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteRoomImage(String imageId) {
-    // TODO: implement deleteRoomImage
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteRoomImage(String imageId) async {
+    try {
+      final deletedHotelImage = await dataSource.deleteRoomImage(imageId);
+      await fileDataSource.deleteFile(
+          "roomimages", deletedHotelImage.imagePath);
+      return const Right(1);
+    } catch (e) {
+      print("Error deleting room image: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
