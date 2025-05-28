@@ -26,7 +26,7 @@ class DashboardDataSourceImpl implements DashboardDataSource {
       DateTime datetime, String managerId) async {
     final response = await client.rpc("active_table_bookings", params: {
       "date_time": datetime.toIso8601String(),
-      "manager_id": managerId,
+      "hotel_manager_id": managerId,
     }).select();
 
     if (response.isEmpty) {
@@ -43,7 +43,7 @@ class DashboardDataSourceImpl implements DashboardDataSource {
       DateTime datetime, String managerId) async {
     final response = await client.rpc("active_take_away_orders", params: {
       "date_time": datetime.toIso8601String(),
-      "manager_id": managerId,
+      "hotel_manager_id": managerId,
     }).select();
 
     if (response.isEmpty) {
@@ -72,7 +72,7 @@ class DashboardDataSourceImpl implements DashboardDataSource {
   Future<List<FamousFoodModel>> getFamousFoodsInCurrentManagerHotels(
       String managerId) async {
     final response = await client.rpc("get_famous_foods_for_manager", params: {
-      "manager_id": managerId,
+      "hotel_manager_id": managerId,
     }).select();
 
     if (response.isEmpty) {
@@ -87,7 +87,7 @@ class DashboardDataSourceImpl implements DashboardDataSource {
   @override
   Future<List<RatingCountModel>> getHotelRatings(String managerId) async {
     final response = await client.rpc("hotel_rating_count", params: {
-      "manager_id": managerId,
+      "hotel_manager_id": managerId,
     }).select();
 
     if (response.isEmpty) {
@@ -102,7 +102,7 @@ class DashboardDataSourceImpl implements DashboardDataSource {
   @override
   Future<List<HotelStateModel>> getHotelState(String managerId) async {
     final response = await client.rpc("hotels_state", params: {
-      "manager_id": managerId,
+      "hotel_manager_id": managerId,
     }).select();
 
     if (response.isEmpty) {
