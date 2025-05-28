@@ -114,8 +114,14 @@ class HotelFoodRepositoryImpl implements HotelFoodRepository {
       String? name,
       double? price,
       bool? available,
-      String? type}) {
-    // TODO: implement updateFood
-    throw UnimplementedError();
+      String? type}) async {
+    try {
+      final hotel =
+          await dataSource.updateFood(foodId, name, price, available, type);
+      return Right(hotel);
+    } catch (e) {
+      print("Error updading food: $e");
+      return Left(ServerFailure());
+    }
   }
 }

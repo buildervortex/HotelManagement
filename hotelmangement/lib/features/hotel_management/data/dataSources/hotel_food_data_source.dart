@@ -12,6 +12,8 @@ abstract class HotelFoodDataSource {
   Future<List<HotelFoodImageModel>> getFoodImages(String foodId);
   Future<List<HotelFoodModel>> getFoods(String hotelId);
   Future<bool> isImageExists(String imageId, String foodId);
+  Future<HotelFoodModel> updateFood(String foodId, String? name, double? price,
+      bool? available, String? type);
 }
 
 class HotelFoodDataSourceImpl implements HotelFoodDataSource {
@@ -119,5 +121,26 @@ class HotelFoodDataSourceImpl implements HotelFoodDataSource {
       print("Error checking if food image exists: $e");
       return false;
     }
+  }
+  
+  @override
+  Future<HotelFoodModel> updateFood(String foodId, String? name, double? price, bool? available, String? type) {
+    final Map<String, dynamic> updates = {};
+    if (name != null) updates["name"] = name;
+    if (price != null) updates["price"] = price;
+    if (available != null) updates["available"] = available;
+    if (type != null) updates["type"] = type;
+    if (updates.isEmpty) {
+      throw Exception("No fields to update");
+    }
+    return client.from("hotel_food").update(updates).eq("id", foodId).select().then((response) {
+      if (response.isEmpty) {
+        throw Exception("Failed to update hotel food");
+      } else {
+        final data = response.first;
+        return HotelFoodModel.fromJson(data);
+      }
+    });
+    
   }
 }
