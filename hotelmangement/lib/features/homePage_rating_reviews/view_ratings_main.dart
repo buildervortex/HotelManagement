@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    MaterialApp(home: RatingReviewsPage(), debugShowCheckedModeBanner: false),
-  );
-}
-
 class RatingReviewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
