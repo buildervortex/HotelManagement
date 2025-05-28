@@ -10,6 +10,7 @@ abstract class HotelFoodDataSource {
   Future<void> deleteFood(String foodId);
   Future<HotelFoodImageModel> deleteFoodImage(String imageId, String foodId);
   Future<List<HotelFoodImageModel>> getFoodImages(String foodId);
+  Future<List<HotelFoodModel>> getFoods(String hotelId);
 }
 
 class HotelFoodDataSourceImpl implements HotelFoodDataSource {
@@ -82,6 +83,20 @@ class HotelFoodDataSourceImpl implements HotelFoodDataSource {
       return response
           .map<HotelFoodImageModel>(
               (data) => HotelFoodImageModel.fromJson(data))
+          .toList();
+    }
+  }
+
+  @override
+  Future<List<HotelFoodModel>> getFoods(String hotelId) async {
+    final response =
+        await client.from("hotel_food").select().eq("hotel_id", hotelId);
+
+    if (response.isEmpty) {
+      throw Exception("Foods not found");
+    } else {
+      return response
+          .map<HotelFoodModel>((data) => HotelFoodModel.fromJson(data))
           .toList();
     }
   }
