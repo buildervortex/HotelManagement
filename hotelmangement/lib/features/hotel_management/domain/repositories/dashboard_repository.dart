@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/active_booking.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/famous_food.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_state.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/rating_count.dart';
 
 abstract class DashboardRepository {
@@ -19,5 +20,8 @@ abstract class DashboardRepository {
 
   Future<Either<Failure, ActiveBooking>> activeTableBookings(
       {required DateTime datetime, required String managerId});
-  
+
+  Future<Either<Failure, HotelState>> getHotelState({
+    required String managerId,
+  });
 }
