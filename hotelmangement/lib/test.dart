@@ -137,5 +137,7 @@ Future<void> testCall() async {
   //     space: 4,
   //     floor: "1st Floor",
   //     available: true));
+  // await trepo.deleteTable(
+  //     tableId: "7990be0d-13c2-43ac-80a3-48bdd3a59185", hotelId: hotelId);
   await Future.delayed(const Duration(seconds: 4));
 }

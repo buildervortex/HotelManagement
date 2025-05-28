@@ -28,9 +28,14 @@ class HotelTableRepositoryImpl implements HotelTableRepository {
 
   @override
   Future<Either<Failure, void>> deleteTable(
-      {required String tableId, required String hotelId}) {
-    // TODO: implement deleteTable
-    throw UnimplementedError();
+      {required String tableId, required String hotelId}) async {
+    try {
+      await dataSource.deleteTable(tableId, hotelId);
+      return const Right(null);
+    } catch (e) {
+      print("Error deleting table: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
