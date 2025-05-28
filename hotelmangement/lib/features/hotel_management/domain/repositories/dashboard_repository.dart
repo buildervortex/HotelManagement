@@ -6,22 +6,23 @@ import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_s
 import 'package:hotelmangement/features/hotel_management/domain/entities/rating_count.dart';
 
 abstract class DashboardRepository {
-  Future<Either<Failure, FamousFood>> getFamousFoodInAll();
+  Future<Either<Failure, List<FamousFood>>> getFamousFoodInAll();
 
-  Future<Either<Failure, FamousFood>> getFamousFoodsInCurrentManagerHotels({
+  Future<Either<Failure, List<FamousFood>>>
+      getFamousFoodsInCurrentManagerHotels({
     required String managerId,
   });
 
-  Future<Either<Failure, RatingCount>> getHotelRatings(
+  Future<Either<Failure, List<RatingCount>>> getHotelRatings(
       {required String managerId});
 
-  Future<Either<Failure, ActiveBooking>> activeTakeAwayBookings(
+  Future<Either<Failure, List<ActiveBooking>>> activeTakeAwayBookings(
       {required DateTime datetime, required String managerId});
 
-  Future<Either<Failure, ActiveBooking>> activeTableBookings(
+  Future<Either<Failure, List<ActiveBooking>>> activeTableBookings(
       {required DateTime datetime, required String managerId});
 
-  Future<Either<Failure, HotelState>> getHotelState({
+  Future<Either<Failure, List<HotelState>>> getHotelState({
     required String managerId,
   });
 }
