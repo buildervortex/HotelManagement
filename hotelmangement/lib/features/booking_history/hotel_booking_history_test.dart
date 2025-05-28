@@ -16,13 +16,15 @@ class _HotelBookingState extends State<HotelBooking> {
 
   DateTime? checkInDate;
   DateTime? checkOutDate;
+  late String imageUrl;
 
-  final String bookingId = '880e8400-e29b-41d4-a716-446655440002';
+  final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
 
   @override
   void initState() {
     super.initState();
     fetchRoomBookingDetails();
+
   }
 
   Future<void> fetchRoomBookingDetails() async {
@@ -30,7 +32,7 @@ class _HotelBookingState extends State<HotelBooking> {
       final response = await supabase
           .from('room_booking')
           .select('check_in, check_out')
-          .eq('booking_id', bookingId)
+          .eq('id', bookingId)
           .limit(1)
           .maybeSingle();
 
@@ -40,6 +42,15 @@ class _HotelBookingState extends State<HotelBooking> {
           checkOutDate = DateTime.parse(response['check_out']);
         });
       }
+       final imagedata = await supabase.rpc("get_booking_room_image",
+      params: {"room_booking_id": bookingId}).single();
+      var  imageUrlData = await supabase.storage.from("roomimages").createSignedUrl(imagedata["file"], 60*60*60);
+
+
+      setState(() {
+        imageUrl=imageUrlData;
+      });
+
     } catch (e) {
       setState(() {
         error = 'Booking fetch error: $e';
@@ -76,8 +87,8 @@ class _HotelBookingState extends State<HotelBooking> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  "assets/booking_history/hotel1.jpg",
+                child: Image.network(
+                  imageUrl,
                   width: MediaQuery.of(context).size.width * 0.95,
                   height: MediaQuery.of(context).size.height * 0.35,
                   fit: BoxFit.cover,
