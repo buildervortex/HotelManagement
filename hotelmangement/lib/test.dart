@@ -138,7 +138,13 @@ Future<void> testCall() async {
   //     floor: "1st Floor",
   //     available: true));
   // await trepo.deleteTable(
-  //     tableId: "7990be0d-13c2-43ac-80a3-48bdd3a59185", hotelId: hotelId);
-  print(await trepo.getTables(hotelId: hotelId));
+  //     tableId: "96e97d2b-4ce0-4f5e-b138-17d2ee078798", hotelId: hotelId);
+  // print(await trepo.getTables(hotelId: hotelId));
+  // print(await trepo.updateTable(
+  //     tableId: "96e97d2b-4ce0-4f5e-b138-17d2ee078798",
+  //     hotelId: hotelId,
+  //     tableNumber: "T2",
+  //     space: 60,
+  //     available: false));
   await Future.delayed(const Duration(seconds: 4));
 }

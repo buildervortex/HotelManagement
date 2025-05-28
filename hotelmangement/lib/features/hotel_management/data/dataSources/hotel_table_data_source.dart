@@ -7,6 +7,8 @@ abstract class HotelTableDataSource {
 
   Future<void> deleteTable(String tableId, String hotelId);
   Future<List<HotelTableModel>> getTables(String hotelId);
+  Future<HotelTableModel> updateTable(String tableId, String hotelId,
+      String? tableNumber, int? space, String? floor, bool? available);
 }
 
 class HotelTableDataSourceImpl implements HotelTableDataSource {
@@ -56,5 +58,26 @@ class HotelTableDataSourceImpl implements HotelTableDataSource {
           .map<HotelTableModel>((data) => HotelTableModel.fromJson(data))
           .toList();
     }
+  }
+  
+  @override
+  Future<HotelTableModel> updateTable(String tableId, String hotelId, String? tableNumber, int? space, String? floor, bool? available) {
+    final Map<String, dynamic> updates = {};
+    if (tableNumber != null) updates["tablenumber"] = tableNumber;
+    if (space != null) updates["space"] = space;
+    if (floor != null) updates["floor"] = floor;
+    if (available != null) updates["available"] = available;
+    if (updates.isEmpty) {
+      throw Exception("No fields to update");
+    }
+    return client.from("hotel_table").update(updates).eq("id", tableId).eq("hotel_id", hotelId).select().then((response) {
+      if (response.isEmpty) {
+        throw Exception("Failed to update hotel table");
+      } else {
+        final data = response.first;
+        return HotelTableModel.fromJson(data);
+      }
+    });
+    
   }
 }

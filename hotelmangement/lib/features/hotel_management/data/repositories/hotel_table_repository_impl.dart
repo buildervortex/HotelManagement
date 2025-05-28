@@ -57,8 +57,14 @@ class HotelTableRepositoryImpl implements HotelTableRepository {
       String? tableNumber,
       int? space,
       String? floor,
-      bool? available}) {
-    // TODO: implement updateTable
-    throw UnimplementedError();
+      bool? available}) async {
+    try {
+      final hotel = await dataSource.updateTable(
+          tableId, hotelId, tableNumber, space, floor, available);
+      return Right(hotel);
+    } catch (e) {
+      print("Error update table: $e");
+      return Left(ServerFailure());
+    }
   }
 }
