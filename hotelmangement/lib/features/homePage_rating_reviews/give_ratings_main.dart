@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RatingApp extends StatelessWidget {
   @override
@@ -16,6 +17,78 @@ class RatingPage extends StatefulWidget {
 }
 
 class _RatingPageState extends State<RatingPage> {
+  final supabase = Supabase.instance.client;
+
+  List<dynamic> giveRatings = [];
+  bool isLoading = true;
+  String? error;
+
+  final String userId = '1234';
+  final String hotelId = '01h1';
+  final String textPhr = '';
+  final String valueImg = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHotelUser();
+    fetchHotelHotel();
+    fetchHotelText();
+    fetchHotelValue();
+  }
+
+  Future<void> fetchHotelUser() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('user_id', userId);
+
+      setState(() {
+        giveRatings = response;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'User fetch error: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> fetchHotelHotel() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('hotel_id', hotelId);
+    } catch (e) {
+      setState(() {
+        error = 'Hotel fetch error: $e';
+      });
+    }
+  }
+
+  Future<void> fetchHotelText() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('text', textPhr);
+    } catch (e) {
+      setState(() {
+        error = 'Text fetch error: $e';
+      });
+    }
+  }
+
+  Future<void> fetchHotelValue() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('value', valueImg);
+    } catch (e) {
+      setState(() {
+        error = 'Value fetch error: $e';
+      });
+    }
+  }
+
   int? selectedEmoji;
   double rating = 0.0;
   final TextEditingController _controller = TextEditingController();
