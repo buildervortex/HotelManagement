@@ -1,15 +1,39 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
+import 'package:hotelmangement/core/fileUtils.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_food_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/food.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/food_image.dart';
 import 'package:hotelmangement/features/hotel_management/domain/repositories/hotel_food_repository.dart';
+import 'package:path/path.dart';
 
 class HotelFoodRepositoryImpl implements HotelFoodRepository {
+  final HotelFoodDataSource dataSource;
+  final FileDataSource fileDataSource;
+
+  HotelFoodRepositoryImpl(
+      {required this.dataSource, required this.fileDataSource});
+
   @override
   Future<Either<Failure, FoodImage>> addFoodImage(
-      String foodId, String localImagePath, String remoteImageSaveName) {
-    // TODO: implement addFoodImage
-    throw UnimplementedError();
+      String foodId, String localImagePath) async {
+    // create file object
+    File file = File(localImagePath);
+
+    // get renamed file name
+    String uploadFileName = Fileutils.uuidRenamedFile(basename(localImagePath));
+
+    try {
+      await fileDataSource.uploadFile(file, uploadFileName, "foodimages");
+      final foodImage = await dataSource.addFoodImage(foodId, uploadFileName);
+      return Right(foodImage);
+    } catch (e) {
+      print("Error adding food image: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override

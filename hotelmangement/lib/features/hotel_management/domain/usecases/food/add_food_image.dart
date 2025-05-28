@@ -16,7 +16,6 @@ class AddFoodImage extends AuthorizedUsecase<FoodImage, Params> {
       return repository.addFoodImage(
         params.foodId,
         params.localImagePath,
-        params.remoteImageSaveName,
       );
     });
   }
@@ -27,17 +26,14 @@ class Params extends Equatable {
   final String managerId;
   final String foodId;
   final String localImagePath;
-  final String remoteImageSaveName;
 
   const Params({
     required this.hotelId,
     required this.managerId,
     required this.foodId,
     required this.localImagePath,
-    required this.remoteImageSaveName,
   });
 
   @override
-  List<Object?> get props =>
-      [hotelId, managerId, foodId, localImagePath, remoteImageSaveName];
+  List<Object?> get props => [hotelId, managerId, foodId, localImagePath];
 }

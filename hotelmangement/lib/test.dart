@@ -12,10 +12,12 @@ import 'package:hotelmangement/features/auth/login.dart';
 import "package:hotelmangement/features/booking_history/booking_history.dart";
 
 import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_food_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_management_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_room_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/manager_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_food_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_room_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/manager_repository_impl.dart';
@@ -42,6 +44,7 @@ Future<void> testCall() async {
   final hotelId = "550e8400-e29b-41d4-a716-446655440001";
   final managerId = "e8b2c4e6-353a-450d-ab3a-08a0676fd773";
   final roomId = "660e8400-e29b-41d4-a716-446655440001";
+  final foodId = "770e8400-e29b-41d4-a716-446655440001";
 
   final fileRepo = FileDataSourceImpl(client: Supabase.instance.client);
   final hotelDataSource =
@@ -50,12 +53,16 @@ Future<void> testCall() async {
       ManagerDataSourceImpl(client: Supabase.instance.client);
   final roomDataSource =
       HotelRoomDataSourceImpl(client: Supabase.instance.client);
+  final foodDataSource =
+      HotelFoodDataSourceImpl(client: Supabase.instance.client);
 
   final repo = HotelRepositoryImpl(
       dataSource: hotelDataSource, fileDataSource: fileRepo);
   final mrepo = ManagerRepositoryImpl(dataSource: managerDataSource);
   final rrepo = HotelRoomRepositoryImpl(
       dataSource: roomDataSource, fileDataSource: fileRepo);
+  final frepo = HotelFoodRepositoryImpl(
+      dataSource: foodDataSource, fileDataSource: fileRepo);
 
   // await repo.addHotelImage(hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
@@ -100,6 +107,6 @@ Future<void> testCall() async {
   //     space: 50,
   //     price: 120.0,
   //     available: false));
-
+  // frepo.addFoodImage(foodId, "assets/profile/logout.png");
   await Future.delayed(const Duration(seconds: 4));
 }
