@@ -76,14 +76,18 @@ Future<void> testCall() async {
   // print(await mrepo.addManager("dbd0ffcf-6bc2-477a-8b24-da53dc8baefc"));
 
   // await rrepo.addRoomImage(roomId, "assets/profile/logout.png");
-  print(await rrepo.createRoom(
-      hotelId: hotelId,
-      roomNumber: "101",
-      description: "A cozy room with a beautiful view",
-      space: 4,
-      floor: "1st Floor",
-      price: 100.0,
-      available: true));
+  // print(await rrepo.createRoom(
+  //     hotelId: hotelId,
+  //     roomNumber: "101",
+  //     description: "A cozy room with a beautiful view",
+  //     space: 4,
+  //     floor: "1st Floor",
+  //     price: 100.0,
+  //     available: true));
+  await rrepo.deleteRoom(
+      roomId: "59e83e47-714f-4ebb-b848-08d19fb0133c",
+      hotelId: "550e8400-e29b-41d4-a716-446655440001");
+  print("done");
 
   await Future.delayed(const Duration(seconds: 4));
 }

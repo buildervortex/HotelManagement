@@ -58,9 +58,14 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
 
   @override
   Future<Either<Failure, void>> deleteRoom(
-      {required String roomId, required String hotelId}) {
-    // TODO: implement deleteRoom
-    throw UnimplementedError();
+      {required String roomId, required String hotelId}) async {
+    try {
+      await dataSource.deleteRoom(roomId: roomId, hotelId: hotelId);
+      return const Right(null);
+    } catch (e) {
+      print("Error deleting hotel room: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
