@@ -37,15 +37,23 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   }
 
   @override
-  Future<Either<Failure, Room>> createRoom(
-      {required String hotelId,
-      required String roomNumber,
-      required String description,
-      required String space,
-      required String floor,
-      required double price}) {
-    // TODO: implement createRoom
-    throw UnimplementedError();
+  Future<Either<Failure, Room>> createRoom({
+    required String hotelId,
+    required String roomNumber,
+    required String description,
+    required int space,
+    required String floor,
+    required double price,
+    required bool available,
+  }) async {
+    try {
+      final room = await dataSource.createRoom(
+          hotelId, roomNumber, description, space, floor, price, available);
+      return Right(room);
+    } catch (e) {
+      print("Error adding room: $e");
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -80,14 +88,16 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
   }
 
   @override
-  Future<Either<Failure, Room>> updateRoom(
-      {required String roomId,
-      required String hotelId,
-      String? roomNumber,
-      String? description,
-      String? space,
-      String? floor,
-      double? price}) {
+  Future<Either<Failure, Room>> updateRoom({
+    required String roomId,
+    required String hotelId,
+    String? roomNumber,
+    String? description,
+    int? space,
+    String? floor,
+    double? price,
+    bool? available,
+  }) {
     // TODO: implement updateRoom
     throw UnimplementedError();
   }

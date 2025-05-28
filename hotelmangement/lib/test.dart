@@ -75,7 +75,15 @@ Future<void> testCall() async {
 
   // print(await mrepo.addManager("dbd0ffcf-6bc2-477a-8b24-da53dc8baefc"));
 
-  await rrepo.addRoomImage(roomId, "assets/profile/logout.png");
+  // await rrepo.addRoomImage(roomId, "assets/profile/logout.png");
+  print(await rrepo.createRoom(
+      hotelId: hotelId,
+      roomNumber: "101",
+      description: "A cozy room with a beautiful view",
+      space: 4,
+      floor: "1st Floor",
+      price: 100.0,
+      available: true));
 
   await Future.delayed(const Duration(seconds: 4));
 }

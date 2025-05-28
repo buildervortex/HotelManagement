@@ -8,9 +8,10 @@ abstract class HotelRoomRepository {
     required String hotelId,
     required String roomNumber,
     required String description,
-    required String space,
+    required int space,
     required String floor,
     required double price,
+    required bool available,
   });
 
   Future<Either<Failure, Room>> updateRoom({
@@ -18,9 +19,10 @@ abstract class HotelRoomRepository {
     required String hotelId,
     String? roomNumber,
     String? description,
-    String? space,
+    int? space,
     String? floor,
     double? price,
+    bool? available,
   });
 
   Future<Either<Failure, void>> deleteRoom({
