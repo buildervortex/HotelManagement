@@ -53,6 +53,12 @@ dependencies:
   mime: ^2.0.0
   path: ^1.9.0
   uuid: ^4.5.1
+  flutter_map: ^6.0.1
+  latlong2: ^0.9.0
+  flutter_rating_bar: ^4.0.0
+
+  fl_chart: ^0.71.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +109,11 @@ flutter:
     - assets/booking/room2.jpg
     - assets/booking/room3.jpg
     - assets/hotels/
+    - assets/onboarding/1.png
+    - assets/onboarding/2.png
+    - assets/onboarding/3.png
+    - assets/onboarding/4.png
+    - assets/onboarding/splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(RatingApp());
-}
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RatingApp extends StatelessWidget {
   @override
@@ -20,6 +17,78 @@ class RatingPage extends StatefulWidget {
 }
 
 class _RatingPageState extends State<RatingPage> {
+  final supabase = Supabase.instance.client;
+
+  List<dynamic> giveRatings = [];
+  bool isLoading = true;
+  String? error;
+
+  final String userId = '1234';
+  final String hotelId = '01h1';
+  final String textPhr = '';
+  final String valueImg = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHotelUser();
+    fetchHotelHotel();
+    fetchHotelText();
+    fetchHotelValue();
+  }
+
+  Future<void> fetchHotelUser() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('user_id', userId);
+
+      setState(() {
+        giveRatings = response;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'User fetch error: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> fetchHotelHotel() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('hotel_id', hotelId);
+    } catch (e) {
+      setState(() {
+        error = 'Hotel fetch error: $e';
+      });
+    }
+  }
+
+  Future<void> fetchHotelText() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('text', textPhr);
+    } catch (e) {
+      setState(() {
+        error = 'Text fetch error: $e';
+      });
+    }
+  }
+
+  Future<void> fetchHotelValue() async {
+    try {
+      final response =
+          await supabase.from('ratings').select().eq('value', valueImg);
+    } catch (e) {
+      setState(() {
+        error = 'Value fetch error: $e';
+      });
+    }
+  }
+
   int? selectedEmoji;
   double rating = 0.0;
   final TextEditingController _controller = TextEditingController();
@@ -30,8 +99,8 @@ class _RatingPageState extends State<RatingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Give rating & Review'),
-        backgroundColor: Colors.white,
+        title: Text('Give Rating & Review'),
+        backgroundColor: const Color.fromARGB(255, 250, 224, 254),
         elevation: 0,
         foregroundColor: Colors.black,
         leading: IconButton(
@@ -76,7 +145,7 @@ class _RatingPageState extends State<RatingPage> {
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: TextField(
                 controller: _controller,
-                maxLines: 5,
+                maxLines: 8,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Write your review',
@@ -95,6 +164,8 @@ class _RatingPageState extends State<RatingPage> {
                   print("Review: ${_controller.text}");
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 50, 98, 243),
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
