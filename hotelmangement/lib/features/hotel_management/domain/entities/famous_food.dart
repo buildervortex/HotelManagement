@@ -14,4 +14,9 @@ class FamousFood extends Equatable {
         name,
         quantity,
       ];
+
+  FamousFood copyWith({String? id, String? name, int? quantity}) {
+    return FamousFood(
+        id: id ?? this.id, name: name ?? this.name, quantity: this.quantity);
+  }
 }

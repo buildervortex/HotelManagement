@@ -45,6 +45,7 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/g
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_image_auth_url.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_images.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_phone_numbers.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotels.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/update_hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/manager_sign_up.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/room/add_room_image.dart';
@@ -173,6 +174,8 @@ void setUpLocator() {
       () => GetHotelPhoneNumbers(repository: gi<HotelRepository>()));
   gi.registerLazySingleton<UpdateHotel>(
       () => UpdateHotel(repository: gi<HotelRepository>()));
+  gi.registerLazySingleton<GetHotels>(
+      () => GetHotels(repository: gi<HotelRepository>()));
 
   // register manager usecases
   gi.registerLazySingleton<ManagerSignUp>(

@@ -22,6 +22,7 @@ abstract class HotelManagementDataSource {
   Future<bool> isImageExists(String imageId, String hotelId);
   Future<HotelModel> updateHotel(String hotelId, String? name, String? address,
       double? longitude, double? latitude, String? mainImage);
+  Future<List<HotelModel>> getHotels(String managerId);
 }
 
 class HotelManagementDataSourceImpl implements HotelManagementDataSource {
@@ -193,6 +194,18 @@ class HotelManagementDataSourceImpl implements HotelManagementDataSource {
     } else {
       final data = response.first;
       return HotelModel.fromJson(data);
+    }
+  }
+
+  @override
+  Future<List<HotelModel>> getHotels(String managerId) async {
+    final response =
+        await client.from("hotel").select().eq("manager_id", managerId);
+
+    if (response.isEmpty) {
+      throw Exception("Hotel not found");
+    } else {
+      return response.map((hotel) => HotelModel.fromJson(hotel)).toList();
     }
   }
 }

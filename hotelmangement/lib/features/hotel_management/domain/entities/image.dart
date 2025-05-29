@@ -8,4 +8,11 @@ class Image extends Equatable {
 
   @override
   List<Object?> get props => [id, imagePath];
+
+  Image copyWith({
+    String? id,
+    String? imagePath,
+  }) {
+    return Image(id: id ?? this.id, imagePath: imagePath ?? this.imagePath);
+  }
 }

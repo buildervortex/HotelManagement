@@ -26,4 +26,20 @@ class Table extends Equatable {
         tableNumber,
         available,
       ];
+
+  Table copyWith(
+      {String? id,
+      String? hotelId,
+      int? space,
+      String? floor,
+      String? tableNumber,
+      bool? available}) {
+    return Table(
+        id: this.id,
+        hotelId: this.hotelId,
+        space: this.space,
+        floor: this.floor,
+        tableNumber: this.tableNumber,
+        available: this.available);
+  }
 }

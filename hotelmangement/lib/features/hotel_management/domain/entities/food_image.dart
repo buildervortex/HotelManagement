@@ -7,4 +7,13 @@ class FoodImage extends Image {
 
   @override
   List<Object?> get props => [id, imagePath, foodId];
+
+  @override
+  Image copyWith({String? id, String? imagePath, String? foodId}) {
+    return FoodImage(
+      id: id ?? this.id,
+      imagePath: imagePath ?? this.imagePath,
+      foodId: foodId ?? this.foodId,
+    );
+  }
 }

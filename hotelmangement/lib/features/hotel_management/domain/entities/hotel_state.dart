@@ -21,4 +21,19 @@ class HotelState extends Equatable {
         roomCount,
         tableCount,
       ];
+
+  HotelState copyWith({
+    String? id,
+    String? name,
+    int? foodCount,
+    int? roomCount,
+    int? tableCount,
+  }) {
+    return HotelState(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        foodCount: foodCount ?? this.foodCount,
+        roomCount: roomCount ?? this.roomCount,
+        tableCount: tableCount ?? this.tableCount);
+  }
 }

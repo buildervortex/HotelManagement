@@ -40,4 +40,29 @@ class Hotel extends Equatable {
         images,
         phoneNumbers
       ];
+
+  Hotel copyWith({
+    String? id,
+    String? managerId,
+    String? name,
+    String? address,
+    double? longitude,
+    double? latitude,
+    String? mainImage,
+    DateTime? createdAt,
+    List<HotelImage>? images,
+    List<HotelPhoneNumber>? phoneNumbers,
+  }) {
+    return Hotel(
+      id: id ?? this.id,
+      managerId: managerId ?? this.managerId,
+      name: name ?? this.name,
+      address: address ?? this.address,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      createdAt: createdAt ?? this.createdAt,
+      images: images ?? this.images,
+      phoneNumbers: phoneNumbers ?? this.phoneNumbers,
+    );
+  }
 }

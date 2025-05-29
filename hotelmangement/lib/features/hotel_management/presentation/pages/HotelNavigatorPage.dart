@@ -11,6 +11,8 @@ class Hotelnavigatorpage extends StatefulWidget {
 class HotelnavigatorpageState extends State<Hotelnavigatorpage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Navigator(
+      initialRoute: "/",
+    );
   }
 }

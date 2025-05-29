@@ -14,4 +14,18 @@ class HotelPhoneNumber extends Equatable {
   });
   @override
   List<Object?> get props => [id, role, phoneNumber, hotelId];
+
+  HotelPhoneNumber copyWith({
+    String? id,
+    String? role,
+    String? phoneNumber,
+    String? hotelId,
+  }) {
+    return HotelPhoneNumber(
+      id: id ?? this.id,
+      role: role ?? this.role,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      hotelId: hotelId ?? this.hotelId,
+    );
+  }
 }

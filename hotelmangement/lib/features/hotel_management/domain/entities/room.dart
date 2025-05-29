@@ -32,4 +32,25 @@ class Room extends Equatable {
         price,
         available,
       ];
+
+  Room copyWith({
+    String? id,
+    String? hotelId,
+    String? roomNumber,
+    String? description,
+    int? space,
+    String? floor,
+    double? price,
+    bool? available,
+  }) {
+    return Room(
+        id: id ?? this.id,
+        hotelId: hotelId ?? this.hotelId,
+        roomNumber: roomNumber ?? this.roomNumber,
+        description: description ?? this.description,
+        space: space ?? this.space,
+        floor: floor ?? this.floor,
+        price: price ?? this.price,
+        available: available ?? this.available);
+  }
 }
