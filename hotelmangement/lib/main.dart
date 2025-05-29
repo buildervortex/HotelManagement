@@ -15,6 +15,7 @@ import 'package:hotelmangement/features/booking_history/booking_test.dart';
 
 import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
+import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
 void main() async {
   // ensure the flutter is initialized

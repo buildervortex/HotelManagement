@@ -106,6 +106,11 @@ flutter:
     - assets/booking/room2.jpg
     - assets/booking/room3.jpg
     - assets/hotels/
+    - assets/onboarding/1.png
+    - assets/onboarding/2.png
+    - assets/onboarding/3.png
+    - assets/onboarding/4.png
+    - assets/onboarding/splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
