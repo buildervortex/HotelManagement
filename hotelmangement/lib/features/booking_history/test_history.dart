@@ -1,327 +1,223 @@
-// import 'package:flutter/material.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-// class History extends StatefulWidget {
-//   const History({super.key});
+class BookingCalendar extends StatefulWidget {
+  const BookingCalendar({super.key});
 
-//   @override
-//   State<History> createState() => _HistoryState();
-// }
+  @override
+  State<BookingCalendar> createState() => _BookingCalendarState();
+}
 
-// class _HistoryState extends State<History> {
-//   final supabase = Supabase.instance.client;
+class _BookingCalendarState extends State<BookingCalendar> {
+  final supabase = Supabase.instance.client;
+  final String bookingId = '880e8400-e29b-41d4-a716-446655440001';
 
-//   bool isLoading = true;
-//   String? error;
+  String? error;
+  DateTime? checkInDate;
+  DateTime? checkOutDate;
 
-//   DateTime? checkInDate;
+  final scrollController = ScrollController();
+  final today = DateTime.now();
+  late final DateTime start;
+  late final int initialMonthIndex;
 
-//   final String hotelId = '550e8400-e29b-41d4-a716-446655440002';
-//   final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
-//   final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
+  @override
+  void initState() {
+    super.initState();
+    fetchRoomBookingDetails();
 
-//   List<Map<String, dynamic>> bookings = [
-//     {
-//       "image": "assets/booking_history/placeholder.jpg", // local placeholder
-//       "name": "Loading...",
-//       "date": "Date unknown",
-//       "price": "\$0",
-//     },
-//     {
-//       "image": "assets/booking_history/hotel2.jpg",
-//       "name": "Loading...",
-//       "rating": 4.5,
-//       "reviews": 320,
-//       "date": "Date unknown",
-//       "discount": "30% OFF",
-//       "price": "\$0",
-//     },
-//     {
-//       "image": "assets/booking_history/hotel5.jpg",
-//       "name": "Loading...",
-//       "rating": 4.2,
-//       "reviews": 150,
-//       "date": "Date unknown",
-//       "discount": "20% OFF",
-//       "price": "\$0",
-//     },
-//     {
-//       "image": "assets/booking_history/hotel4.jpg",
-//       "name": "Loading...",
-//       "rating": 4.2,
-//       "reviews": 150,
-//       "date": "Date unknown",
-//       "discount": "20% OFF",
-//       "price": "\$0",
-//     },
-//     {
-//       "image": "assets/booking_history/hotel3.jpg",
-//       "name": "Loading...",
-//       "rating": 4.2,
-//       "reviews": 150,
-//       "date": "Date unknown",
-//       "discount": "20% OFF",
-//       "price": "\$0",
-//     },
-//   ];
+    start = DateTime(today.year, today.month - 12);
+    initialMonthIndex = 12;
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchPrices();
-//     fetchRoomBookingDetails();
-//     fetchHotelName();
-//   }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToTodayMonth();
+    });
+  }
 
-//   Future<void> fetchPrices() async {
-//     try {
-//       final response = await supabase
-//           .from('hotel_room')
-//           .select()
-//           .eq('hotel_id', hotelId);
+  Future<void> fetchRoomBookingDetails() async {
+    try {
+      final response = await supabase
+          .from('room_booking')
+          .select('check_in, check_out')
+          .eq('booking_id', bookingId)
+          .maybeSingle();
 
-//       final updatedBookings = [...bookings];
-//       for (int i = 0; i < updatedBookings.length && i < response.length; i++) {
-//         if (response[i]['price'] != null) {
-//           updatedBookings[i]['price'] = "\$${response[i]['price']}";
-//         }
-//       }
+      if (response != null) {
+        setState(() {
+          checkInDate = DateTime.parse(response['check_in']);
+          checkOutDate = DateTime.parse(response['check_out']);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Booking fetch error: $e';
+      });
+    }
+  }
 
-//       setState(() {
-//         bookings = updatedBookings;
-//       });
-//     } catch (e) {
-//       setState(() {
-//         error = 'Price fetch error: $e';
-//       });
-//     } finally {
-//       setState(() {
-//         isLoading = false;
-//       });
-//     }
-//   }
+  void scrollToTodayMonth() {
+    const double itemHeight = 320;
+    scrollController.jumpTo(itemHeight * initialMonthIndex);
+  }
 
-//   Future<void> fetchRoomBookingDetails() async {
-//     try {
-//       final response = await supabase
-//           .from('room_booking')
-//           .select('check_in, check_out')
-//           .eq('id', bookingId)
-//           .limit(1)
-//           .maybeSingle();
+  bool _isToday(DateTime date) {
+    final now = DateTime.now();
+    return now.year == date.year &&
+        now.month == date.month &&
+        now.day == date.day;
+  }
 
-//       final imageNetworkData = await supabase.rpc("get_booking_room_image",
-//           params: {"room_booking_id": bookingId}).single();
+  bool _isCheckIn(DateTime date) {
+    return checkInDate != null &&
+        date.year == checkInDate!.year &&
+        date.month == checkInDate!.month &&
+        date.day == checkInDate!.day;
+  }
 
-//       var newImageUrl = await supabase.storage
-//           .from("roomimages")
-//           .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
+  bool _isCheckOut(DateTime date) {
+    return checkOutDate != null &&
+        date.year == checkOutDate!.year &&
+        date.month == checkOutDate!.month &&
+        date.day == checkOutDate!.day;
+  }
 
-//       if (response != null && bookings.isNotEmpty) {
-//         setState(() {
-//           checkInDate = DateTime.parse(response['check_in']);
-//           bookings[0]["date"] = formatDateTime(checkInDate!);
-//           bookings[0]["image"] = newImageUrl; // network image
-//         });
-//       }
-//     } catch (e) {
-//       setState(() {
-//         error = 'Booking fetch error: $e';
-//       });
-//     }
-//   }
+  Widget _legendBox(Color color, String label) {
+    return Row(
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 4),
+        Text(label),
+      ],
+    );
+  }
 
-//   Future<void> fetchHotelName() async {
-//     try {
-//       final response = await supabase
-//           .from('hotel')
-//           .select('name')
-//           .eq('manager_id', managerId);
+  @override
+  Widget build(BuildContext context) {
+    final end = DateTime(today.year, today.month + 12);
 
-//       if (response != null && response is List && response.isNotEmpty) {
-//         setState(() {
-//           bookings[0]['name'] = response[0]['name'];
-//         });
-//       }
-//     } catch (e) {
-//       setState(() {
-//         error = 'Hotel name fetch error: $e';
-//       });
-//     }
-//   }
+    return Scaffold(
+      appBar: AppBar(title: const Text("Booking Calendar")),
+      body: ListView(
+        controller: scrollController,
+        children: [
+          if (error != null)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(error!, style: const TextStyle(color: Colors.red)),
+            ),
+          if (checkInDate != null && checkOutDate != null)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Check-In: ${DateFormat.yMMMd().format(checkInDate!)}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Check-Out: ${DateFormat.yMMMd().format(checkOutDate!)}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              children: [
+                _legendBox(Colors.green, "Check-In"),
+                const SizedBox(width: 10),
+                _legendBox(Colors.orange, "Check-Out"),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          ...List.generate(
+            end.difference(start).inDays ~/ 30 + 1,
+            (index) {
+              final date = DateTime(start.year, start.month + index);
+              return buildMonth(date);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-//   String formatDateTime(DateTime dateTime) {
-//     return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
-//         "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-//   }
+  Widget buildMonth(DateTime date) {
+    final daysInMonth = DateUtils.getDaysInMonth(date.year, date.month);
+    final firstWeekday = DateTime(date.year, date.month, 1).weekday;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenWidth = MediaQuery.of(context).size.width;
-//     double screenHeight = MediaQuery.of(context).size.height;
-//     double textScale = MediaQuery.of(context).textScaleFactor;
+    List<Widget> dayWidgets = [];
+    for (int i = 1; i < firstWeekday; i++) {
+      dayWidgets.add(const SizedBox());
+    }
 
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
-//           "Booking History",
-//           style: TextStyle(color: Colors.black, fontSize: 20 * textScale),
-//         ),
-//         backgroundColor: Colors.white,
-//         actions: [
-//           TextButton(
-//             onPressed: () {
-//               setState(() {
-//                 bookings.clear();
-//               });
-//             },
-//             child: Text(
-//               "Clear All",
-//               style: TextStyle(color: Colors.red, fontSize: 16 * textScale),
-//             ),
-//           )
-//         ],
-//       ),
-//       body: Padding(
-//         padding: EdgeInsets.all(screenWidth * 0.04),
-//         child: Column(
-//           children: [
-//             TextField(
-//               decoration: InputDecoration(
-//                 hintText: "Search",
-//                 prefixIcon: Icon(Icons.search),
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(10),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: screenHeight * 0.02),
-//             Row(
-//               children: [
-//                 Expanded(
-//                   child: ElevatedButton(
-//                     onPressed: () {},
-//                     style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-//                     child: Text(
-//                       "Hotels",
-//                       style: TextStyle(
-//                         color: Colors.white,
-//                         fontWeight: FontWeight.bold,
-//                         fontSize: 16 * textScale,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 Expanded(
-//                   child: ElevatedButton(
-//                     onPressed: () {},
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.white,
-//                       foregroundColor: Colors.black,
-//                     ),
-//                     child: Text("Date", style: TextStyle(fontSize: 16 * textScale)),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: screenHeight * 0.02),
-//             if (error != null)
-//               Text(error!, style: TextStyle(color: Colors.red)),
-//             Expanded(
-//               child: isLoading
-//                   ? Center(child: CircularProgressIndicator())
-//                   : bookings.isEmpty
-//                       ? Center(child: Text("No bookings available"))
-//                       : ListView.builder(
-//                           itemCount: bookings.length,
-//                           itemBuilder: (context, index) {
-//                             var booking = bookings[index];
-//                             return Dismissible(
-//                               key: UniqueKey(),
-//                               direction: DismissDirection.endToStart,
-//                               onDismissed: (direction) {
-//                                 setState(() {
-//                                   bookings.removeAt(index);
-//                                 });
-//                               },
-//                               background: Container(
-//                                 color: Colors.red,
-//                                 alignment: Alignment.centerRight,
-//                                 padding: EdgeInsets.symmetric(horizontal: 20),
-//                                 child: Icon(Icons.delete, color: Colors.white),
-//                               ),
-//                               child: Card(
-//                                 margin: EdgeInsets.only(bottom: 10),
-//                                 elevation: 4,
-//                                 shape: RoundedRectangleBorder(
-//                                   borderRadius: BorderRadius.circular(12),
-//                                 ),
-//                                 child: Padding(
-//                                   padding: EdgeInsets.all(screenWidth * 0.04),
-//                                   child: Row(
-//                                     children: [
-//                                       ClipRRect(
-//                                         borderRadius: BorderRadius.circular(8),
-//                                         child: booking["image"].toString().startsWith("http")
-//                                             ? Image.network(
-//                                                 booking["image"],
-//                                                 width: screenWidth * 0.3,
-//                                                 height: 100,
-//                                                 fit: BoxFit.cover,
-//                                               )
-//                                             : Image.asset(
-//                                                 booking["image"],
-//                                                 width: screenWidth * 0.3,
-//                                                 height: 100,
-//                                                 fit: BoxFit.cover,
-//                                               ),
-//                                       ),
-//                                       SizedBox(width: screenWidth * 0.05),
-//                                       Expanded(
-//                                         child: Column(
-//                                           crossAxisAlignment: CrossAxisAlignment.start,
-//                                           children: [
-//                                             Text(
-//                                               booking["name"],
-//                                               style: TextStyle(
-//                                                 fontSize: 12 * textScale,
-//                                                 fontWeight: FontWeight.bold,
-//                                               ),
-//                                             ),
-//                                             SizedBox(height: screenHeight * 0.01),
-                                           
-//                                             SizedBox(height: screenHeight * 0.01),
-//                                             Text(
-//                                               "Date: ${booking["date"]}",
-//                                               style: TextStyle(fontSize: 10 * textScale),
-//                                             ),
-                                          
-//                                             Text(
-//                                               booking["price"].toString(),
-//                                               style: TextStyle(
-//                                                 fontSize: 10 * textScale,
-//                                                 fontWeight: FontWeight.bold,
-//                                                 color: Colors.blue,
-//                                               ),
-//                                             ),
-//                                           ],
-//                                         ),
-//                                       ),
-//                                       TextButton(
-//                                         child: const Text('Booking Now', style: TextStyle(fontSize: 10)),
-//                                         onPressed: () {},
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ),
-//                               ),
-//                             );
-//                           },
-//                         ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+    for (int i = 1; i <= daysInMonth; i++) {
+      final currentDate = DateTime(date.year, date.month, i);
+
+      Color? bg;
+      if (_isToday(currentDate)) {
+        bg = Colors.blue;
+      } else if (_isCheckIn(currentDate)) {
+        bg = Colors.green;
+      } else if (_isCheckOut(currentDate)) {
+        bg = Colors.orange;
+      }
+
+      dayWidgets.add(
+        Container(
+          margin: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            color: bg,
+            shape: BoxShape.circle,
+          ),
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          child: Text(
+            '$i',
+            style: TextStyle(
+              color: bg != null ? Colors.white : Colors.black,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            DateFormat.yMMMM().format(date),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          GridView.count(
+            crossAxisCount: 7,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: dayWidgets,
+          ),
+        ],
+      ),
+    );
+  }
+}

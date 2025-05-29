@@ -17,7 +17,9 @@ import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
 import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
-import 'features/booking_history/booking_calendar.dart';
+
+import 'features/booking_history/hotel_booking_history.dart';
+import 'package:hotelmangement/features/booking_history/test_history.dart';
 
 
 void main() async {
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BookingCalendar(),
+      home:BookingCalendar(),
 
       // home: GoogleMapPolyline(),
     );

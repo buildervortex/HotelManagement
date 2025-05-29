@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,13 +21,23 @@ class _HotelBookingState extends State<HotelBooking> {
   DateTime? checkInDate;
   DateTime? checkOutDate;
   late String imageUrl;
+  List<String> ImageUrls = [];
+  List<dynamic> hotelName = [];
+  List<dynamic>  hotelDescription = [];
+  List<dynamic> price = [];
 
   final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
+  final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
+  final String roomId = '660e8400-e29b-41d4-a716-446655440001';
+
 
   @override
   void initState() {
     super.initState();
     fetchRoomBookingDetails();
+    fetchHotelName();
+    fetchHotelDescription();
+    fetchPrices();
   }
 
   Future<void> fetchRoomBookingDetails() async {
@@ -43,6 +55,41 @@ class _HotelBookingState extends State<HotelBooking> {
       var newImageUrl = await supabase.storage
           .from("roomimages")
           .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
+
+       final imagesData = await supabase.rpc("get_booking_room_images",
+          params: {"room_booking_id": bookingId});
+
+
+        List<String> newImageUrls= [];
+        
+
+        for(var idata in imagesData){
+
+         // print(idata["file"]);
+        
+           var newImageUrl = await supabase.storage
+          .from("roomimages")
+          .createSignedUrl(idata["file"], 60 * 60 * 60);
+
+          newImageUrls.add(newImageUrl);
+
+
+        //print(newImagesUrl);
+        }
+        
+
+        
+      setState(() {
+         ImageUrls=newImageUrls;
+      });
+
+      //print(imageList);
+         // (imagesData[0]["file"]);
+      
+        
+
+
+
 
       if (response != null && newImageUrl.isNotEmpty) {
         setState(() {
@@ -62,13 +109,81 @@ class _HotelBookingState extends State<HotelBooking> {
   String formatDateTime(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";
   }
+  
 
-  final List<String> imageList = [
-    "assets/booking_history/room1.jpg",
-    "assets/booking_history/room2.jpg",
-    "assets/booking_history/room3.jpg",
-    "assets/booking_history/room4.jpg",
-  ];
+    Future<void> fetchHotelName() async {
+    try {
+      final response = await supabase
+          .from('hotel')
+          .select('name')
+          .eq('manager_id', managerId);
+
+          setState(() {
+        hotelName = response;
+      });
+
+
+    } catch (e) {
+      setState(() {
+        error = 'Hotel name fetch error: $e';
+      });
+    }
+  }
+
+
+
+ Future<void> fetchHotelDescription() async {
+    try {
+      final response = await supabase
+          .from('hotel_room')
+          .select('description')
+          .eq('id', roomId);
+
+          setState(() {
+        hotelDescription = response;
+      });
+
+
+    } catch (e) {
+      setState(() {
+        error = 'Hotel name fetch error: $e';
+      });
+    }
+  }
+
+
+
+  Future<void> fetchPrices() async {
+    try {
+      final response = await supabase.from('hotel_room').select().eq('id', roomId);
+
+     
+      setState(() {
+        price = response;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'Price fetch error: $e';
+      });
+
+
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+   
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +279,7 @@ class _HotelBookingState extends State<HotelBooking> {
                     ],
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       const Text("Check-out",
                           style: TextStyle(fontWeight: FontWeight.bold)),
@@ -173,14 +288,7 @@ class _HotelBookingState extends State<HotelBooking> {
                           : "Loading..."),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Guests",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text("2 Adults"),
-                    ],
-                  ),
+                 
                 ],
               ),
 
@@ -205,10 +313,10 @@ class _HotelBookingState extends State<HotelBooking> {
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   viewportFraction: 0.8,
                 ),
-                items: imageList.map((item) {
+                items: ImageUrls.map((item) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
+                    child: Image.network(
                       item,
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width,
@@ -218,61 +326,25 @@ class _HotelBookingState extends State<HotelBooking> {
               ),
 
               const SizedBox(height: 16),
-              const Text("Beach House Studio",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+             Text(
+                   hotelName.isNotEmpty ? hotelName[0]['name'] : "Loading hotel name...",
+             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               const SizedBox(height: 4),
-              const Text("Oceanfront rooms offering unparalleled views",
-                  style: TextStyle(color: Colors.grey)),
+              Text(
+                   hotelDescription.isNotEmpty ? hotelDescription[0]['description'] : "Loading hotel Description...",
+             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),),
               const SizedBox(height: 20),
 
               const Text("Best Available Rate",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 10),
-              const Text("\$2,770 per night (before taxes and fees)",
-                  style: TextStyle(fontSize: 14, color: Colors.black54)),
-              const SizedBox(height: 20),
+             Text(
+                  price.isNotEmpty ? price[0]['price'].toString() : "Loading price...",),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: const [
-                      Icon(Icons.bed, color: Colors.black54),
-                      SizedBox(width: 4),
-                      Text(
-                        "1 BED / EXTRA BED AVAILABLE",
-                        style: TextStyle(fontSize: 10, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: const [
-                      Icon(Icons.person, color: Colors.black54),
-                      SizedBox(width: 4),
-                      Text(
-                        "UP TO 3 GUESTS",
-                        style: TextStyle(fontSize: 10, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 24, 108, 219),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    child: const Text(
-                      "details",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
+                 const SizedBox(height: 20),
+             
+
+             
 
               const SizedBox(height: 40),
               Center(
