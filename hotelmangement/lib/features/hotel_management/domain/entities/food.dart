@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/food_image.dart';
 
 class Food extends Equatable {
   final String id;
@@ -7,14 +8,17 @@ class Food extends Equatable {
   final double price;
   final bool availability;
   final String type;
+  final List<FoodImage> images;
 
-  const Food(
-      {required this.id,
-      required this.hotelId,
-      required this.name,
-      required this.price,
-      required this.availability,
-      required this.type});
+  const Food({
+    required this.id,
+    required this.hotelId,
+    required this.name,
+    required this.price,
+    required this.availability,
+    required this.type,
+    this.images = const [],
+  });
 
   @override
   List<Object?> get props => [
@@ -24,6 +28,7 @@ class Food extends Equatable {
         price,
         availability,
         type,
+        images,
       ];
 
   Food copyWith({
@@ -33,6 +38,7 @@ class Food extends Equatable {
     double? price,
     bool? availability,
     String? type,
+    List<FoodImage>? images,
   }) {
     return Food(
       id: id ?? this.id,
@@ -41,6 +47,7 @@ class Food extends Equatable {
       price: price ?? this.price,
       availability: availability ?? this.availability,
       type: type ?? this.type,
+      images: images ?? this.images,
     );
   }
 }

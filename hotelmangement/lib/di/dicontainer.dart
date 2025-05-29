@@ -67,6 +67,8 @@ import 'package:hotelmangement/features/hotel_management/presentation/blocs/dash
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_ratings_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_state_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_own_hotels_famous_foods_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/foods/bloc/foods_bloc.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_foods_images_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_images_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_phone_numbers_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_room_images_cubit.dart';
@@ -241,6 +243,9 @@ void setUpLocator() {
   gi.registerFactory<HotelRoomImagesCubit>(() => HotelRoomImagesCubit(
       getRoomImages: gi<GetRoomImages>(),
       getRoomImageAuthUrl: gi<GetRoomImageAuthUrl>()));
+  gi.registerFactory<HotelFoodsImagesCubit>(() => HotelFoodsImagesCubit(
+      getFoodImages: gi<GetFoodImages>(),
+      getFoodImageAuthUrl: gi<GetFoodImageAuthUrl>()));
 
   // register bloc
   gi.registerFactory<HotelsBloc>(() => HotelsBloc(
@@ -250,4 +255,7 @@ void setUpLocator() {
   gi.registerFactory<RoomsBloc>(() => RoomsBloc(
       getRoomsInHotel: gi<GetRoomsInHotel>(),
       hotelRoomImagesCubit: gi<HotelRoomImagesCubit>()));
+  gi.registerFactory<FoodsBloc>(() => FoodsBloc(
+      getFoodsInHotel: gi<GetFoodsInHotel>(),
+      hotelFoodsImagesCubit: gi<HotelFoodsImagesCubit>()));
 }
