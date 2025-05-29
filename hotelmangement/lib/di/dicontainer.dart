@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/dashboard_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_food_data_source.dart';
@@ -25,6 +26,7 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/dashboa
 import 'package:hotelmangement/features/hotel_management/domain/usecases/dashboard/get_famous_food_in_all_hotels.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/dashboard/get_famous_foods_in_own_hotels.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/dashboard/get_hotel_ratings.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/dashboard/get_hotel_state.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/food/add_food_image.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/food/create_food.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/food/delete_food.dart';
@@ -58,6 +60,12 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/table/d
 import 'package:hotelmangement/features/hotel_management/domain/usecases/table/get_tables_in_hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/table/update_table.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/validation/hotel_authorize.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_active_table_bookings_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_active_takeaway_bookings_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_famous_foods_in_all_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_ratings_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_state_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_own_hotels_famous_foods_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // final gi = GetIt
@@ -201,4 +209,16 @@ void setUpLocator() {
   gi.registerLazySingleton<UpdateTable>(() => UpdateTable(
       repository: gi<HotelTableRepository>(),
       hotelAuthorize: gi<HotelAuthorize>()));
+
+  // reigister blocks
+  gi.registerFactory<GetActiveTableBookingsCubit>(
+      () => GetActiveTableBookingsCubit(usecase: gi<GetActiveTableBookings>()));
+  gi.registerFactory<GetActiveTakeawayBookingsCubit>(() =>
+      GetActiveTakeawayBookingsCubit(usecase: gi<GetActiveTakeawayBookings>()));
+  gi.registerFactory<GetFamousFoodsInAllCubit>(
+      () => GetFamousFoodsInAllCubit(usecase: gi<GetFamousFoodInAllHotels>()));
+  gi.registerFactory<GetHotelRatingsCubit>(() => gi<GetHotelRatingsCubit>());
+  gi.registerFactory<GetHotelStateCubit>(() => gi<GetHotelStateCubit>());
+  gi.registerFactory<GetOwnHotelsFamousFoodsCubit>(() =>
+      GetOwnHotelsFamousFoodsCubit(usecase: gi<GetFamousFoodsInOwnHotels>()));
 }
