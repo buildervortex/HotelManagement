@@ -9,23 +9,23 @@ sealed class GetHotelRatingsState extends Equatable {
 
 final class GetHotelRatingsInitial extends GetHotelRatingsState {}
 
-final class Empty extends GetHotelRatingsState {}
+final class GetHotelRatingsEmpty extends GetHotelRatingsState {}
 
-final class Loading extends GetHotelRatingsState {}
+final class GetHotelRatingsLoading extends GetHotelRatingsState {}
 
-final class Loaded extends GetHotelRatingsState {
+final class GetHotelRatingsLoaded extends GetHotelRatingsState {
   final List<RatingCount> ratings;
 
-  const Loaded({required this.ratings});
+  const GetHotelRatingsLoaded({required this.ratings});
 
   @override
   List<Object> get props => [ratings];
 }
 
-final class Error extends GetHotelRatingsState {
+final class GetHotelRatingsError extends GetHotelRatingsState {
   final String message;
 
-  const Error(this.message);
+  const GetHotelRatingsError(this.message);
 
   @override
   List<Object> get props => [message];

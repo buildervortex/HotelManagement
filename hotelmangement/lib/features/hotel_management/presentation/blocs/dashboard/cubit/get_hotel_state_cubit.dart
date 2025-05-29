@@ -10,14 +10,14 @@ class GetHotelStateCubit extends Cubit<GetHotelStateState> {
   GetHotelStateCubit({required this.usecase}) : super(GetHotelStateInitial());
 
   Future<void> getHotelState(String managerId) async {
-    emit(Loading());
+    emit(GetHotelStateLoading());
 
     final states = await usecase(Params(managerId: managerId));
 
     states.fold((failure) {
-      emit(Error("Failed to fetch hotel states"));
+      emit(GetHotelStateError("Failed to fetch hotel states"));
     }, (states) {
-      emit(Loaded(states: states));
+      emit(GetHotelStateLoaded(states: states));
     });
   }
 }

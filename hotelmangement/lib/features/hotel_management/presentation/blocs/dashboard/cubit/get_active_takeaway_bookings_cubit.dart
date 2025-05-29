@@ -13,18 +13,19 @@ class GetActiveTakeawayBookingsCubit
 
   Future<void> getActiveTakeawayBookings(
       DateTime datetime, String managerId) async {
-    emit(Loading());
+    emit(GetActiveTakeawayBookingsLoading());
 
     final bookings =
         await usecase(Params(datetime: datetime, managerId: managerId));
 
     bookings.fold((failure) {
-      emit(Error("Failed to fetch active takeaway bookings"));
+      emit(GetActiveTakeawayBookingsError(
+          "Failed to fetch active takeaway bookings"));
     }, (bookings) {
       if (bookings.isEmpty) {
-        emit(Empty());
+        emit(GetActiveTakeawayBookingsEmpty());
       } else {
-        emit(Loaded(bookings: bookings));
+        emit(GetActiveTakeawayBookingsLoaded(bookings: bookings));
       }
     });
   }

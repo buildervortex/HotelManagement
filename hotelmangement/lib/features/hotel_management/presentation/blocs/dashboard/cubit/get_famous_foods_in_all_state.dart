@@ -7,23 +7,23 @@ sealed class GetFamousFoodsInAllState extends Equatable {
   List<Object> get props => [];
 }
 
-final class Empty extends GetFamousFoodsInAllState {}
+final class GetFamousFoodsInAllEmpty extends GetFamousFoodsInAllState {}
 
-final class Loading extends GetFamousFoodsInAllState {}
+final class GetFamousFoodsInAllLoading extends GetFamousFoodsInAllState {}
 
-final class Loaded extends GetFamousFoodsInAllState {
+final class GetFamousFoodsInAllLoaded extends GetFamousFoodsInAllState {
   final List<FamousFood> famousFoods;
 
-  const Loaded({required this.famousFoods});
+  const GetFamousFoodsInAllLoaded({required this.famousFoods});
 
   @override
   List<Object> get props => [famousFoods];
 }
 
-final class Error extends GetFamousFoodsInAllState {
+final class GetFamousFoodsInAllError extends GetFamousFoodsInAllState {
   final String message;
 
-  const Error(this.message);
+  const GetFamousFoodsInAllError(this.message);
 
   @override
   List<Object> get props => [message];

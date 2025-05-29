@@ -8,19 +8,19 @@ part 'get_active_table_bookings_state.dart';
 class GetActiveTableBookingsCubit extends Cubit<GetActiveTableBookingsState> {
   final GetActiveTableBookings usecase;
   GetActiveTableBookingsCubit({required this.usecase})
-      : super(GetActiveTableBookingsInitial());
+      : super(GetActiveTableBookingEmpty());
 
   Future<void> getActiveTableBookings(
       DateTime datetime, String managerId) async {
-    emit(Loading());
+    emit(GetActiveTableBookingLoading());
 
     final bookings =
         await usecase(Params(datetime: datetime, managerId: managerId));
 
     bookings.fold((failure) {
-      emit(Error("Failed to fetch active table bookings"));
+      emit(GetActiveTableBookingError("Failed to fetch active table bookings"));
     }, (bookings) {
-      emit(Loaded(bookings: bookings));
+      emit(GetActiveTableBookingLoaded(bookings: bookings));
     });
   }
 }

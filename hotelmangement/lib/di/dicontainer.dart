@@ -124,6 +124,8 @@ void setUpLocator() {
       () => GetFamousFoodsInOwnHotels(repository: gi<DashboardRepository>()));
   gi.registerLazySingleton<GetHotelRatings>(
       () => GetHotelRatings(repository: gi<DashboardRepository>()));
+  gi.registerLazySingleton<GetHotelState>(
+      () => GetHotelState(repository: gi<DashboardRepository>()));
 
   // reigster food usecase
   gi.registerLazySingleton<AddFoodImage>(() => AddFoodImage(
@@ -217,8 +219,10 @@ void setUpLocator() {
       GetActiveTakeawayBookingsCubit(usecase: gi<GetActiveTakeawayBookings>()));
   gi.registerFactory<GetFamousFoodsInAllCubit>(
       () => GetFamousFoodsInAllCubit(usecase: gi<GetFamousFoodInAllHotels>()));
-  gi.registerFactory<GetHotelRatingsCubit>(() => gi<GetHotelRatingsCubit>());
-  gi.registerFactory<GetHotelStateCubit>(() => gi<GetHotelStateCubit>());
+  gi.registerFactory<GetHotelRatingsCubit>(
+      () => GetHotelRatingsCubit(usecase: gi<GetHotelRatings>()));
+  gi.registerFactory<GetHotelStateCubit>(
+      () => GetHotelStateCubit(usecase: gi<GetHotelState>()));
   gi.registerFactory<GetOwnHotelsFamousFoodsCubit>(() =>
       GetOwnHotelsFamousFoodsCubit(usecase: gi<GetFamousFoodsInOwnHotels>()));
 }

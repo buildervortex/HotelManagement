@@ -7,25 +7,23 @@ sealed class GetActiveTableBookingsState extends Equatable {
   List<Object> get props => [];
 }
 
-final class GetActiveTableBookingsInitial extends GetActiveTableBookingsState {}
+final class GetActiveTableBookingEmpty extends GetActiveTableBookingsState {}
 
-final class Empty extends GetActiveTableBookingsState {}
+final class GetActiveTableBookingLoading extends GetActiveTableBookingsState {}
 
-final class Loading extends GetActiveTableBookingsState {}
-
-final class Loaded extends GetActiveTableBookingsState {
+final class GetActiveTableBookingLoaded extends GetActiveTableBookingsState {
   final List<ActiveBooking> bookings;
 
-  const Loaded({required this.bookings});
+  const GetActiveTableBookingLoaded({required this.bookings});
 
   @override
   List<Object> get props => [bookings];
 }
 
-final class Error extends GetActiveTableBookingsState {
+final class GetActiveTableBookingError extends GetActiveTableBookingsState {
   final String message;
 
-  const Error(this.message);
+  const GetActiveTableBookingError(this.message);
 
   @override
   List<Object> get props => [message];

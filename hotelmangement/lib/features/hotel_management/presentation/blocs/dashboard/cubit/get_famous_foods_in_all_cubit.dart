@@ -8,17 +8,18 @@ part 'get_famous_foods_in_all_state.dart';
 
 class GetFamousFoodsInAllCubit extends Cubit<GetFamousFoodsInAllState> {
   final GetFamousFoodInAllHotels usecase;
-  GetFamousFoodsInAllCubit({required this.usecase}) : super(Empty());
+  GetFamousFoodsInAllCubit({required this.usecase})
+      : super(GetFamousFoodsInAllEmpty());
 
   Future<void> getFamousFoods() async {
-    emit(Loading());
+    emit(GetFamousFoodsInAllLoading());
 
     final foods = await usecase(NoParams());
 
     foods.fold((failure) {
-      emit(Error("Failed to fetch famous foods"));
+      emit(GetFamousFoodsInAllError("Failed to fetch famous foods"));
     }, (foods) {
-      emit(Loaded(famousFoods: foods));
+      emit(GetFamousFoodsInAllLoaded(famousFoods: foods));
     });
   }
 }

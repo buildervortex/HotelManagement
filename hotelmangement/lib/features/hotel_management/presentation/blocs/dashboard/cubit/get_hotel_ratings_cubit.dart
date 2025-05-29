@@ -11,14 +11,14 @@ class GetHotelRatingsCubit extends Cubit<GetHotelRatingsState> {
       : super(GetHotelRatingsInitial());
 
   Future<void> getHotelRatings(String managerId) async {
-    emit(Loading());
+    emit(GetHotelRatingsLoading());
 
     final ratings = await usecase(Params(managerId: managerId));
 
     ratings.fold((failure) {
-      emit(Error("Failed to fetch hotel ratings"));
+      emit(GetHotelRatingsError("Failed to fetch hotel ratings"));
     }, (ratings) {
-      emit(Loaded(ratings: ratings));
+      emit(GetHotelRatingsLoaded(ratings: ratings));
     });
   }
 }

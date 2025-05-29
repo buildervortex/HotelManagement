@@ -7,25 +7,30 @@ sealed class GetActiveTakeawayBookingsState extends Equatable {
   List<Object> get props => [];
 }
 
-final class GetActiveTakeawayBookingsInitial extends GetActiveTakeawayBookingsState {}
+final class GetActiveTakeawayBookingsInitial
+    extends GetActiveTakeawayBookingsState {}
 
-final class Empty extends GetActiveTakeawayBookingsState {}
+final class GetActiveTakeawayBookingsEmpty
+    extends GetActiveTakeawayBookingsState {}
 
-final class Loading extends GetActiveTakeawayBookingsState {}
+final class GetActiveTakeawayBookingsLoading
+    extends GetActiveTakeawayBookingsState {}
 
-final class Loaded extends GetActiveTakeawayBookingsState {
+final class GetActiveTakeawayBookingsLoaded
+    extends GetActiveTakeawayBookingsState {
   final List<ActiveBooking> bookings;
 
-  const Loaded({required this.bookings});
+  const GetActiveTakeawayBookingsLoaded({required this.bookings});
 
   @override
   List<Object> get props => [bookings];
 }
 
-final class Error extends GetActiveTakeawayBookingsState {
+final class GetActiveTakeawayBookingsError
+    extends GetActiveTakeawayBookingsState {
   final String message;
 
-  const Error(this.message);
+  const GetActiveTakeawayBookingsError(this.message);
 
   @override
   List<Object> get props => [message];
