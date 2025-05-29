@@ -17,7 +17,7 @@ class RoomImage extends Image {
   // }
 
   @override
-  Image copyWith({String? id, String? imagePath, String? imageUrl}) {
+  RoomImage copyWith({String? id, String? imagePath, String? imageUrl}) {
     return RoomImage(
       roomId: roomId,
       id: id ?? this.id,

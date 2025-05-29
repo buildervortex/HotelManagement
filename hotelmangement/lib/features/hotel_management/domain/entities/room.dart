@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/room_image.dart';
 
 class Room extends Equatable {
   final String id;
@@ -9,6 +10,7 @@ class Room extends Equatable {
   final String floor;
   final double price;
   final bool available;
+  final List<RoomImage> images;
 
   const Room({
     required this.id,
@@ -19,6 +21,7 @@ class Room extends Equatable {
     required this.floor,
     required this.price,
     required this.available,
+    this.images = const [],
   });
 
   @override
@@ -31,6 +34,7 @@ class Room extends Equatable {
         floor,
         price,
         available,
+        images,
       ];
 
   Room copyWith({
@@ -42,15 +46,18 @@ class Room extends Equatable {
     String? floor,
     double? price,
     bool? available,
+    List<RoomImage>? images,
   }) {
     return Room(
-        id: id ?? this.id,
-        hotelId: hotelId ?? this.hotelId,
-        roomNumber: roomNumber ?? this.roomNumber,
-        description: description ?? this.description,
-        space: space ?? this.space,
-        floor: floor ?? this.floor,
-        price: price ?? this.price,
-        available: available ?? this.available);
+      id: id ?? this.id,
+      hotelId: hotelId ?? this.hotelId,
+      roomNumber: roomNumber ?? this.roomNumber,
+      description: description ?? this.description,
+      space: space ?? this.space,
+      floor: floor ?? this.floor,
+      price: price ?? this.price,
+      available: available ?? this.available,
+      images: images ?? this.images,
+    );
   }
 }

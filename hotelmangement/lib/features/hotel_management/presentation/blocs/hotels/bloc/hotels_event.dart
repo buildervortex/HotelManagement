@@ -22,3 +22,14 @@ class HotelImageReceived extends HotelsEvent {
   @override
   List<Object> get props => [hotelId, images];
 }
+
+class HotelPhoneNumbersReceived extends HotelsEvent {
+  final String hotelId;
+  final List<HotelPhoneNumber> numbers;
+
+  const HotelPhoneNumbersReceived(
+      {required this.hotelId, required this.numbers});
+
+  @override
+  List<Object> get props => [hotelId, numbers];
+}

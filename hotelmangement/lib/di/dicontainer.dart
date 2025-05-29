@@ -68,7 +68,10 @@ import 'package:hotelmangement/features/hotel_management/presentation/blocs/dash
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_state_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_own_hotels_famous_foods_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_images_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_phone_numbers_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_room_images_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/bloc/hotels_bloc.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/rooms/bloc/rooms_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // final gi = GetIt
@@ -233,9 +236,18 @@ void setUpLocator() {
   gi.registerFactory<HotelImagesCubit>(() => HotelImagesCubit(
       getHotelImages: gi<GetHotelImages>(),
       getHotelImageAuthUrl: gi<GetHotelImageAuthUrl>()));
+  gi.registerFactory<HotelPhoneNumbersCubit>(() =>
+      HotelPhoneNumbersCubit(getHotelPhoneNumbers: gi<GetHotelPhoneNumbers>()));
+  gi.registerFactory<HotelRoomImagesCubit>(() => HotelRoomImagesCubit(
+      getRoomImages: gi<GetRoomImages>(),
+      getRoomImageAuthUrl: gi<GetRoomImageAuthUrl>()));
 
   // register bloc
   gi.registerFactory<HotelsBloc>(() => HotelsBloc(
       getHotelsUsecase: gi<GetHotels>(),
-      hotelImagesCubit: gi<HotelImagesCubit>()));
+      hotelImagesCubit: gi<HotelImagesCubit>(),
+      hotelPhoneNumbersCubit: gi<HotelPhoneNumbersCubit>()));
+  gi.registerFactory<RoomsBloc>(() => RoomsBloc(
+      getRoomsInHotel: gi<GetRoomsInHotel>(),
+      hotelRoomImagesCubit: gi<HotelRoomImagesCubit>()));
 }

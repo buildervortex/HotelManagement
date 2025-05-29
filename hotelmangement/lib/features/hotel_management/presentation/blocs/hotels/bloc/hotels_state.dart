@@ -49,3 +49,14 @@ final class HotelImageLoaded extends HotelsState {
   @override
   List<Object> get props => [images, hotelId];
 }
+
+final class HotelPhoneNumberLoaded extends HotelsState {
+  final List<HotelPhoneNumber> phoneNumbers;
+  final String hotelId;
+
+  const HotelPhoneNumberLoaded(
+      {required this.phoneNumbers, required this.hotelId});
+
+  @override
+  List<Object> get props => [phoneNumbers, hotelId];
+}
