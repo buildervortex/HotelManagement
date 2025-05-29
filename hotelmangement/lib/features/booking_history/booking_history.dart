@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -9,53 +9,151 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  final supabase = Supabase.instance.client;
+
+  bool isLoading = true;
+  String? error;
+
+  DateTime? checkInDate;
+
+  final String hotelId = '550e8400-e29b-41d4-a716-446655440002';
+  final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
+  final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
+
   List<Map<String, dynamic>> bookings = [
     {
-      "image": "assets/booking_history/hotel1.jpg",
-      "name": "Heden Golf",
-      "rating": 3.9,
-      "reviews": 200,
-      "date": "23 July 2019",
-      "discount": "25% OFF",
-      "price": "\$127",
+      "image": "assets/booking_history/placeholder.jpg", // local placeholder
+      "name": "Loading...",
+      "date": "Date unknown",
+      "price": "\$0",
     },
     {
       "image": "assets/booking_history/hotel2.jpg",
-      "name": "Sunset Resort",
+      "name": "Loading...",
       "rating": 4.5,
       "reviews": 320,
-      "date": "12 June 2021",
+      "date": "Date unknown",
       "discount": "30% OFF",
-      "price": "\$99",
+      "price": "\$0",
     },
     {
       "image": "assets/booking_history/hotel5.jpg",
-      "name": "Ocean View Hotel",
+      "name": "Loading...",
       "rating": 4.2,
       "reviews": 150,
-      "date": "5 March 2023",
+      "date": "Date unknown",
       "discount": "20% OFF",
-      "price": "\$150",
+      "price": "\$0",
     },
     {
       "image": "assets/booking_history/hotel4.jpg",
-      "name": "Ocean View Hotel",
+      "name": "Loading...",
       "rating": 4.2,
       "reviews": 150,
-      "date": "5 March 2023",
+      "date": "Date unknown",
       "discount": "20% OFF",
-      "price": "\$150",
+      "price": "\$0",
     },
     {
       "image": "assets/booking_history/hotel3.jpg",
-      "name": "Ocean View Hotel",
+      "name": "Loading...",
       "rating": 4.2,
       "reviews": 150,
-      "date": "5 March 2023",
+      "date": "Date unknown",
       "discount": "20% OFF",
-      "price": "\$150",
+      "price": "\$0",
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPrices();
+    fetchRoomBookingDetails();
+    fetchHotelName();
+  }
+
+  Future<void> fetchPrices() async {
+    try {
+      final response = await supabase
+          .from('hotel_room')
+          .select()
+          .eq('hotel_id', hotelId);
+
+      final updatedBookings = [...bookings];
+      for (int i = 0; i < updatedBookings.length && i < response.length; i++) {
+        if (response[i]['price'] != null) {
+          updatedBookings[i]['price'] = "\$${response[i]['price']}";
+        }
+      }
+
+      setState(() {
+        bookings = updatedBookings;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'Price fetch error: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> fetchRoomBookingDetails() async {
+    try {
+      final response = await supabase
+          .from('room_booking')
+          .select('check_in, check_out')
+          .eq('id', bookingId)
+          .limit(1)
+          .maybeSingle();
+
+      final imageNetworkData = await supabase.rpc("get_booking_room_image",
+          params: {"room_booking_id": bookingId}).single();
+
+      var newImageUrl = await supabase.storage
+          .from("roomimages")
+          .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
+
+      if (response != null && bookings.isNotEmpty) {
+        setState(() {
+          checkInDate = DateTime.parse(response['check_in']);
+          bookings[0]["date"] = formatDateTime(checkInDate!);
+          bookings[0]["image"] = newImageUrl; // network image
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Booking fetch error: $e';
+      });
+    }
+  }
+
+  Future<void> fetchHotelName() async {
+    try {
+      final response = await supabase
+          .from('hotel')
+          .select('name')
+          .eq('manager_id', managerId);
+
+      if (response != null && response is List && response.isNotEmpty) {
+        setState(() {
+          bookings[0]['name'] = response[0]['name'];
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Hotel name fetch error: $e';
+      });
+    }
+  }
+
+  String formatDateTime(DateTime dateTime) {
+    return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +165,7 @@ class _HistoryState extends State<History> {
       appBar: AppBar(
         title: Text(
           "Booking History",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize:
-                20 * textScale, // Adjust font size based on textScaleFactor
-          ),
+          style: TextStyle(color: Colors.black, fontSize: 20 * textScale),
         ),
         backgroundColor: Colors.white,
         actions: [
@@ -83,16 +177,13 @@ class _HistoryState extends State<History> {
             },
             child: Text(
               "Clear All",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 16 * textScale,
-              ),
+              style: TextStyle(color: Colors.red, fontSize: 16 * textScale),
             ),
           )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
+        padding: EdgeInsets.all(screenWidth * 0.04),
         child: Column(
           children: [
             TextField(
@@ -110,15 +201,14 @@ class _HistoryState extends State<History> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                     child: Text(
                       "Hotels",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16 * textScale),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16 * textScale,
+                      ),
                     ),
                   ),
                 ),
@@ -129,128 +219,105 @@ class _HistoryState extends State<History> {
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                     ),
-                    child: Text(
-                      "Date",
-                      style: TextStyle(fontSize: 16 * textScale),
-                    ),
+                    child: Text("Date", style: TextStyle(fontSize: 16 * textScale)),
                   ),
                 ),
               ],
             ),
             SizedBox(height: screenHeight * 0.02),
+            if (error != null)
+              Text(error!, style: TextStyle(color: Colors.red)),
             Expanded(
-              child: bookings.isEmpty
-                  ? Center(child: Text("No bookings available"))
-                  : ListView.builder(
-                      itemCount: bookings.length,
-                      itemBuilder: (context, index) {
-                        var booking = bookings[index];
-                        return Dismissible(
-                          key: UniqueKey(),
-                          direction: DismissDirection.endToStart,
-                          onDismissed: (direction) {
-                            setState(() {
-                              bookings.removeAt(index);
-                            });
-                          },
-                          background: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Icon(Icons.delete, color: Colors.white),
-                          ),
-                          child: Card(
-                            margin: EdgeInsets.only(bottom: 10),
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(screenWidth * 0.04),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      booking["image"],
-                                      width: screenWidth *
-                                          0.3, // Responsive image width
-                                    ),
-                                  ),
-                                  SizedBox(width: screenWidth * 0.05),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          booking["name"],
-                                          style: TextStyle(
-                                            fontSize: 12 * textScale,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(height: screenHeight * 0.01),
-                                        Row(
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : bookings.isEmpty
+                      ? Center(child: Text("No bookings available"))
+                      : ListView.builder(
+                          itemCount: bookings.length,
+                          itemBuilder: (context, index) {
+                            var booking = bookings[index];
+                            return Dismissible(
+                              key: UniqueKey(),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                setState(() {
+                                  bookings.removeAt(index);
+                                });
+                              },
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerRight,
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(Icons.delete, color: Colors.white),
+                              ),
+                              child: Card(
+                                margin: EdgeInsets.only(bottom: 10),
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(screenWidth * 0.04),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: booking["image"].toString().startsWith("http")
+                                            ? Image.network(
+                                                booking["image"],
+                                                width: screenWidth * 0.3,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                booking["image"],
+                                                width: screenWidth * 0.3,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                      SizedBox(width: screenWidth * 0.05),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Icon(Icons.star,
-                                                color: Colors.amber, size: 10),
                                             Text(
-                                              " ${booking["rating"]} (${booking["reviews"]} reviews)",
+                                              booking["name"],
+                                              style: TextStyle(
+                                                fontSize: 12 * textScale,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(height: screenHeight * 0.01),
+                                           
+                                            SizedBox(height: screenHeight * 0.01),
+                                            Text(
+                                              "Date: ${booking["date"]}",
+                                              style: TextStyle(fontSize: 10 * textScale),
+                                            ),
+                                          
+                                            Text(
+                                              booking["price"].toString(),
                                               style: TextStyle(
                                                 fontSize: 10 * textScale,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.blue,
                                               ),
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: screenHeight * 0.01),
-                                        Text(
-                                          "Date: ${booking["date"]}",
-                                          style: TextStyle(
-                                            fontSize: 10 * textScale,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Discount: ${booking["discount"]}",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 10 * textScale,
-                                          ),
-                                        ),
-                                        Text(
-                                          booking["price"],
-                                          style: TextStyle(
-                                            fontSize: 10 * textScale,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
+                                      ),
                                       TextButton(
-                                        child: const Text(
-                                          'Booking Now',
-                                          style: TextStyle(
-                                            fontSize: 10, // Minimized font size
-                                          ),
-                                        ),
+                                        child: const Text('Booking Now', style: TextStyle(fontSize: 10)),
                                         onPressed: () {},
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
             ),
           ],
         ),

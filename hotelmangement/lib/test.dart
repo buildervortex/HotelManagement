@@ -10,6 +10,7 @@ import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
 // import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 import "package:hotelmangement/features/booking_history/booking_history.dart";
+import 'package:hotelmangement/features/hotel_management/data/dataSources/dashboard_data_source.dart';
 
 import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_food_data_source.dart';
@@ -17,6 +18,7 @@ import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_room_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/hotel_table_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/manager_data_source.dart';
+import 'package:hotelmangement/features/hotel_management/data/repositories/dashboard_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/file_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_food_repository_impl.dart';
 import 'package:hotelmangement/features/hotel_management/data/repositories/hotel_repository_impl.dart';
@@ -59,6 +61,8 @@ Future<void> testCall() async {
       HotelFoodDataSourceImpl(client: Supabase.instance.client);
   final tableDataSource =
       HotelTableDataSourceImpl(client: Supabase.instance.client);
+  final dashboardDataSource =
+      DashboardDataSourceImpl(client: Supabase.instance.client);
 
   final repo = HotelRepositoryImpl(
       dataSource: hotelDataSource, fileDataSource: fileRepo);
@@ -68,14 +72,17 @@ Future<void> testCall() async {
   final frepo = HotelFoodRepositoryImpl(
       dataSource: foodDataSource, fileDataSource: fileRepo);
   final trepo = HotelTableRepositoryImpl(dataSource: tableDataSource);
+  final drepo = DashboardRepositoryImpl(dataSource: dashboardDataSource);
 
-  final response = await Supabase.instance.client.rpc("get_booking_room_image",
-      params: {"room_booking_id": '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143'}).single();
+  // final response = await Supabase.instance.client.rpc("get_booking_room_image",
+  //     params: {
+  //       "room_booking_id": '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143'
+  //     }).single();
 
-  print("Response: $response");
-  print("booking_id ${response['booking_id']}");
-  print("room_id ${response['room_id']}");
-  print("file ${response['file']}");
+  // print("Response: $response");
+  // print("booking_id ${response['booking_id']}");
+  // print("room_id ${response['room_id']}");
+  // print("file ${response['file']}");
 
   // await repo.addHotelImage(hotelId, "assets/profile/logout.png");
   // await repo.addHotelPhoneNumber(hotelId, "0714587248", "admin-role");
@@ -154,6 +161,15 @@ Future<void> testCall() async {
   //     tableNumber: "T2",
   //     space: 60,
   //     available: false));
+
+  // print(await drepo.getFamousFoodInAll());
+  // print(await drepo.getFamousFoodsInCurrentManagerHotels(managerId: managerId));
+  // print(await drepo.activeTableBookings(
+  //     datetime: DateTime.now(), managerId: managerId));
+  // print(await drepo.activeTakeAwayBookings(
+  //     datetime: DateTime.now(), managerId: managerId));
+  // print(await drepo.getHotelRatings(managerId: managerId));
+  // print(await drepo.getHotelState(managerId: managerId));
 
   await Future.delayed(const Duration(seconds: 4));
 }
