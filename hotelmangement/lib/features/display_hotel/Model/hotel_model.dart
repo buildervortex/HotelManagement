@@ -17,7 +17,7 @@ class HotelModel {
     required this.bathroom,
     required this.Mobile,
     required this.Facilities,
-    required this.category
+    required this.category, required String id
   });
 }
 
