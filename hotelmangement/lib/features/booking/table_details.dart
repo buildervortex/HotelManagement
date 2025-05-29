@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StaticBookingDetailsPage extends StatelessWidget {
-  // Static example data
   final String customerName = "John Doe";
   final String contactNumber = "123-456-7890";
   final DateTime bookingDate = DateTime(2025, 6, 15);
