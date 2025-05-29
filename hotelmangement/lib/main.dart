@@ -15,15 +15,15 @@ import 'package:hotelmangement/test.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/booking/table_booking.dart';
 //import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
-import 'package:hotelmangement/features/booking_history/booking_test.dart';
+//import 'package:hotelmangement/features/booking_history/booking_calendar.dart';
 
 import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
-import 'package:hotelmangement/features/onboarding/splash_screen.dart';
+//import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
 
-import 'features/booking_history/hotel_booking_history.dart';
-import 'package:hotelmangement/features/booking_history/test_history.dart';
+//import 'features/booking_history/hotel_booking_history.dart';
+
 
 
 void main() async {
@@ -52,13 +52,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
       home:BookingCalendar(),
 
       // home: GoogleMapPolyline(),
-=======
-      home: HotelBooking(),
->>>>>>> 5c9d0bbbce10d009771abae921dfea665d020b0f
     );
   }
 }
