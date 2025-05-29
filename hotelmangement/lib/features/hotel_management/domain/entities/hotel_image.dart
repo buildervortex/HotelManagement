@@ -4,7 +4,10 @@ class HotelImage extends Image {
   final String hotelId;
 
   const HotelImage(
-      {required super.id, required super.imagePath, required this.hotelId});
+      {required super.id,
+      required super.imagePath,
+      required this.hotelId,
+      super.imageUrl});
 
   @override
   List<Object?> get props => [id, imagePath, hotelId];
@@ -15,11 +18,12 @@ class HotelImage extends Image {
   //       id: id, imagePath: imagePath, hotelId: hotelId ?? this.hotelId);
   // }
   @override
-  Image copyWith({String? id, String? imagePath, String? hotelId}) {
+  HotelImage copyWith(
+      {String? id, String? imagePath, String? hotelId, String? imageUrl}) {
     return HotelImage(
-      id: id ?? this.id,
-      imagePath: imagePath ?? this.imagePath,
-      hotelId: hotelId ?? this.hotelId,
-    );
+        id: id ?? this.id,
+        imagePath: imagePath ?? this.imagePath,
+        hotelId: hotelId ?? this.hotelId,
+        imageUrl: imageUrl ?? this.imageUrl);
   }
 }

@@ -34,7 +34,7 @@ class _HotelListTileState extends State<HotelListTile> {
             Text(widget.hotel.address),
             Row(
               children: _cachedImages.isNotEmpty
-                  ? _cachedImages.map((image) => Text(image.imagePath)).toList()
+                  ? _cachedImages.map((image) => Text(image.imageUrl ?? "no url")).toList()
                   : [Text("No Data")],
             )
           ],

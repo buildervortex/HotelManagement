@@ -230,8 +230,9 @@ void setUpLocator() {
       () => GetHotelStateCubit(usecase: gi<GetHotelState>()));
   gi.registerFactory<GetOwnHotelsFamousFoodsCubit>(() =>
       GetOwnHotelsFamousFoodsCubit(usecase: gi<GetFamousFoodsInOwnHotels>()));
-  gi.registerFactory<HotelImagesCubit>(
-      () => HotelImagesCubit(getHotelImages: gi<GetHotelImages>()));
+  gi.registerFactory<HotelImagesCubit>(() => HotelImagesCubit(
+      getHotelImages: gi<GetHotelImages>(),
+      getHotelImageAuthUrl: gi<GetHotelImageAuthUrl>()));
 
   // register bloc
   gi.registerFactory<HotelsBloc>(() => HotelsBloc(
