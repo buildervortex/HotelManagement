@@ -4,12 +4,7 @@ import 'package:hotelmangement/features/auth/home.dart';
 import 'package:hotelmangement/features/profile/editProfile.dart';
 import 'package:hotelmangement/features/profile/logout.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: MyProfileScreen(),
-  ));
-}
+
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});

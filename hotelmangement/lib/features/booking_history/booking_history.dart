@@ -27,42 +27,7 @@ class _HistoryState extends State<History> {
       "date": "Date unknown",
       "price": "\$0",
     },
-    {
-      "image": "assets/booking_history/hotel2.jpg",
-      "name": "Loading...",
-      "rating": 4.5,
-      "reviews": 320,
-      "date": "Date unknown",
-      "discount": "30% OFF",
-      "price": "\$0",
-    },
-    {
-      "image": "assets/booking_history/hotel5.jpg",
-      "name": "Loading...",
-      "rating": 4.2,
-      "reviews": 150,
-      "date": "Date unknown",
-      "discount": "20% OFF",
-      "price": "\$0",
-    },
-    {
-      "image": "assets/booking_history/hotel4.jpg",
-      "name": "Loading...",
-      "rating": 4.2,
-      "reviews": 150,
-      "date": "Date unknown",
-      "discount": "20% OFF",
-      "price": "\$0",
-    },
-    {
-      "image": "assets/booking_history/hotel3.jpg",
-      "name": "Loading...",
-      "rating": 4.2,
-      "reviews": 150,
-      "date": "Date unknown",
-      "discount": "20% OFF",
-      "price": "\$0",
-    },
+   
   ];
 
   @override

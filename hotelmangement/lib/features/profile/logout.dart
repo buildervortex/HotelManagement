@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/home.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: LogoutScreen(),
-    ),
-  );
-}
 
 class LogoutScreen extends StatefulWidget {
   const LogoutScreen({super.key});

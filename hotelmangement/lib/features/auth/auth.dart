@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 import 'package:hotelmangement/features/auth/register.dart';
 
-void main(){
-  runApp(MaterialApp(
-    home: MyApp(),
-  )
-  );
-}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
