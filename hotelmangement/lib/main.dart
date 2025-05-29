@@ -25,7 +25,6 @@ import 'package:hotelmangement/features/booking/room_booking_details.dart';
 //import 'features/booking_history/hotel_booking_history.dart';
 
 
-
 void main() async {
   // ensure the flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,9 +51,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:BookingCalendar(),
-
-      // home: GoogleMapPolyline(),
+      home: ManagerMainPage(
+        managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
+      ),
     );
   }
 }
