@@ -10,118 +10,24 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   final supabase = Supabase.instance.client;
-  
+
   bool isLoading = true;
   String? error;
 
   DateTime? checkInDate;
-   late String imageUrl;
 
   final String hotelId = '550e8400-e29b-41d4-a716-446655440002';
   final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
   final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
 
-  @override
-  void initState() {
-    super.initState();
-    fetchPrices();
-    fetchRoomBookingDetails();
-    fetchHotelName();
-  }
-
-  Future<void> fetchPrices() async {
-    try {
-      final response = await supabase.from('hotel_room').select().eq('hotel_id', hotelId);
-
-      final updatedBookings = [...bookings];
-      for (int i = 0; i < updatedBookings.length && i < response.length; i++) {
-        if (response[i]['price'] != null) {
-          updatedBookings[i]['price'] = "\$${response[i]['price']}";
-        }
-      }
-
-      setState(() {
-        bookings = updatedBookings;
-      });
-    } catch (e) {
-      setState(() {
-        error = 'Price fetch error: $e';
-      });
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  Future<void> fetchRoomBookingDetails() async {
-    try {
-      final response = await supabase
-          .from('room_booking')
-          .select('check_in, check_out')
-          .eq('id', bookingId)
-          .limit(1)
-          .maybeSingle();
-
-
-
-      final imageNetworkData = await supabase.rpc("get_booking_room_image",
-          params: {"room_booking_id": bookingId}).single();
-
-        var newImageUrl = await supabase.storage
-          .from("roomimages")
-          .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
-
-
-
-      if (response != null && bookings.isNotEmpty) {
-        setState(() {
-          checkInDate = DateTime.parse(response['check_in']);
-          bookings[0]["date"] = formatDateTime(checkInDate!);
-        });
-      }
-    } catch (e) {
-      setState(() {
-        error = 'Booking fetch error: $e';
-      });
-    }
-  }
-
-  String formatDateTime(DateTime dateTime) {
-    return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
-        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-  }
-
-  Future<void> fetchHotelName() async {
-  try {
-    final response = await supabase
-        .from('hotel')
-        .select('name')
-        .eq('manager_id', managerId); // This returns a List
-
-    if (response != null && response is List && response.isNotEmpty) {
-      setState(() {
-        // Just use the first name for now, or loop if needed
-        bookings[0]['name'] = response[0]['name'];
-      });
-    }
-  } catch (e) {
-    setState(() {
-      error = 'Hotel name fetch error: $e';
-    });
-  }
-}
-
-
-
-List<Map<String, dynamic>> bookings = [
+  List<Map<String, dynamic>> bookings = [
     {
-      //"image": Image.network(bookings["image"]),
+      "image": "assets/booking_history/placeholder.jpg", // local placeholder
       "name": "Loading...",
-      "rating": 3.9,
-      "reviews": 200,
+     
+      
       "date": "Date unknown",
-      "discount": "25% OFF",
+    
       "price": "\$0",
     },
     {
@@ -162,45 +68,95 @@ List<Map<String, dynamic>> bookings = [
     },
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    fetchPrices();
+    fetchRoomBookingDetails();
+    fetchHotelName();
+  }
 
+  Future<void> fetchPrices() async {
+    try {
+      final response = await supabase
+          .from('hotel_room')
+          .select()
+          .eq('hotel_id', hotelId);
 
+      final updatedBookings = [...bookings];
+      for (int i = 0; i < updatedBookings.length && i < response.length; i++) {
+        if (response[i]['price'] != null) {
+          updatedBookings[i]['price'] = "\$${response[i]['price']}";
+        }
+      }
 
+      setState(() {
+        bookings = updatedBookings;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'Price fetch error: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
+  Future<void> fetchRoomBookingDetails() async {
+    try {
+      final response = await supabase
+          .from('room_booking')
+          .select('check_in, check_out')
+          .eq('id', bookingId)
+          .limit(1)
+          .maybeSingle();
 
+      final imageNetworkData = await supabase.rpc("get_booking_room_image",
+          params: {"room_booking_id": bookingId}).single();
 
+      var newImageUrl = await supabase.storage
+          .from("roomimages")
+          .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
 
+      if (response != null && bookings.isNotEmpty) {
+        setState(() {
+          checkInDate = DateTime.parse(response['check_in']);
+          bookings[0]["date"] = formatDateTime(checkInDate!);
+          bookings[0]["image"] = newImageUrl; // network image
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Booking fetch error: $e';
+      });
+    }
+  }
 
+  Future<void> fetchHotelName() async {
+    try {
+      final response = await supabase
+          .from('hotel')
+          .select('name')
+          .eq('manager_id', managerId);
 
+      if (response != null && response is List && response.isNotEmpty) {
+        setState(() {
+          bookings[0]['name'] = response[0]['name'];
+        });
+      }
+    } catch (e) {
+      setState(() {
+        error = 'Hotel name fetch error: $e';
+      });
+    }
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  String formatDateTime(DateTime dateTime) {
+    return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -309,10 +265,19 @@ List<Map<String, dynamic>> bookings = [
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child: Image.asset(
-                                          booking["image"],
-                                          width: screenWidth * 0.3,
-                                        ),
+                                        child: booking["image"].toString().startsWith("http")
+                                            ? Image.network(
+                                                booking["image"],
+                                                width: screenWidth * 0.3,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                booking["image"],
+                                                width: screenWidth * 0.3,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                       SizedBox(width: screenWidth * 0.05),
                                       Expanded(
@@ -327,27 +292,13 @@ List<Map<String, dynamic>> bookings = [
                                               ),
                                             ),
                                             SizedBox(height: screenHeight * 0.01),
-                                            Row(
-                                              children: [
-                                                Icon(Icons.star, color: Colors.amber, size: 10),
-                                                Text(
-                                                  " ${booking["rating"]} (${booking["reviews"]} reviews)",
-                                                  style: TextStyle(fontSize: 10 * textScale),
-                                                ),
-                                              ],
-                                            ),
+                                           
                                             SizedBox(height: screenHeight * 0.01),
                                             Text(
                                               "Date: ${booking["date"]}",
                                               style: TextStyle(fontSize: 10 * textScale),
                                             ),
-                                            Text(
-                                              "Discount: ${booking["discount"]}",
-                                              style: TextStyle(
-                                                color: Colors.green,
-                                                fontSize: 10 * textScale,
-                                              ),
-                                            ),
+                                          
                                             Text(
                                               booking["price"].toString(),
                                               style: TextStyle(

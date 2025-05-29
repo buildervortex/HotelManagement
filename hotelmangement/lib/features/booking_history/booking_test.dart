@@ -12,20 +12,25 @@ class _BookingDetailsState extends State<BookingDetails> {
   final supabase = Supabase.instance.client;
 
   List<dynamic> phoneNumbers = [];
+   List<dynamic> price = [];
+  
   bool isLoading = true;
   String? error;
 
   DateTime? checkInDate;
   DateTime? checkOutDate;
+  
 
   final String hotelId = '550e8400-e29b-41d4-a716-446655440001';
   final String bookingId = '880e8400-e29b-41d4-a716-446655440002';
+  final String roomId= '660e8400-e29b-41d4-a716-446655440001';
 
   @override
   void initState() {
     super.initState();
     fetchHotelPhoneNumbers();
     fetchRoomBookingDetails();
+    fetchPrices();
   }
 
   Future<void> fetchHotelPhoneNumbers() async {
@@ -55,8 +60,8 @@ class _BookingDetailsState extends State<BookingDetails> {
           .from('room_booking')
           .select('check_in, check_out')
           .eq('booking_id', bookingId)
-          .limit(1)
           .maybeSingle();
+      
 
       if (response != null) {
         setState(() {
@@ -70,6 +75,34 @@ class _BookingDetailsState extends State<BookingDetails> {
       });
     }
   }
+
+
+Future<void> fetchPrices() async {
+    try {
+      final response = await supabase.from('hotel_room').select().eq('id', roomId);
+
+     
+      setState(() {
+        price = response;
+      });
+    } catch (e) {
+      setState(() {
+        error = 'Price fetch error: $e';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+
+
+
+
+
+
+
 
   String formatDateTime(DateTime dateTime) {
     return "${dateTime.day}/${dateTime.month}/${dateTime.year}, "
@@ -127,24 +160,27 @@ class _BookingDetailsState extends State<BookingDetails> {
                   : "Loading...",
               normalStyle,
             ),
-            buildRow("No. of Adults", "2", normalStyle),
-            buildRow("No. of Children", "2", normalStyle),
-            buildRow("No. of Rooms", "1", normalStyle),
+           
             const Divider(height: 32),
-            buildRow("Price", "\$125", normalStyle),
-            buildRow("Tax", "\$20", normalStyle),
-            buildRow("Total", "\$145", boldStyle),
+           
+           buildRow(
+                  "Room Price",
+                   price.isNotEmpty
+                  ? price.map((p) => "\$${p['price']}").join(", ")
+                 : "No data",
+                 boldStyle,
+                 ),
+
             const Divider(height: 32),
             Row(children: [Text("Food details", style: boldStyle)]),
-            const SizedBox(height: 16),
-            buildRow("Bagels with turkey and bacon", "\$10", normalStyle),
-            buildRow("Sandwich", "\$5", normalStyle),
-            const Divider(height: 32),
-            buildRow("Subtotal", "\$15", normalStyle),
-            buildRow("Service tax", "\$2", normalStyle),
-            const Divider(height: 32),
-            buildRow("Total", "\$17", boldStyle),
+            
+          
+            buildRow("Total food Price", "\$17", boldStyle),
             const SizedBox(height: 30),
+             const Divider(height: 32),
+            buildRow("Total Price", "\$17", boldStyle),
+            const SizedBox(height: 30),
+
             Row(children: [Text("Phone Numbers", style: boldStyle)]),
             const SizedBox(height: 10),
             ...phoneNumbers.map((phone) => buildRow(
