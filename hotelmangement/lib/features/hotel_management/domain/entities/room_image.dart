@@ -3,7 +3,10 @@ import 'package:hotelmangement/features/hotel_management/domain/entities/image.d
 class RoomImage extends Image {
   final String roomId;
   const RoomImage(
-      {required this.roomId, required super.id, required super.imagePath});
+      {required this.roomId,
+      required super.id,
+      required super.imagePath,
+      super.imageUrl});
 
   @override
   List<Object?> get props => [id, imagePath, roomId];
@@ -14,10 +17,12 @@ class RoomImage extends Image {
   // }
 
   @override
-  Image copyWith({String? id, String? imagePath}) {
+  RoomImage copyWith({String? id, String? imagePath, String? imageUrl}) {
     return RoomImage(
-        roomId: roomId,
-        id: id ?? this.id,
-        imagePath: imagePath ?? this.imagePath);
+      roomId: roomId,
+      id: id ?? this.id,
+      imagePath: imagePath ?? this.imagePath,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
   }
 }

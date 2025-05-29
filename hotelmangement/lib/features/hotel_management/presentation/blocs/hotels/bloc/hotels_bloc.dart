@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_phone_number.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotels.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_images_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_phone_numbers_cubit.dart';
 
 part 'hotels_event.dart';
 part 'hotels_state.dart';
@@ -11,10 +13,14 @@ part 'hotels_state.dart';
 class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   final GetHotels getHotelsUsecase;
   final HotelImagesCubit hotelImagesCubit;
+  final HotelPhoneNumbersCubit hotelPhoneNumbersCubit;
 
   List<Hotel> _hotels = [];
 
-  HotelsBloc({required this.getHotelsUsecase, required this.hotelImagesCubit})
+  HotelsBloc(
+      {required this.getHotelsUsecase,
+      required this.hotelImagesCubit,
+      required this.hotelPhoneNumbersCubit})
       : super(HotelsInitial()) {
     _registerListners();
     _registerCubitListners();
@@ -23,6 +29,7 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
   void _registerListners() {
     on<GetHotelsEvent>(_onHotelLoad);
     on<HotelImageReceived>(_onHotelImageLoaded);
+    on<HotelPhoneNumbersReceived>(_onHotelPhoneNumbersLoaded);
   }
 
   Future<void> _onHotelLoad(
@@ -51,6 +58,12 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
             hotelId: imagesState.hotelId, images: imagesState.hotelImages));
       }
     });
+    hotelPhoneNumbersCubit.stream.listen((numberState) {
+      if (numberState is HotelPhoneNumbersLoaded) {
+        add(HotelPhoneNumbersReceived(
+            hotelId: numberState.hotelId, numbers: numberState.hotelNumbers));
+      }
+    });
   }
 
   void _onHotelImageLoaded(
@@ -61,6 +74,20 @@ class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
       if (hotel.id == event.hotelId) {
         hotelList.add(hotel.copyWith(images: event.images));
         emit(HotelImageLoaded(hotelId: event.hotelId, images: event.images));
+        continue;
+      }
+      hotelList.add(hotel.copyWith());
+    }
+    _hotels = hotelList;
+  }
+
+  void _onHotelPhoneNumbersLoaded(
+      HotelPhoneNumbersReceived event, Emitter<HotelsState> emit) async {
+    List<Hotel> hotelList = [];
+
+    for (var hotel in _hotels) {
+      if (hotel.id == event.hotelId) {
+        hotelList.add(hotel.copyWith(phoneNumbers: event.numbers));
         continue;
       }
       hotelList.add(hotel.copyWith());

@@ -40,7 +40,6 @@ import 'package:hotelmangement/features/booking/table_booking.dart';
 //import 'features/booking_history/hotel_booking_history.dart';
 
 
-
 void main() async {
   // ensure the flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,6 +66,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+<<<<<<< HEAD
       home:RoomBookingPage(),
 
       // home: GoogleMapPolyline(),
@@ -117,7 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+=======
+      home: ManagerMainPage(
+        managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
+>>>>>>> bce3ce0576e24d37471919bea68f1cda34341cd7
       ),
     );
   }
 }
+

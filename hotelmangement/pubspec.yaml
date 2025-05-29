@@ -58,7 +58,6 @@ dependencies:
   flutter_rating_bar: ^4.0.0
 
   fl_chart: ^0.71.0
-  
 
 dev_dependencies:
   flutter_test:
@@ -116,18 +115,18 @@ flutter:
     - assets/onboarding/splash.png
 
     - assets/hotel_discount/appbar.jpg
-    - assets\hotel_discount\Eurostars_Gran_Valencia.jpg
-    - assets\hotel_discount\host.jpg
-    - assets\hotel_discount\hotel_valencia_1.jpg
-    - assets\hotel_discount\hotel_valencia_2.jpg
-    - assets\hotel_discount\hotel_valencia_3.jpg
-    - assets\hotel_discount\hotel_valencia_4.webp
-    - assets\hotel_discount\hotel_valencia_5.webp
-    - assets\hotel_discount\hotel_valencia_6.jpg
-    - assets\hotel_discount\hotel_valencia.jpg
-    - assets\hotel_discount\romantic_experience.jpg
-    - assets\hotel_discount\visit_oceanografic.jpg
-    - assets\hotel_discount\visit_oceanografic1.jpg
+    # - assets\hotel_discount\Eurostars_Gran_Valencia.jpg
+    # - assets\hotel_discount\host.jpg
+    # - assets\hotel_discount\hotel_valencia_1.jpg
+    # - assets\hotel_discount\hotel_valencia_2.jpg
+    # - assets\hotel_discount\hotel_valencia_3.jpg
+    # - assets\hotel_discount\hotel_valencia_4.webp
+    # - assets\hotel_discount\hotel_valencia_5.webp
+    # - assets\hotel_discount\hotel_valencia_6.jpg
+    # - assets\hotel_discount\hotel_valencia.jpg
+    # - assets\hotel_discount\romantic_experience.jpg
+    # - assets\hotel_discount\visit_oceanografic.jpg
+    # - assets\hotel_discount\visit_oceanografic1.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
