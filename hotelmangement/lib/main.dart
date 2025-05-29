@@ -17,6 +17,8 @@ import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
 import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
+import 'features/booking_history/booking_calendar.dart';
+
 
 void main() async {
   // ensure the flutter is initialized
@@ -44,9 +46,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ManagerMainPage(
-        managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
-      ),
+      home: BookingCalendar(),
 
       // home: GoogleMapPolyline(),
     );
