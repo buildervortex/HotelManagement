@@ -98,6 +98,20 @@ flutter:
     - assets/booking_history/room4.jpg
     # - images/a_dot_ham.jpeg
 
+    - assets/hotel_discount/appbar.jpg
+    - assets\hotel_discount\Eurostars_Gran_Valencia.jpg
+    - assets\hotel_discount\host.jpg
+    - assets\hotel_discount\hotel_valencia_1.jpg
+    - assets\hotel_discount\hotel_valencia_2.jpg
+    - assets\hotel_discount\hotel_valencia_3.jpg
+    - assets\hotel_discount\hotel_valencia_4.webp
+    - assets\hotel_discount\hotel_valencia_5.webp
+    - assets\hotel_discount\hotel_valencia_6.jpg
+    - assets\hotel_discount\hotel_valencia.jpg
+    - assets\hotel_discount\romantic_experience.jpg
+    - assets\hotel_discount\visit_oceanografic.jpg
+    - assets\hotel_discount\visit_oceanografic1.jpg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

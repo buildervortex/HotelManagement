@@ -63,7 +63,7 @@ class _HotelOfferDetailPageState extends State<HotelOfferDetailPage> {
             _buildHotelInfo(),
             _buildWhatWeOffer(),
             _buildHostInfo(),
-            _buildBookNowButton(context),
+            //_buildBookNowButton(context),
           ],
         ),
       ),
@@ -165,7 +165,7 @@ class _HotelOfferDetailPageState extends State<HotelOfferDetailPage> {
           ),
           const SizedBox(height: 16),
           const Text(
-            "Valencia Center Luxury, close to the Turia riverbed and the City of Arts and Sciences. Valencia Center Luxury offers accommodation with a garden, private parking and a clinical...",
+            "Hotel Valencia Center is 1312 feet from Valencia’s City of Arts and Sciences, 1.9 mi from the city center. It offers a sauna, gym and outdoor pool, and free Wi-Fi. The hotel is a 10-minute walk from Ayora Metro Station, which connects to the city center and the airport. It takes 5 minutes by bus to the beach or city center, and there is a bus stop opposite the hotel. All air-conditioned/heated (according season) rooms have a satellite TV, safe and mini-bar The hotel restaurant serves Mediterranean cuisine. There is a bar and room service is available. There is a 24-hour front desk and you can hire a car at the tour desk. On-site parking is available for an extra charge.",
             style: TextStyle(fontSize: 14),
           ),
         ],
@@ -229,28 +229,28 @@ class _HotelOfferDetailPageState extends State<HotelOfferDetailPage> {
     );
   }
 
-  Widget _buildBookNowButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: ElevatedButton(
-        onPressed: () {
-          // Add navigation or booking logic
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          minimumSize: const Size(double.infinity, 50),
-        ),
-        child: const Text(
-          "Book Now",
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
-  }
+  // Widget _buildBookNowButton(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+  //     child: ElevatedButton(
+  //       onPressed: () {
+  //         // Add navigation or booking logic
+  //       },
+  //       style: ElevatedButton.styleFrom(
+  //         backgroundColor: Colors.red,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(30),
+  //         ),
+  //         padding: const EdgeInsets.symmetric(vertical: 16),
+  //         minimumSize: const Size(double.infinity, 50),
+  //       ),
+  //       child: const Text(
+  //         "Book Now",
+  //         style: TextStyle(color: Colors.white, fontSize: 16),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 class _OfferIcon extends StatelessWidget {
