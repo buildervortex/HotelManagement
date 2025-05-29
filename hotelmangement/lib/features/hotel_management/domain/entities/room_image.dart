@@ -8,8 +8,16 @@ class RoomImage extends Image {
   @override
   List<Object?> get props => [id, imagePath, roomId];
 
-  RoomImage copyWith({String? roomId}) {
+  // RoomImage copyWith({String? roomId}) {
+  //   return RoomImage(
+  //       roomId: roomId ?? this.roomId, id: id, imagePath: imagePath);
+  // }
+
+  @override
+  Image copyWith({String? id, String? imagePath}) {
     return RoomImage(
-        roomId: roomId ?? this.roomId, id: id, imagePath: imagePath);
+        roomId: roomId,
+        id: id ?? this.id,
+        imagePath: imagePath ?? this.imagePath);
   }
 }
