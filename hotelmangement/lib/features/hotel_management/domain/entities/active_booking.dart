@@ -13,4 +13,9 @@ class ActiveBooking extends Equatable {
         name,
         count,
       ];
+
+  ActiveBooking copyWith({String? id, String? name, int? count}) {
+    return ActiveBooking(
+        id: id ?? this.id, name: name ?? this.name, count: count ?? this.count);
+  }
 }

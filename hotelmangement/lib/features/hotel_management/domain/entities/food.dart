@@ -25,4 +25,22 @@ class Food extends Equatable {
         availability,
         type,
       ];
+
+  Food copyWith({
+    String? id,
+    String? hotelId,
+    String? name,
+    double? price,
+    bool? availability,
+    String? type,
+  }) {
+    return Food(
+      id: id ?? this.id,
+      hotelId: hotelId ?? this.hotelId,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      availability: availability ?? this.availability,
+      type: type ?? this.type,
+    );
+  }
 }

@@ -157,4 +157,15 @@ class HotelRepositoryImpl implements HotelRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, List<Hotel>>> getHotels(String managerId) async {
+    try {
+      final hotels = await dataSource.getHotels(managerId);
+      return Right(hotels);
+    } catch (e) {
+      print("Error getting hotels: $e");
+      return Left(ServerFailure());
+    }
+  }
 }

@@ -64,6 +64,10 @@ class RomanticExperiencePage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
+              "Eurostars Gran Valencia Hotel features a 24 hour front desk, a rooftop terrace, and a concierge. In addition, as a valued Eurostars Gran Valencia Hotel guest, you can enjoy a pool and a poolside bar that are available on-site. Guests arriving by vehicle have access to parking.\n\n",
+              style: TextStyle(fontSize: 14),
+            ),
+            const Text(
               "Live an unforgettable romantic night full of details at the Exe Rey Don Jaime. We have everything you need for an evening full of magic.\n\nIncludes:\n- Welcome gift.\n- A bottle of cava.\n- Chocolates.",
               style: TextStyle(fontSize: 14),
             ),
@@ -75,15 +79,6 @@ class RomanticExperiencePage extends StatelessWidget {
             const SizedBox(height: 12),
             _buildRelatedOfferCard(context),
             const SizedBox(height: 16),
-            Center(
-              child: TextButton.icon(
-                onPressed: () {
-                  
-                },
-                icon: const Icon(Icons.arrow_forward),
-                label: const Text("SEE ALL PROMOTIONS"),
-              ),
-            )
           ],
         ),
       ),

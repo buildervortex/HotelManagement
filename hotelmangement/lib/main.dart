@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
+import 'package:hotelmangement/features/booking_history/hotel_booking_history.dart';
 import 'package:hotelmangement/features/booking_history/hotel_booking_history_test.dart';
 import 'package:hotelmangement/features/booking_history/test_history.dart';
 import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
 import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
+import 'package:hotelmangement/features/google_map/google_map_polygon.dart';
 import 'package:hotelmangement/features/google_map/google_map_polyline.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/give_ratings_main.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/view_ratings_main.dart';
 import 'package:hotelmangement/features/homePage_rating_reviews/home_page_main.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/pages/manager_main_page.dart';
 import 'package:hotelmangement/test.dart';
+import 'package:hotelmangement/features/booking/room_booking.dart';
+import 'package:hotelmangement/features/booking/table_booking.dart';
 //import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
 import 'package:hotelmangement/features/booking_history/booking_test.dart';
 
@@ -48,9 +52,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+<<<<<<< HEAD
       home:BookingCalendar(),
 
       // home: GoogleMapPolyline(),
+=======
+      home: HotelBooking(),
+>>>>>>> 5c9d0bbbce10d009771abae921dfea665d020b0f
     );
   }
 }

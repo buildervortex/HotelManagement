@@ -8,4 +8,18 @@ class HotelImage extends Image {
 
   @override
   List<Object?> get props => [id, imagePath, hotelId];
+
+  // @override
+  // HotelImage copyWith({String? hotelId}) {
+  //   return HotelImage(
+  //       id: id, imagePath: imagePath, hotelId: hotelId ?? this.hotelId);
+  // }
+  @override
+  Image copyWith({String? id, String? imagePath, String? hotelId}) {
+    return HotelImage(
+      id: id ?? this.id,
+      imagePath: imagePath ?? this.imagePath,
+      hotelId: hotelId ?? this.hotelId,
+    );
+  }
 }

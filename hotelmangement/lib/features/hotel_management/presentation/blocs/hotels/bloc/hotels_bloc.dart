@@ -1,13 +1,70 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel.dart';
+import 'package:hotelmangement/features/hotel_management/domain/entities/hotel_image.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotels.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_images_cubit.dart';
 
 part 'hotels_event.dart';
 part 'hotels_state.dart';
 
 class HotelsBloc extends Bloc<HotelsEvent, HotelsState> {
-  HotelsBloc() : super(HotelsInitial()) {
-    on<HotelsEvent>((event, emit) {
-      // TODO: implement event handler
+  final GetHotels getHotelsUsecase;
+  final HotelImagesCubit hotelImagesCubit;
+
+  List<Hotel> _hotels = [];
+
+  HotelsBloc({required this.getHotelsUsecase, required this.hotelImagesCubit})
+      : super(HotelsInitial()) {
+    _registerListners();
+    _registerCubitListners();
+  }
+
+  void _registerListners() {
+    on<GetHotelsEvent>(_onHotelLoad);
+    on<HotelImageReceived>(_onHotelImageLoaded);
+  }
+
+  Future<void> _onHotelLoad(
+      GetHotelsEvent event, Emitter<HotelsState> emit) async {
+    emit(HotelLoading());
+
+    final hotelListOrFailure =
+        await getHotelsUsecase(Params(managerId: event.managerId));
+
+    hotelListOrFailure.fold((error) => emit(HotelError()), (hotelList) {
+      _hotels = hotelList;
+      emit(HotelLoaded(
+          hotels: _hotels.map((hotel) => hotel.copyWith()).toList()));
+
+      for (var hotel in _hotels) {
+        hotelImagesCubit.loadImages(hotel.id);
+      }
     });
+  }
+
+  void _registerCubitListners() {
+    // listen for hotel image cubit changes
+    hotelImagesCubit.stream.listen((imagesState) {
+      if (imagesState is HotelImagesLoaded) {
+        add(HotelImageReceived(
+            hotelId: imagesState.hotelId, images: imagesState.hotelImages));
+      }
+    });
+  }
+
+  void _onHotelImageLoaded(
+      HotelImageReceived event, Emitter<HotelsState> emit) async {
+    List<Hotel> hotelList = [];
+
+    for (var hotel in _hotels) {
+      if (hotel.id == event.hotelId) {
+        hotelList.add(hotel.copyWith(images: event.images));
+        emit(HotelImageLoaded(hotelId: event.hotelId, images: event.images));
+        continue;
+      }
+      hotelList.add(hotel.copyWith());
+    }
+    _hotels = hotelList;
   }
 }

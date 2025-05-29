@@ -45,6 +45,7 @@ import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/g
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_image_auth_url.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_images.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotel_phone_numbers.dart';
+import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/get_hotels.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/hotel/update_hotel.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/manager_sign_up.dart';
 import 'package:hotelmangement/features/hotel_management/domain/usecases/room/add_room_image.dart';
@@ -66,6 +67,8 @@ import 'package:hotelmangement/features/hotel_management/presentation/blocs/dash
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_ratings_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_hotel_state_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/dashboard/cubit/get_own_hotels_famous_foods_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_images_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/bloc/hotels_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // final gi = GetIt
@@ -173,6 +176,8 @@ void setUpLocator() {
       () => GetHotelPhoneNumbers(repository: gi<HotelRepository>()));
   gi.registerLazySingleton<UpdateHotel>(
       () => UpdateHotel(repository: gi<HotelRepository>()));
+  gi.registerLazySingleton<GetHotels>(
+      () => GetHotels(repository: gi<HotelRepository>()));
 
   // register manager usecases
   gi.registerLazySingleton<ManagerSignUp>(
@@ -212,7 +217,7 @@ void setUpLocator() {
       repository: gi<HotelTableRepository>(),
       hotelAuthorize: gi<HotelAuthorize>()));
 
-  // reigister blocks
+  // reigister cubits
   gi.registerFactory<GetActiveTableBookingsCubit>(
       () => GetActiveTableBookingsCubit(usecase: gi<GetActiveTableBookings>()));
   gi.registerFactory<GetActiveTakeawayBookingsCubit>(() =>
@@ -225,4 +230,11 @@ void setUpLocator() {
       () => GetHotelStateCubit(usecase: gi<GetHotelState>()));
   gi.registerFactory<GetOwnHotelsFamousFoodsCubit>(() =>
       GetOwnHotelsFamousFoodsCubit(usecase: gi<GetFamousFoodsInOwnHotels>()));
+  gi.registerFactory<HotelImagesCubit>(
+      () => HotelImagesCubit(getHotelImages: gi<GetHotelImages>()));
+
+  // register bloc
+  gi.registerFactory<HotelsBloc>(() => HotelsBloc(
+      getHotelsUsecase: gi<GetHotels>(),
+      hotelImagesCubit: gi<HotelImagesCubit>()));
 }

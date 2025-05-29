@@ -12,8 +12,6 @@ class BookingDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text("Room Booking Details",
-            //     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             Text("Floor: 2nd", style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),

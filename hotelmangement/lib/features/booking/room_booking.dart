@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase import
 
 class RoomBookingPage extends StatefulWidget {
   @override
@@ -20,6 +21,32 @@ class _RoomBookingPageState extends State<RoomBookingPage> {
     'assets/booking/room2.jpg',
     'assets/booking/room3.jpg',
   ];
+
+  List<Map<String, dynamic>> roomBookings = [];
+
+  Future<void> fetchRoomBookings() async {
+    final response = await Supabase.instance.client
+        .from('room_booking')
+        .select()
+        .order('check_in', ascending: true);
+
+    setState(() {
+      roomBookings = List<Map<String, dynamic>>.from(response);
+    });
+
+    for (var item in roomBookings) {
+      print("Room ID: ${item['room_id']}");
+      print("Check-in: ${item['check_in']}");
+      print("Check-out: ${item['check_out']}");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchRoomBookings();
+  }
 
   Future<void> selectDate(BuildContext context, bool isCheckIn) async {
     final DateTime? picked = await showDatePicker(
@@ -170,6 +197,25 @@ class _RoomBookingPageState extends State<RoomBookingPage> {
                 return DropdownMenuItem(value: room, child: Text(room));
               }).toList(),
             ),
+            Divider(),
+            Text("Room Bookings from Supabase",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            roomBookings.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: roomBookings.map((booking) {
+                      return Card(
+                        child: ListTile(
+                          title: Text('Room ID: ${booking['room_id']}'),
+                          subtitle: Text(
+                            'Check-in: ${booking['check_in']}\nCheck-out: ${booking['check_out']}',
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  )
+                : Text('No bookings found.'),
             SizedBox(height: 30),
             Center(
               child: ElevatedButton(
