@@ -1,4 +1,5 @@
 import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:hotelmangement/di/dicontainer.dart";
 import "package:logger/web.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 
@@ -26,6 +27,9 @@ Future<void> initializeProject() async {
   );
 
   log.d("Supabase initialized successfully!");
+
+  // initialize the di container
+  setUpLocator();
 }
 
 String? isConfigReady(DotEnv dotenv) {

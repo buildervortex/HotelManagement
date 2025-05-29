@@ -30,6 +30,7 @@ class UpdateRoom extends Usecase<Room, Params> {
       space: params.space,
       floor: params.floor,
       price: params.price,
+      available: params.available,
     );
   }
 }
@@ -40,19 +41,22 @@ class Params extends Equatable {
   final String roomId;
   final String? roomNumber;
   final String? description;
-  final String? space;
+  final int? space;
   final String? floor;
   final double? price;
+  final bool? available;
 
-  const Params(
-      {required this.managerId,
-      required this.hotelId,
-      required this.roomId,
-      required this.roomNumber,
-      required this.description,
-      required this.space,
-      required this.floor,
-      required this.price});
+  const Params({
+    required this.managerId,
+    required this.hotelId,
+    required this.roomId,
+    required this.roomNumber,
+    required this.description,
+    required this.space,
+    required this.floor,
+    required this.price,
+    required this.available,
+  });
   @override
   List<Object?> get props => [
         managerId,
@@ -62,6 +66,7 @@ class Params extends Equatable {
         description,
         space,
         floor,
-        price
+        price,
+        available,
       ];
 }
