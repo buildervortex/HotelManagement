@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hotelmangement/core/cubit/auth_cubit.dart';
 import 'package:hotelmangement/core/usecase.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/dashboard_data_source.dart';
 import 'package:hotelmangement/features/hotel_management/data/dataSources/file_data_source.dart';
@@ -252,6 +253,8 @@ void setUpLocator() {
   gi.registerFactory<CreateHotelCubit>(() => CreateHotelCubit(
       gi<CreateHotel>(), gi<AddHotelPhoneNumber>(), gi<AddHotelImage>()));
   gi.registerFactory<LocationCubit>(() => LocationCubit());
+  gi.registerFactory<AuthCubit>(() => AuthCubit(
+      client: gi<SupabaseClient>(), managerSignUpUsecase: gi<ManagerSignUp>()));
 
   // register bloc
   gi.registerFactory<HotelsBloc>(() => HotelsBloc(

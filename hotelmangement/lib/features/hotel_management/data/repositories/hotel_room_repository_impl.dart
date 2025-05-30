@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
 import 'package:hotelmangement/core/error/failure.dart';
@@ -26,8 +27,10 @@ class HotelRoomRepositoryImpl extends HotelRoomRepository {
     // get renamed file name
     String uploadFileName = Fileutils.uuidRenamedFile(basename(localImagePath));
 
+    Uint8List bytes = await file.readAsBytes();
+
     try {
-      await fileDataSource.uploadFile(file, uploadFileName, "roomimages");
+      await fileDataSource.uploadFile(bytes, uploadFileName, "roomimages");
       final roomImage = await dataSource.addRoomImage(uploadFileName, roomId);
       return Right(roomImage);
     } catch (e) {
