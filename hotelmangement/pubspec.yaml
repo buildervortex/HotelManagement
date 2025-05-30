@@ -58,6 +58,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
 
   fl_chart: ^0.71.0
+  location: ^8.0.0
 
 dev_dependencies:
   flutter_test:
