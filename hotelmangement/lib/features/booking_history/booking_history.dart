@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hotelmangement/features/booking_history/booking_calendar.dart';
+import 'package:hotelmangement/features/booking_history/hotel_booking_history.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class History extends StatefulWidget {
@@ -27,7 +29,6 @@ class _HistoryState extends State<History> {
       "date": "Date unknown",
       "price": "\$0",
     },
-   
   ];
 
   @override
@@ -40,10 +41,8 @@ class _HistoryState extends State<History> {
 
   Future<void> fetchPrices() async {
     try {
-      final response = await supabase
-          .from('hotel_room')
-          .select()
-          .eq('hotel_id', hotelId);
+      final response =
+          await supabase.from('hotel_room').select().eq('hotel_id', hotelId);
 
       final updatedBookings = [...bookings];
       for (int i = 0; i < updatedBookings.length && i < response.length; i++) {
@@ -166,7 +165,8 @@ class _HistoryState extends State<History> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
                     child: Text(
                       "Hotels",
                       style: TextStyle(
@@ -179,12 +179,19 @@ class _HistoryState extends State<History> {
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BookingCalendar()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                     ),
-                    child: Text("Date", style: TextStyle(fontSize: 16 * textScale)),
+                    child: Text("Date",
+                        style: TextStyle(fontSize: 16 * textScale)),
                   ),
                 ),
               ],
@@ -227,7 +234,9 @@ class _HistoryState extends State<History> {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child: booking["image"].toString().startsWith("http")
+                                        child: booking["image"]
+                                                .toString()
+                                                .startsWith("http")
                                             ? Image.network(
                                                 booking["image"],
                                                 width: screenWidth * 0.3,
@@ -244,7 +253,8 @@ class _HistoryState extends State<History> {
                                       SizedBox(width: screenWidth * 0.05),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               booking["name"],
@@ -253,14 +263,15 @@ class _HistoryState extends State<History> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SizedBox(height: screenHeight * 0.01),
-                                           
-                                            SizedBox(height: screenHeight * 0.01),
+                                            SizedBox(
+                                                height: screenHeight * 0.01),
+                                            SizedBox(
+                                                height: screenHeight * 0.01),
                                             Text(
                                               "Date: ${booking["date"]}",
-                                              style: TextStyle(fontSize: 10 * textScale),
+                                              style: TextStyle(
+                                                  fontSize: 10 * textScale),
                                             ),
-                                          
                                             Text(
                                               booking["price"].toString(),
                                               style: TextStyle(
@@ -273,8 +284,16 @@ class _HistoryState extends State<History> {
                                         ),
                                       ),
                                       TextButton(
-                                        child: const Text('Booking Now', style: TextStyle(fontSize: 10)),
-                                        onPressed: () {},
+                                        child: const Text('Booking Now',
+                                            style: TextStyle(fontSize: 10)),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HotelBooking()),
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),

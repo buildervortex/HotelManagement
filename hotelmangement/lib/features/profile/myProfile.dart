@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotelmangement/core/cubit/auth_cubit.dart';
 import 'package:hotelmangement/features/auth/home.dart';
 import 'package:hotelmangement/features/profile/editProfile.dart';
 import 'package:hotelmangement/features/profile/logout.dart';
@@ -25,10 +27,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  // );
                 },
               ),
               title: const Text(
@@ -47,13 +49,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   const SizedBox(height: 40),
 
                   buildProfileCard(
-                      'Name', 'Ahad Hashmi', CupertinoIcons.person, context),
+                      'lahiru', 'dilhara', CupertinoIcons.person, context),
                   const SizedBox(height: 10),
-                  buildProfileCard('Email', 'ahadhashmideveloper@gmail.com',
+                  buildProfileCard('Email', 'galahirudilhara@gmail.com',
                       CupertinoIcons.mail, context),
                   const SizedBox(height: 10),
                   buildProfileCard(
-                      'Phone', '03107085816', CupertinoIcons.phone, context),
+                      'Phone', '0785754688', CupertinoIcons.phone, context),
 
                   const SizedBox(height: 30),
                   // --------------------- Edit Profile Button -------------------------
@@ -93,11 +95,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     width: double.infinity,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LogoutScreen()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const LogoutScreen()),
+                        // );
+                        BlocProvider.of<AuthCubit>(context).logOut();
                       },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,

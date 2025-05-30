@@ -20,16 +20,15 @@ class _HotelBookingState extends State<HotelBooking> {
 
   DateTime? checkInDate;
   DateTime? checkOutDate;
-  late String imageUrl;
+  String imageUrl = '';
   List<String> ImageUrls = [];
   List<dynamic> hotelName = [];
-  List<dynamic>  hotelDescription = [];
+  List<dynamic> hotelDescription = [];
   List<dynamic> price = [];
 
   final String bookingId = '224c4f8c-e525-4dd0-ad6b-f2ccd16e1143';
   final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
   final String roomId = '660e8400-e29b-41d4-a716-446655440001';
-
 
   @override
   void initState() {
@@ -56,40 +55,29 @@ class _HotelBookingState extends State<HotelBooking> {
           .from("roomimages")
           .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
 
-       final imagesData = await supabase.rpc("get_booking_room_images",
+      final imagesData = await supabase.rpc("get_booking_room_images",
           params: {"room_booking_id": bookingId});
 
+      List<String> newImageUrls = [];
 
-        List<String> newImageUrls= [];
-        
+      for (var idata in imagesData) {
+        // print(idata["file"]);
 
-        for(var idata in imagesData){
+        var newImageUrl = await supabase.storage
+            .from("roomimages")
+            .createSignedUrl(idata["file"], 60 * 60 * 60);
 
-         // print(idata["file"]);
-        
-           var newImageUrl = await supabase.storage
-          .from("roomimages")
-          .createSignedUrl(idata["file"], 60 * 60 * 60);
-
-          newImageUrls.add(newImageUrl);
-
+        newImageUrls.add(newImageUrl);
 
         //print(newImagesUrl);
-        }
-        
+      }
 
-        
       setState(() {
-         ImageUrls=newImageUrls;
+        ImageUrls = newImageUrls;
       });
 
       //print(imageList);
-         // (imagesData[0]["file"]);
-      
-        
-
-
-
+      // (imagesData[0]["file"]);
 
       if (response != null && newImageUrl.isNotEmpty) {
         setState(() {
@@ -109,20 +97,17 @@ class _HotelBookingState extends State<HotelBooking> {
   String formatDateTime(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";
   }
-  
 
-    Future<void> fetchHotelName() async {
+  Future<void> fetchHotelName() async {
     try {
       final response = await supabase
           .from('hotel')
           .select('name')
           .eq('manager_id', managerId);
 
-          setState(() {
+      setState(() {
         hotelName = response;
       });
-
-
     } catch (e) {
       setState(() {
         error = 'Hotel name fetch error: $e';
@@ -130,20 +115,16 @@ class _HotelBookingState extends State<HotelBooking> {
     }
   }
 
-
-
- Future<void> fetchHotelDescription() async {
+  Future<void> fetchHotelDescription() async {
     try {
       final response = await supabase
           .from('hotel_room')
           .select('description')
           .eq('id', roomId);
 
-          setState(() {
+      setState(() {
         hotelDescription = response;
       });
-
-
     } catch (e) {
       setState(() {
         error = 'Hotel name fetch error: $e';
@@ -151,13 +132,11 @@ class _HotelBookingState extends State<HotelBooking> {
     }
   }
 
-
-
   Future<void> fetchPrices() async {
     try {
-      final response = await supabase.from('hotel_room').select().eq('id', roomId);
+      final response =
+          await supabase.from('hotel_room').select().eq('id', roomId);
 
-     
       setState(() {
         price = response;
       });
@@ -165,25 +144,12 @@ class _HotelBookingState extends State<HotelBooking> {
       setState(() {
         error = 'Price fetch error: $e';
       });
-
-
     } finally {
       setState(() {
         isLoading = false;
       });
     }
   }
-
-
-
-
-
-
-
-
-
-
-   
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +179,9 @@ class _HotelBookingState extends State<HotelBooking> {
         title: const Text("Hotel Details"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -288,7 +256,6 @@ class _HotelBookingState extends State<HotelBooking> {
                           : "Loading..."),
                     ],
                   ),
-                 
                 ],
               ),
 
@@ -326,90 +293,33 @@ class _HotelBookingState extends State<HotelBooking> {
               ),
 
               const SizedBox(height: 16),
-             Text(
-                   hotelName.isNotEmpty ? hotelName[0]['name'] : "Loading hotel name...",
-             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text(
+                hotelName.isNotEmpty
+                    ? hotelName[0]['name']
+                    : "Loading hotel name...",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 4),
               Text(
-                   hotelDescription.isNotEmpty ? hotelDescription[0]['description'] : "Loading hotel Description...",
-             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),),
+                hotelDescription.isNotEmpty
+                    ? hotelDescription[0]['description']
+                    : "Loading hotel Description...",
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.normal),
+              ),
               const SizedBox(height: 20),
 
               const Text("Best Available Rate",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 10),
-             Text(
-                  price.isNotEmpty ? price[0]['price'].toString() : "Loading price...",),
-
-                 const SizedBox(height: 20),
-             
-
-
-
-
-
-                Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Icon(Icons.bed, color: Colors.black54),
-                      const SizedBox(width: 4),
-                      const Text(
-                        "1 BED / EXTRA BED AVAILABLE",
-                        style: TextStyle(fontSize: 10, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-
-                  // Up to 3 Guests
-                  Column(
-                    children: [
-                      Icon(Icons.person, color: Colors.black54),
-                      const SizedBox(width: 4),
-                      const Text(
-                        "UP TO 3 GUESTS",
-                        style: TextStyle(fontSize: 10, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 24, 108, 219),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    child: const Text(
-                      "details",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+              Text(
+                price.isNotEmpty
+                    ? price[0]['price'].toString()
+                    : "Loading price...",
               ),
 
-              SizedBox(
-                height: 40,
-              ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-             
+              const SizedBox(height: 20),
 
               const SizedBox(height: 40),
               Center(

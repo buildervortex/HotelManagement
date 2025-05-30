@@ -406,13 +406,10 @@
 //   }
 // }
 
-
-
-
-
 // New Update
 
 import 'package:flutter/material.dart';
+import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -453,7 +450,8 @@ class HotelDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     hotel.hotel.name,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -466,7 +464,9 @@ class HotelDetailScreen extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(Icons.phone, size: 16),
-                      Text(hotel.phoneNumbers.isNotEmpty ? hotel.phoneNumbers[0].number : "N/A"),
+                      Text(hotel.phoneNumbers.isNotEmpty
+                          ? hotel.phoneNumbers[0].number
+                          : "N/A"),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -474,7 +474,8 @@ class HotelDetailScreen extends StatelessWidget {
                     children: [
                       RatingBarIndicator(
                         rating: hotel.hotel.rating,
-                        itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber),
+                        itemBuilder: (context, _) =>
+                            const Icon(Icons.star, color: Colors.amber),
                         itemCount: 5,
                         itemSize: 20.0,
                       ),
@@ -487,7 +488,8 @@ class HotelDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   _buildReviewSection(),
                   const SizedBox(height: 16),
-                  const Text("Common Facilities", style: TextStyle(fontWeight: FontWeight.bold)),
+                  const Text("Common Facilities",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 10,
@@ -502,7 +504,7 @@ class HotelDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          _buildBottomBar(),
+          _buildBottomBar(context),
         ],
       ),
     );
@@ -525,7 +527,8 @@ class HotelDetailScreen extends StatelessWidget {
   Widget _buildReviewSection() {
     return Row(
       children: [
-        _buildReviewCard("John Doe", "Amazing place! The rooms were clean and the service was great."),
+        _buildReviewCard("John Doe",
+            "Amazing place! The rooms were clean and the service was great."),
         const SizedBox(width: 10),
         _buildReviewCard("Jane Smith", "Lovely location. Friendly staff."),
       ],
@@ -562,7 +565,7 @@ class HotelDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar() {
+  Widget _buildBottomBar(BuildContext context) {
     return Container(
       color: Colors.brown[300],
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -572,7 +575,14 @@ class HotelDetailScreen extends StatelessWidget {
           Text("Price\nRs: ${hotel.hotel.price.toInt()}",
               style: const TextStyle(color: Colors.white, fontSize: 16)),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => RoomBookingPage(),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.brown),
             child: const Text("Book Now"),
           ),
