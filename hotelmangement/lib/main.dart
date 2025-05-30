@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/features/booking_history/hotel_booking_history.dart';
 
-
 import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
 import 'package:hotelmangement/features/display_hotel/display_hotel.dart';
 import 'package:hotelmangement/features/google_map/google_map_polygon.dart';
@@ -32,15 +31,12 @@ import 'package:hotelmangement/features/booking/room_booking.dart';
 //import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
 
-import 'package:hotelmangement/features/booking/table_booking.dart';
 //import 'package:hotelmangement/features/booking/table_booking.dart';
 //import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
-
 //import 'features/booking_history/hotel_booking_history.dart';
 import 'package:hotelmangement/features/booking/table_details.dart';
-
-
+import 'package:hotelmangement/features/booking/table_booking.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -68,14 +64,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
-      home:StaticBookingDetailsPage();
-      ),
-=======
-      home:StaticBookingDetailsPage(),
-     
->>>>>>> 7d35ad00c6b04c17d42d1af3d4a60fdfad3b5ef1
+      home: TableBookingPage(),
     );
   }
 }
-
