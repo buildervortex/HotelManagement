@@ -318,7 +318,7 @@ class FoodListPage extends StatefulWidget {
 }
 
 class _FoodListPageState extends State<FoodListPage> {
-  final Color primaryColor = const Color.fromRGBO(255, 88, 3, 1);
+  final Color maroonColor = const Color.fromARGB(255, 88, 3, 4);
   final Color whiteColor = Colors.white;
 
   @override
@@ -333,11 +333,15 @@ class _FoodListPageState extends State<FoodListPage> {
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: maroonColor,
         elevation: 0,
         title: const Text(
           "Food List",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
         ),
         centerTitle: true,
       ),
@@ -352,44 +356,42 @@ class _FoodListPageState extends State<FoodListPage> {
                 itemBuilder: (context, index) {
                   final food = state.foods[index];
                   return Container(
-                    margin: const EdgeInsets.only(bottom: 12),
+                    margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
                       color: whiteColor,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primaryColor.withOpacity(0.2),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                      border: Border.all(color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: maroonColor, width: 2),
                     ),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 16),
+                          horizontal: 16, vertical: 10),
                       leading: CircleAvatar(
-                        backgroundColor: primaryColor,
+                        backgroundColor: maroonColor,
                         child: Text(
                           food.name[0].toUpperCase(),
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                       title: Text(
                         food.name,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
+                          color: maroonColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       subtitle: Text(
                         "Rs. ${food.price.toStringAsFixed(2)}",
                         style: TextStyle(
-                          color: primaryColor.withOpacity(0.7),
+                          color: maroonColor.withOpacity(0.7),
+                          fontSize: 14,
                         ),
                       ),
-                      trailing: const Icon(Icons.arrow_forward_ios,
-                          color: Colors.grey, size: 16),
+                      trailing: Icon(
+                        Icons.restaurant_menu,
+                        color: maroonColor,
+                      ),
                     ),
                   );
                 },
