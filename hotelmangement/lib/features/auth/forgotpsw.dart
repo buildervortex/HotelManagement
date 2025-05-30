@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/changepsw.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ForgotScreen(),
-  ));
-}
 
 class ForgotScreen extends StatefulWidget {
   const ForgotScreen({super.key});

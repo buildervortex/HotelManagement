@@ -7,7 +7,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final SupabaseClient client;
-  String clientId = "e8b2c4e6-353a-450d-ab3a-08a0676fd773";
+  String clientId = "5eaf5c7d-1f4d-443f-a5e0-2ad2e5a69ed7";
   bool isManager = false;
   final ManagerSignUp managerSignUpUsecase;
 
@@ -55,20 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> loginUser(String email, String password) async {
-    final response =
-        await client.auth.signInWithPassword(password: password, email: email);
-
-    if (response.user != null) {
-      clientId = response.user!.id;
-      isManager = false;
-    } else {
-      return emit(LogOut());
-    }
-    emit(LoggingUser(userId: clientId, isManager: isManager));
-  }
-
-  Future<void> loginManager(String email, String password) async {
+  Future<void> loginManagerOrUser(String email, String password) async {
     final response =
         await client.auth.signInWithPassword(password: password, email: email);
 
@@ -82,10 +69,11 @@ class AuthCubit extends Cubit<AuthState> {
         await client.from("manager").select().eq("id", clientId).maybeSingle();
 
     if (manager == null) {
-      return emit(LogOut());
+      isManager = false;
+      return emit(LoggingUser(userId: clientId, isManager: false));
     }
     isManager = true;
-    emit(LoggingUser(userId: clientId, isManager: isManager));
+    emit(LoggingUser(userId: clientId, isManager: true));
   }
 
   Future<bool> _userProfileRegister(

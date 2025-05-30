@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/forgotpsw.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: ChangeScreen(),
-  ));
-}
 
 class ChangeScreen extends StatefulWidget {
   const ChangeScreen({super.key});

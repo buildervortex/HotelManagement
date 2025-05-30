@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotelmangement/core/cubit/auth_cubit.dart';
 import 'package:hotelmangement/features/auth/auth.dart';
 import 'package:hotelmangement/features/auth/forgotpsw.dart';
 import 'package:hotelmangement/features/auth/home.dart';
@@ -31,33 +33,39 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _loading = true);
 
-      try {
-        final response = await supabase.auth.signInWithPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
+      BlocProvider.of<AuthCubit>(context)
+          .loginManagerOrUser(_emailController.text, _passwordController.text);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              "Successfully logged in",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
+      // try {
+      //   final response = await supabase.auth.signInWithPassword(
+      //     email: _emailController.text.trim(),
+      //     password: _passwordController.text.trim(),
+      //   );
 
-        if (response.session != null && response.user != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Login Failed: $e")),
-        );
-      }
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(
+      //       content: Text(
+      //         "Successfully logged in",
+      //         style: TextStyle(
+      //             fontWeight: FontWeight.bold,
+      //             fontSize: 20,
+      //             color: Colors.white),
+      //       ),
+      //       backgroundColor: Colors.green,
+      //     ),
+      //   );
+
+      //   if (response.session != null && response.user != null) {
+      //     Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(builder: (_) => const HomeScreen()),
+      //     );
+      //   }
+      // } catch (e) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text("Login Failed: $e")),
+      //   );
+      // }
 
       setState(() => _loading = false);
     }
@@ -121,7 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   "Welcome back, glad to see you!",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 88, 3, 4)),
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 88, 3, 4)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -130,8 +141,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: "Enter your email",
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter your email';
-                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w]{2,4}$').hasMatch(value)) return 'Enter a valid email';
+                  if (value == null || value.isEmpty)
+                    return 'Please enter your email';
+                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w]{2,4}$')
+                      .hasMatch(value)) return 'Enter a valid email';
                   return null;
                 },
               ),
@@ -140,8 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: "Enter your password",
                 obscureText: true,
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Please enter your password';
-                  if (value.length < 6) return 'Password must be at least 6 characters';
+                  if (value == null || value.isEmpty)
+                    return 'Please enter your password';
+                  if (value.length < 6)
+                    return 'Password must be at least 6 characters';
                   return null;
                 },
               ),
@@ -150,8 +165,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Row(
                     children: [
-                      Checkbox(value: _isChecked, onChanged: _onChecked, activeColor: const Color.fromARGB(255, 88, 3, 4)),
-                      const Text("Remember Me", style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 88, 3, 4))),
+                      Checkbox(
+                          value: _isChecked,
+                          onChanged: _onChecked,
+                          activeColor: const Color.fromARGB(255, 88, 3, 4)),
+                      const Text("Remember Me",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 88, 3, 4))),
                     ],
                   ),
                   TextButton(
@@ -159,18 +180,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       context,
                       MaterialPageRoute(builder: (_) => const ForgotScreen()),
                     ),
-                    child: const Text("Forgot Password?", style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
+                    child: const Text("Forgot Password?",
+                        style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: OutlinedButton(
                   onPressed: _loading ? null : _login,
                   style: OutlinedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 88, 3, 4),
-                    side: const BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
+                    side: const BorderSide(
+                        color: Color.fromARGB(255, 88, 3, 4), width: 2),
                     elevation: 4,
                     minimumSize: const Size(double.infinity, 50),
                   ),
@@ -179,7 +203,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text(
                             "Login",
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                   ),
                 ),
@@ -187,25 +214,35 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               Row(
                 children: const [
-                  Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
-                  Text(" OR ", style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
-                  Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
+                  Expanded(
+                      child: Divider(
+                          color: Color.fromARGB(255, 88, 3, 4), height: 36)),
+                  Text(" OR ",
+                      style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
+                  Expanded(
+                      child: Divider(
+                          color: Color.fromARGB(255, 88, 3, 4), height: 36)),
                 ],
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: OutlinedButton(
                   onPressed: _signInWithGoogle,
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    side: const BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
+                    side: const BorderSide(
+                        color: Color.fromARGB(255, 88, 3, 4), width: 2),
                     elevation: 4,
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   child: const Text(
                     "Login with Google",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 88, 3, 4)),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 88, 3, 4)),
                   ),
                 ),
               ),
@@ -217,12 +254,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextSpan(
                       text: "Sign Up",
-                      style: const TextStyle(color: Color.fromARGB(255, 88, 3, 4), fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 88, 3, 4),
+                          fontWeight: FontWeight.bold),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                        ),
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const RegisterScreen()),
+                            ),
                     ),
                   ],
                 ),
