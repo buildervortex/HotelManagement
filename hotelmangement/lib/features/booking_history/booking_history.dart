@@ -23,12 +23,48 @@ class _HistoryState extends State<History> {
   final String managerId = 'e8b2c4e6-353a-450d-ab3a-08a0676fd773';
 
   List<Map<String, dynamic>> bookings = [
-    {
-      "image": "assets/booking_history/placeholder.jpg", // local placeholder
-      "name": "Loading...",
-      "date": "Date unknown",
-      "price": "\$0",
+  {
+      "image": "assets/booking_history/hotel4.jpg",
+      "name": "Ocean View Hotel",
+     
+      "date": "5 March 2023",
+   
+      "price": "\$150",
     },
+    {
+      "image": "assets/booking_history/hotel3.jpg",
+      "name": "Historic Manor Inn",
+     
+      "date": "5 March 2023",
+  
+      "price": "\$150",
+    },
+    {
+      "image": "assets/booking_history/hotel1.jpg",
+      "name": "Heden Golf",
+    
+      "date": "23 July 2019",
+ 
+      "price": "\$127",
+    },
+    {
+      "image": "assets/booking_history/hotel2.jpg",
+      "name": "Sunset Resort",
+    
+      "date": "12 June 2021",
+    
+      "price": "\$99",
+    },
+    {
+      "image": "assets/booking_history/hotel5.jpg",
+      "name": "Urban Boutique Hotel",
+    
+      "date": "5 March 2023",
+     
+      "price": "\$150",
+    },
+
+
   ];
 
   @override
@@ -71,15 +107,16 @@ class _HistoryState extends State<History> {
           .from('room_booking')
           .select('check_in, check_out')
           .eq('id', bookingId)
-          .limit(1)
+        
           .maybeSingle();
 
       final imageNetworkData = await supabase.rpc("get_booking_room_image",
-          params: {"room_booking_id": bookingId}).single();
+          params: {"room_booking_id": bookingId});
 
       var newImageUrl = await supabase.storage
           .from("roomimages")
-          .createSignedUrl(imageNetworkData["file"], 60 * 60 * 60);
+        .createSignedUrl(imageNetworkData["file"].toString(), 60 * 60 * 60);
+
 
       if (response != null && bookings.isNotEmpty) {
         setState(() {
