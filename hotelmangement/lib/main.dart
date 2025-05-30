@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         navigatorKey: _navigatorKey,
-        initialRoute: "/manager",
+        initialRoute: "/login",
         onGenerateRoute: _generateRoutes,
       ),
     );
