@@ -108,6 +108,10 @@ flutter:
     - assets/booking/room1.jpg
     - assets/booking/room2.jpg
     - assets/booking/room3.jpg
+    - assets/booking/pizza.jpg
+    - assets/booking/burger.jpg
+    - assets/booking/sushi.jpg
+
     - assets/hotels/
     - assets/onboarding/1.png
     - assets/onboarding/2.png
