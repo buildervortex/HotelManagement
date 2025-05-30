@@ -16,7 +16,7 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
   late double longitude;
   late double latitude;
   List<String> hotelImages = [];
-  List<Map<String, String>> phoneNumbers = [];
+  List<List<String>> phoneNumbers = [];
 
   final CreateHotel createHotelUsecase;
   final ahpn.AddHotelPhoneNumber addHotelPhoneNumberUsecase;
@@ -30,14 +30,11 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     this.hotelName = hotelname;
     this.address = address;
     this.managerId = managerId;
-    print("hotel name ${hotelname}, addr ${address}, managerId ${managerId}");
   }
 
   void setLocationDetails(double longitude, double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
-    print(
-        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude},");
   }
 
   void addHotelImages(String localImagePath) {
@@ -46,22 +43,38 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     copy.add(localImagePath);
     this.hotelImages = copy;
     emit(CreateHotelImageAdded(images: copy));
-    print(
-        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
   void addHotelPhoneNumber(String role, String phone) {
     var copy = [...phoneNumbers];
 
-    copy.add({role: phone});
+    copy.add([role, phone]);
     this.phoneNumbers = copy;
     emit(CreateHotelPhoneNumberAdded(phoneNumbers: copy));
-    print(
-        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
   Future<void> createHotel() async {
-    print(
-        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
+    final hotelOrFailure = await createHotelUsecase(Params(
+        name: this.hotelName,
+        address: address,
+        longitude: longitude,
+        latitude: latitude,
+        managerId: managerId));
+    hotelOrFailure.fold((error) => print(error), (hotel) async {
+      for (var image in this.hotelImages) {
+        await addHotelImageUsecase(ahid.Params(
+            hotelId: hotel.id,
+            managerId: managerId,
+            localImagePath: image[0],
+            remoteImageSaveName: ""));
+      }
+      for (var number in this.phoneNumbers) {
+        await addHotelPhoneNumberUsecase(ahpn.Params(
+            hotelId: hotel.id,
+            managerId: managerId,
+            phoneNumber: number[1],
+            role: number[0]));
+      }
+    });
   }
 }

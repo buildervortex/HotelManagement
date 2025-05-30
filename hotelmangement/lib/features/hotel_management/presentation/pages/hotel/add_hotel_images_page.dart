@@ -42,6 +42,12 @@ class _AddHotelImagesPageState extends State<AddHotelImagesPage> {
           label: Text("Take Image"),
           icon: Icon(Icons.camera),
         ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed("/getNumbers");
+          },
+          child: Text("next"),
+        ),
       ],
     );
   }

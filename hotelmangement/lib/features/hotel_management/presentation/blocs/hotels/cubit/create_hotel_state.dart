@@ -14,7 +14,7 @@ final class CreateHotelError extends CreateHotelState {}
 final class CreateHotelSuccess extends CreateHotelState {}
 
 final class CreateHotelPhoneNumberAdded extends CreateHotelState {
-  final List<Map<String, String>> phoneNumbers;
+  final List<List<String>> phoneNumbers;
 
   const CreateHotelPhoneNumberAdded({required this.phoneNumbers});
 
