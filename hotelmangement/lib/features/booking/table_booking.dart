@@ -111,7 +111,6 @@ class _TableBookingPageState extends State<TableBookingPage> {
               Text("Book a Table",
                   style: Theme.of(context).textTheme.titleLarge),
               SizedBox(height: 20),
-
               TextFormField(
                 initialValue: customerName,
                 decoration: InputDecoration(labelText: 'Customer Name'),
@@ -119,7 +118,6 @@ class _TableBookingPageState extends State<TableBookingPage> {
                 onSaved: (value) => customerName = value!,
               ),
               SizedBox(height: 10),
-
               TextFormField(
                 initialValue: contactNumber,
                 decoration: InputDecoration(labelText: 'Contact Number'),
@@ -129,21 +127,17 @@ class _TableBookingPageState extends State<TableBookingPage> {
                 onSaved: (value) => contactNumber = value!,
               ),
               SizedBox(height: 10),
-
-              // 📅 Date
               ListTile(
                 title: Text(
                     "Date: ${selectedDate.toLocal().toString().split(' ')[0]}"),
                 trailing: Icon(Icons.calendar_today),
                 onTap: () => _pickDate(context),
               ),
-
               ListTile(
                 title: Text("Time: ${selectedTime.format(context)}"),
                 trailing: Icon(Icons.access_time),
                 onTap: () => _pickTime(context),
               ),
-
               DropdownButtonFormField<int>(
                 decoration: InputDecoration(labelText: 'Number of Guests'),
                 value: guests,
@@ -153,7 +147,6 @@ class _TableBookingPageState extends State<TableBookingPage> {
                 onChanged: (value) => setState(() => guests = value!),
               ),
               SizedBox(height: 10),
-
               TextFormField(
                 initialValue: specialRequest,
                 decoration: InputDecoration(labelText: 'Special Requests'),
@@ -161,7 +154,6 @@ class _TableBookingPageState extends State<TableBookingPage> {
                 onSaved: (value) => specialRequest = value ?? '',
               ),
               SizedBox(height: 20),
-
               ElevatedButton(
                 onPressed: _submitBooking,
                 child: Text("Update Booking"),
