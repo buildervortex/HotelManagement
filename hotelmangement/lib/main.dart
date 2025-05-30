@@ -29,7 +29,7 @@ import 'package:hotelmangement/features/booking/room_booking.dart';
 //import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
 //import 'package:hotelmangement/features/booking_history/booking_calendar.dart';
 
-import 'package:hotelmangement/features/booking/table_details.dart';
+//import 'package:hotelmangement/features/booking/table_details.dart';
 import 'package:hotelmangement/features/booking/room_booking_details.dart';
 
 import 'package:hotelmangement/features/booking/table_booking.dart';
@@ -38,6 +38,8 @@ import 'package:hotelmangement/features/booking/table_booking.dart';
 
 
 //import 'features/booking_history/hotel_booking_history.dart';
+import 'package:hotelmangement/features/booking/table_details.dart';
+
 
 
 void main() async {
@@ -66,8 +68,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ManagerMainPage(
-        managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
+      home:StaticBookingDetailsPage();
       ),
     );
   }
