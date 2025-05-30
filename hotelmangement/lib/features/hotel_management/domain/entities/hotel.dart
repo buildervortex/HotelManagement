@@ -41,6 +41,12 @@ class Hotel extends Equatable {
         phoneNumbers
       ];
 
+  get location => null;
+
+  get imageUrls => null;
+
+  get rating => null;
+
   Hotel copyWith({
     String? id,
     String? managerId,
