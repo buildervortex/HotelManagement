@@ -93,7 +93,7 @@ flutter:
     - assets/profile/logout.png
     - assets/profile/profile.png
     # - images/a_dot_burr.jpeg
-    - assets/booking_history/hotel1.jpg
+    - assets/booking_history/placeholder.jpg
     - assets/booking_history/hotel2.jpg
     - assets/booking_history/hotel3.jpg
     - assets/booking_history/hotel4.jpg
