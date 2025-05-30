@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotelmangement/di/dicontainer.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/bloc/hotels_bloc.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/cubit/create_hotel_cubit.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/location/cubit/location_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/pages/HotelListPage.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/pages/hotel/add_hotel_images_page.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/pages/hotel/create_hotel_page.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/pages/locationGetPage.dart';
 
@@ -23,6 +25,7 @@ class HotelnavigatorpageState extends State<Hotelnavigatorpage> {
       providers: [
         BlocProvider(create: (cont) => gi<HotelsBloc>()),
         BlocProvider(create: (cont) => gi<CreateHotelCubit>()),
+        BlocProvider(create: (cont) => gi<LocationCubit>()),
       ],
       child: Navigator(initialRoute: "/listHotels", onGenerateRoute: onRoute),
     );
@@ -40,6 +43,9 @@ class HotelnavigatorpageState extends State<Hotelnavigatorpage> {
 
       case "/getLocation":
         return MaterialPageRoute(builder: (_) => Locationgetpage());
+
+      case "/getImages":
+        return MaterialPageRoute(builder: (_) => AddHotelImagesPage());
       default:
         return MaterialPageRoute(
             builder: (_) => Center(

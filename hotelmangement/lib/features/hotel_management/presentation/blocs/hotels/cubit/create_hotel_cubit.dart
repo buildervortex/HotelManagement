@@ -30,11 +30,13 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     this.hotelName = hotelname;
     this.address = address;
     this.managerId = managerId;
+    print("hotel name ${hotelname}, addr ${address}, managerId ${managerId}");
   }
 
   void setLocationDetails(double longitude, double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
+    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude},");
   }
 
   void addHotelImages(String localImagePath) {
@@ -43,6 +45,7 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     copy.add(localImagePath);
     this.hotelImages = copy;
     emit(CreateHotelImageAdded(images: copy));
+    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
   void addHotelPhoneNumber(String role, String phone) {
@@ -51,7 +54,10 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     copy.add({role: phone});
     this.phoneNumbers = copy;
     emit(CreateHotelPhoneNumberAdded(phoneNumbers: copy));
+    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
-  Future<void> createHotel() async {}
+  Future<void> createHotel() async {
+    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
+  }
 }
