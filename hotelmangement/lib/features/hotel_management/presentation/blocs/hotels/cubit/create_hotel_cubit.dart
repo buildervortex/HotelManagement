@@ -15,15 +15,15 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
 
   late double longitude;
   late double latitude;
-  late List<String> hotelImages;
-  late List<Map<String, String>> phoneNumbers;
+  List<String> hotelImages = [];
+  List<Map<String, String>> phoneNumbers = [];
 
   final CreateHotel createHotelUsecase;
   final ahpn.AddHotelPhoneNumber addHotelPhoneNumberUsecase;
-  final ahid.AddHotelImage addHotelImage;
+  final ahid.AddHotelImage addHotelImageUsecase;
 
   CreateHotelCubit(this.createHotelUsecase, this.addHotelPhoneNumberUsecase,
-      this.addHotelImage)
+      this.addHotelImageUsecase)
       : super(CreateHotelInitial());
 
   void setHotelDetails(String hotelname, String address, String managerId) {
@@ -36,7 +36,8 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
   void setLocationDetails(double longitude, double latitude) {
     this.longitude = longitude;
     this.latitude = latitude;
-    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude},");
+    print(
+        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude},");
   }
 
   void addHotelImages(String localImagePath) {
@@ -45,7 +46,8 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     copy.add(localImagePath);
     this.hotelImages = copy;
     emit(CreateHotelImageAdded(images: copy));
-    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
+    print(
+        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
   void addHotelPhoneNumber(String role, String phone) {
@@ -54,10 +56,12 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
     copy.add({role: phone});
     this.phoneNumbers = copy;
     emit(CreateHotelPhoneNumberAdded(phoneNumbers: copy));
-    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
+    print(
+        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 
   Future<void> createHotel() async {
-    print("hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
+    print(
+        "hotel name ${hotelName}, addr ${address}, managerId ${managerId}, longitude ${longitude}, latitude ${latitude}, images ${hotelImages}, numbers ${phoneNumbers}");
   }
 }
