@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TableBookingPage extends StatefulWidget {
-  final String bookingId;
-
-  TableBookingPage({required this.bookingId});
-
+  
+  //TableBookingPage({required this.bookingId});
+  late String bookingId;
   @override
   _TableBookingPageState createState() => _TableBookingPageState();
 }
+ 
 
 class _TableBookingPageState extends State<TableBookingPage> {
   final _formKey = GlobalKey<FormState>();
