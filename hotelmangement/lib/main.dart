@@ -39,7 +39,7 @@ import 'package:hotelmangement/features/booking/table_booking.dart';
 
 //import 'features/booking_history/hotel_booking_history.dart';
 import 'package:hotelmangement/features/booking/table_details.dart';
-
+import 'package:hotelmangement/features/hotel_management/presentation/pages/dashboard_page.dart';
 
 
 void main() async {
@@ -68,7 +68,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:StaticBookingDetailsPage(),
+      home:ManagerMainPage(
+           managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
+         ),
      
     );
   }
