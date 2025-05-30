@@ -68,8 +68,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+<<<<<<< HEAD
       home:StaticBookingDetailsPage();
       ),
+=======
+      home:StaticBookingDetailsPage(),
+     
+>>>>>>> 7d35ad00c6b04c17d42d1af3d4a60fdfad3b5ef1
     );
   }
 }
