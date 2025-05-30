@@ -36,7 +36,10 @@ import 'package:hotelmangement/features/booking/room_booking_details.dart';
 
 //import 'features/booking_history/hotel_booking_history.dart';
 import 'package:hotelmangement/features/booking/table_details.dart';
-import 'package:hotelmangement/features/booking/table_booking.dart';
+//import 'package:hotelmangement/features/booking/table_booking.dart';
+import 'package:hotelmangement/features/booking/room_booking.dart';
+import 'package:hotelmangement/features/booking/room_booking_details.dart';
+import 'package:hotelmangement/features/auth/register.dart';
 
 void main() async {
   // ensure the flutter is initialized
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: TableBookingPage(),
+      home: RegisterScreen(),
     );
   }
 }

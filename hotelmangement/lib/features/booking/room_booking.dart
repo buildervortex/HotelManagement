@@ -220,13 +220,17 @@ class _RoomBookingPageState extends State<RoomBookingPage> {
             Center(
               child: ElevatedButton(
                 onPressed: bookRoom,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 12,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent, // Button background color
+                  foregroundColor: Colors.white, // Text color
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text("Book Now",
-                      style: TextStyle(fontSize: 18, color: Colors.blueAccent)),
+                ),
+                child: Text(
+                  "Book Now",
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
             ),
