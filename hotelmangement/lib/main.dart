@@ -10,26 +10,6 @@ import 'package:hotelmangement/navigators/introNavigator.dart';
 import 'package:hotelmangement/navigators/managerNavigator.dart';
 import 'package:hotelmangement/navigators/userNavigator.dart';
 import 'package:hotelmangement/test.dart';
-<<<<<<< HEAD
-import 'package:hotelmangement/features/booking/room_booking.dart';
-//import 'package:hotelmangement/features/booking/table_booking.dart';
-//import 'package:hotelmangement/features/booking_history/booking_history_test.dart';
-//import 'package:hotelmangement/features/booking_history/booking_calendar.dart';
-
-//import 'package:hotelmangement/features/booking/table_details.dart';
-import 'package:hotelmangement/features/booking/room_booking_details.dart';
-
-import 'package:hotelmangement/features/booking/table_booking.dart';
-//import 'package:hotelmangement/features/booking/table_booking.dart';
-//import 'package:hotelmangement/features/onboarding/splash_screen.dart';
-
-
-//import 'features/booking_history/hotel_booking_history.dart';
-import 'package:hotelmangement/features/booking/table_details.dart';
-import 'package:hotelmangement/features/hotel_management/presentation/pages/dashboard_page.dart';
-
-=======
->>>>>>> d45d1708fd404dc5dd1b3e27140c2e1ee3405e26
 
 void main() async {
   // ensure the flutter is initialized
@@ -82,13 +62,6 @@ class MyApp extends StatelessWidget {
         initialRoute: "/manager",
         onGenerateRoute: _generateRoutes,
       ),
-<<<<<<< HEAD
-      home:ManagerMainPage(
-           managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
-         ),
-     
-=======
->>>>>>> d45d1708fd404dc5dd1b3e27140c2e1ee3405e26
     );
   }
 
