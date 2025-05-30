@@ -15,15 +15,15 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
 
   late double longitude;
   late double latitude;
-  late List<String> hotelImages;
-  late List<Map<String, String>> phoneNumbers;
+  List<String> hotelImages = [];
+  List<List<String>> phoneNumbers = [];
 
   final CreateHotel createHotelUsecase;
   final ahpn.AddHotelPhoneNumber addHotelPhoneNumberUsecase;
-  final ahid.AddHotelImage addHotelImage;
+  final ahid.AddHotelImage addHotelImageUsecase;
 
   CreateHotelCubit(this.createHotelUsecase, this.addHotelPhoneNumberUsecase,
-      this.addHotelImage)
+      this.addHotelImageUsecase)
       : super(CreateHotelInitial());
 
   void setHotelDetails(String hotelname, String address, String managerId) {
@@ -48,10 +48,33 @@ class CreateHotelCubit extends Cubit<CreateHotelState> {
   void addHotelPhoneNumber(String role, String phone) {
     var copy = [...phoneNumbers];
 
-    copy.add({role: phone});
+    copy.add([role, phone]);
     this.phoneNumbers = copy;
     emit(CreateHotelPhoneNumberAdded(phoneNumbers: copy));
   }
 
-  Future<void> createHotel() async {}
+  Future<void> createHotel() async {
+    final hotelOrFailure = await createHotelUsecase(Params(
+        name: this.hotelName,
+        address: address,
+        longitude: longitude,
+        latitude: latitude,
+        managerId: managerId));
+    hotelOrFailure.fold((error) => print(error), (hotel) async {
+      for (var image in this.hotelImages) {
+        await addHotelImageUsecase(ahid.Params(
+            hotelId: hotel.id,
+            managerId: managerId,
+            localImagePath: image[0],
+            remoteImageSaveName: ""));
+      }
+      for (var number in this.phoneNumbers) {
+        await addHotelPhoneNumberUsecase(ahpn.Params(
+            hotelId: hotel.id,
+            managerId: managerId,
+            phoneNumber: number[1],
+            role: number[0]));
+      }
+    });
+  }
 }
