@@ -74,6 +74,7 @@ import 'package:hotelmangement/features/hotel_management/presentation/blocs/help
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_room_images_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/bloc/hotels_bloc.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/rooms/bloc/rooms_bloc.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/tables/bloc/tables_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // final gi = GetIt
@@ -258,4 +259,6 @@ void setUpLocator() {
   gi.registerFactory<FoodsBloc>(() => FoodsBloc(
       getFoodsInHotel: gi<GetFoodsInHotel>(),
       hotelFoodsImagesCubit: gi<HotelFoodsImagesCubit>()));
+  gi.registerFactory<TablesBloc>(
+      () => TablesBloc(getTablesInHotel: gi<GetTablesInHotel>()));
 }
