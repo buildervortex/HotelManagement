@@ -35,6 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> singUpManager(String email, String password, String username,
       String phoneNumber) async {
     final response = await client.auth.signUp(password: password, email: email);
+    print(response);
 
     if (response.user != null) {
       clientId = response.user!.id;
@@ -48,6 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
 
     final managerResult = await managerSignUpUsecase(Params(id: clientId));
+    print(managerResult);
 
     managerResult.fold((error) => emit(LogOut()), (manager) {
       isManager = true;

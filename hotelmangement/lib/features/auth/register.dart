@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotelmangement/core/cubit/auth_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hotelmangement/features/auth/auth.dart';
 import 'package:hotelmangement/features/auth/login.dart';
@@ -51,46 +53,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final phone = _phoneController.text.trim();
     final role = selectedValue;
 
-    try {
-      // Register with Supabase Auth
-      final response = await supabase.auth.signUp(
-        email: email,
-        password: password,
-      );
-      final user = response.user;
-      if (user == null) throw Exception("Registration failed. Try again!");
+    final isManager = selectedValue == "Hotel Manager";
 
-      // Insert into profiles table
-      await supabase.from('profiles').insert({
-        'id': user.id,
-        'first_name': firstName,
-        'last_name': lastName,
-        'username': username,
-        'phone': phone,
-        'role': role,
-      });
-
-      // Navigate to Login screen
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration successful! Please login.')),
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
-      }
-    } on AuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message)),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registration failed: $e')),
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+    if (isManager) {
+      BlocProvider.of<AuthCubit>(context)
+          .singUpManager(email, password, username, phone);
+    } else {
+      BlocProvider.of<AuthCubit>(context)
+          .singUpUser(email, password, username, phone);
     }
+
+    // try {
+    //   // Register with Supabase Auth
+    //   final response = await supabase.auth.signUp(
+    //     email: email,
+    //     password: password,
+    //   );
+    //   final user = response.user;
+    //   if (user == null) throw Exception("Registration failed. Try again!");
+
+    //   // Insert into profiles table
+    //   await supabase.from('profiles').insert({
+    //     'id': user.id,
+    //     'first_name': firstName,
+    //     'last_name': lastName,
+    //     'username': username,
+    //     'phone': phone,
+    //     'role': role,
+    //   });
+
+    //   // Navigate to Login screen
+    //   if (mounted) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('Registration successful! Please login.')),
+    //     );
+    //     Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => LoginScreen()),
+    //     );
+    //   }
+    // } on AuthException catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text(e.message)),
+    //   );
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Registration failed: $e')),
+    //   );
+    // } finally {
+    //   if (mounted) setState(() => _isLoading = false);
+    // }
   }
 
   @override
