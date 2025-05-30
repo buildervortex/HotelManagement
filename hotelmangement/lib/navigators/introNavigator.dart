@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/login.dart';
+import 'package:hotelmangement/features/onboarding/splash_screen.dart';
 
 class Intronavigator extends StatelessWidget {
   const Intronavigator({super.key});
@@ -8,7 +9,7 @@ class Intronavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (settings) =>
-          MaterialPageRoute(builder: (_) => LoginScreen()),
+          MaterialPageRoute(builder: (_) => SplashScreen()),
     );
   }
 }
