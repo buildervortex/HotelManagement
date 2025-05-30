@@ -103,7 +103,6 @@ class _RoomBookingPageState extends State<RoomBookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Room Booking')),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(

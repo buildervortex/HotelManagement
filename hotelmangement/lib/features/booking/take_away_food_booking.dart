@@ -89,7 +89,6 @@ class _TakeAwayBookingPageState extends State<TakeAwayBookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Take Away Food Booking')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -409,6 +409,7 @@
 // New Update
 
 import 'package:flutter/material.dart';
+import 'package:hotelmangement/features/booking/BookingScaffold.dart';
 import 'package:hotelmangement/features/booking/room_booking.dart';
 import 'package:hotelmangement/features/display_hotel/Model/hotel_model_test.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -579,7 +580,7 @@ class HotelDetailScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => RoomBookingPage(),
+                  builder: (_) => Bookingscaffold(),
                 ),
               );
             },
