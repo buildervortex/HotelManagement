@@ -23,5 +23,7 @@ class LocationCubit extends Cubit<LocationState> {
 
     final currentLocation = await location.getLocation();
     emit(LoadedCurrentLocation(locationData: currentLocation));
+
+    print("The current location data are the ${currentLocation}");
   }
 }

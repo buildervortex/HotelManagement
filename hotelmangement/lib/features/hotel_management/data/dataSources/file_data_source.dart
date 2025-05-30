@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class FileDataSource {
-  Future<void> uploadFile(File file, String imageName, String bucketName);
+  Future<void> uploadFile(Uint8List file, String imageName, String bucketName);
   Future<String> getFileUrl(String bucketName, String fileName);
   Future<String> deleteFile(String bucketName, String fileName);
 }
@@ -16,8 +17,7 @@ class FileDataSourceImpl implements FileDataSource {
 
   @override
   Future<void> uploadFile(
-      File file, String imageName, String bucketName) async {
-    final fileBytes = await file.readAsBytes();
+      Uint8List fileBytes, String imageName, String bucketName) async {
     await client.storage.from(bucketName).updateBinary(imageName, fileBytes);
   }
 

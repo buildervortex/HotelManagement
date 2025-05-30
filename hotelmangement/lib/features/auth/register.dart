@@ -21,7 +21,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   bool _isLoading = false;
 
@@ -30,6 +33,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
+    _usernameController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -42,6 +47,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final password = _passwordController.text.trim();
     final firstName = _firstNameController.text.trim();
     final lastName = _lastNameController.text.trim();
+    final username = _usernameController.text.trim();
+    final phone = _phoneController.text.trim();
     final role = selectedValue;
 
     try {
@@ -58,6 +65,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'id': user.id,
         'first_name': firstName,
         'last_name': lastName,
+        'username': username,
+        'phone': phone,
         'role': role,
       });
 
@@ -88,7 +97,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 88, 3, 4),
         leading: BackButton(
@@ -101,7 +109,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           },
         ),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -113,7 +120,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     "Welcome! Create your new account",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 88, 3, 4)),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 88, 3, 4)),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -122,14 +132,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 _buildTextField(
                   controller: _firstNameController,
                   hintText: "Enter your first name",
-                  validator: (value) => value!.isEmpty ? "First name is required" : null,
+                  validator: (value) =>
+                      value!.isEmpty ? "First name is required" : null,
                 ),
 
                 // Last Name
                 _buildTextField(
                   controller: _lastNameController,
                   hintText: "Enter your last name",
-                  validator: (value) => value!.isEmpty ? "Last name is required" : null,
+                  validator: (value) =>
+                      value!.isEmpty ? "Last name is required" : null,
                 ),
 
                 // Email
@@ -139,11 +151,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) return "Email is required";
-                    if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+                    if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value)) {
                       return "Enter a valid email";
                     }
                     return null;
                   },
+                ),
+
+                // Username
+                _buildTextField(
+                  controller: _usernameController,
+                  hintText: "Enter your username",
+                  validator: (value) =>
+                      value!.isEmpty ? "Username is required" : null,
                 ),
 
                 // Password
@@ -153,7 +174,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) return "Password is required";
-                    if (value.length < 6) return "Password must be at least 6 characters";
+                    if (value.length < 6)
+                      return "Password must be at least 6 characters";
                     return null;
                   },
                 ),
@@ -165,7 +187,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) return "Please confirm your password";
-                    if (value != _passwordController.text) return "Passwords do not match";
+                    if (value != _passwordController.text)
+                      return "Passwords do not match";
+                    return null;
+                  },
+                ),
+
+                // Phone Number
+                _buildTextField(
+                  controller: _phoneController,
+                  hintText: "Enter your phone number",
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value!.isEmpty) return "Phone number is required";
+                    if (!RegExp(r'^\d{10,15}$').hasMatch(value))
+                      return "Enter a valid phone number";
                     return null;
                   },
                 ),
@@ -187,7 +223,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         selectedValue = value;
                       });
                     },
-                    validator: (value) => value == null ? "Please select a role" : null,
+                    validator: (value) =>
+                        value == null ? "Please select a role" : null,
                   ),
                 ),
 
@@ -206,7 +243,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 88, 3, 4),
-                      side: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
+                      side: BorderSide(
+                          color: Color.fromARGB(255, 88, 3, 4), width: 2),
                       elevation: 4,
                       minimumSize: Size(500, 50),
                     ),
@@ -214,7 +252,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ? CircularProgressIndicator(color: Colors.white)
                         : Text(
                             "Create Account",
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                   ),
                 ),
@@ -224,9 +265,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 // OR Divider
                 Row(
                   children: [
-                    Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
-                    Text(" OR ", style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
-                    Expanded(child: Divider(color: Color.fromARGB(255, 88, 3, 4), height: 36)),
+                    Expanded(
+                        child: Divider(
+                            color: Color.fromARGB(255, 88, 3, 4), height: 36)),
+                    Text(" OR ",
+                        style: TextStyle(color: Color.fromARGB(255, 88, 3, 4))),
+                    Expanded(
+                        child: Divider(
+                            color: Color.fromARGB(255, 88, 3, 4), height: 36)),
                   ],
                 ),
 
@@ -238,18 +284,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: OutlinedButton(
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Google sign up not implemented')),
+                        SnackBar(
+                            content: Text('Google sign up not implemented')),
                       );
                     },
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      side: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
+                      side: BorderSide(
+                          color: Color.fromARGB(255, 88, 3, 4), width: 2),
                       elevation: 4,
                       minimumSize: Size(500, 50),
                     ),
                     child: Text(
                       "Sign up with Google",
-                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 88, 3, 4)),
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 88, 3, 4)),
                     ),
                   ),
                 ),
@@ -260,7 +311,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text.rich(
                     TextSpan(
                       text: "Already have an account? ",
-                      style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 88, 3, 4)),
+                      style: TextStyle(
+                          fontSize: 16, color: Color.fromARGB(255, 88, 3, 4)),
                       children: [
                         TextSpan(
                           text: "Login here",
@@ -273,7 +325,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ..onTap = () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LoginScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
                               );
                             },
                         ),
@@ -315,7 +368,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       hintStyle: TextStyle(fontSize: 18),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 1.5),
+        borderSide:
+            BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -323,7 +377,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 1.5),
+        borderSide:
+            BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 1.5),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
