@@ -4,12 +4,6 @@ import 'package:hotelmangement/features/profile/editProfile.dart';
 import 'package:hotelmangement/features/profile/myProfile.dart';
 import 'package:hotelmangement/features/profile/logout.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: HomeScreen(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -4,7 +4,6 @@ import 'package:hotelmangement/core/cubit/auth_cubit.dart';
 import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/di/dicontainer.dart';
 
-import 'package:hotelmangement/features/hotel_management/presentation/pages/manager_main_page.dart';
 import 'package:hotelmangement/navigators/authNavigator.dart';
 import 'package:hotelmangement/navigators/introNavigator.dart';
 import 'package:hotelmangement/navigators/managerNavigator.dart';

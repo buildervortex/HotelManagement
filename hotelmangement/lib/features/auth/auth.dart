@@ -2,21 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelmangement/features/auth/login.dart';
 import 'package:hotelmangement/features/auth/register.dart';
 
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-       debugShowCheckedModeBanner: false, 
-      title: "Hotel Booking App",
-      home: const AuthScreen(),
-    );
-  }
-}
-
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
@@ -27,14 +12,13 @@ class AuthScreen extends StatelessWidget {
 
       //---------------------app bar---------------------------
       appBar: AppBar(
-      backgroundColor: Color.fromARGB(255, 88, 3, 4),
-),
-
+        backgroundColor: Color.fromARGB(255, 88, 3, 4),
+      ),
 
       //--------------------------body--------------------------
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        
+
         //--------------------------image----------------------
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +59,6 @@ class AuthScreen extends StatelessWidget {
               ),
             ),
 
-            
             const SizedBox(height: 100),
 
             //---------------------------------login button---------------------------
@@ -85,7 +68,8 @@ class AuthScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -113,12 +97,14 @@ class AuthScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterScreen()),
                   );
                 },
                 style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  side: const BorderSide(color: Color.fromARGB(255, 88, 3, 4), width: 2),
+                  side: const BorderSide(
+                      color: Color.fromARGB(255, 88, 3, 4), width: 2),
                   elevation: 4,
                   minimumSize: const Size(500, 50),
                 ),
@@ -132,7 +118,6 @@ class AuthScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
           ],
         ),
       ),
