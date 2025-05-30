@@ -344,6 +344,71 @@ class _HotelBookingState extends State<HotelBooking> {
                  const SizedBox(height: 20),
              
 
+
+
+
+
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Icon(Icons.bed, color: Colors.black54),
+                      const SizedBox(width: 4),
+                      const Text(
+                        "1 BED / EXTRA BED AVAILABLE",
+                        style: TextStyle(fontSize: 10, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+
+                  // Up to 3 Guests
+                  Column(
+                    children: [
+                      Icon(Icons.person, color: Colors.black54),
+                      const SizedBox(width: 4),
+                      const Text(
+                        "UP TO 3 GUESTS",
+                        style: TextStyle(fontSize: 10, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 24, 108, 219),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: const Text(
+                      "details",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(
+                height: 40,
+              ),
+
+
+
+
+
+
+
+
+
+
+
+
+
              
 
               const SizedBox(height: 40),
