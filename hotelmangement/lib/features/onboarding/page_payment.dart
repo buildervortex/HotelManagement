@@ -82,7 +82,8 @@ class PagePayment extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (_) => const PageDining()),
+                            MaterialPageRoute(
+                                builder: (_) => const PageDining()),
                           );
                         },
                         child: const Text(
@@ -106,10 +107,9 @@ class PagePayment extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 18),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => const AuthScreen()),
-                          );
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamedAndRemoveUntil(
+                                  "/login", (route) => false);
                         },
                         child: const Text(
                           'Get Started',
@@ -140,7 +140,9 @@ class PagePayment extends StatelessWidget {
       width: isActive ? 10 : 8,
       height: 8,
       decoration: BoxDecoration(
-        color: isActive ? Colors.black.withOpacity(0.8) : Colors.black.withOpacity(0.2),
+        color: isActive
+            ? Colors.black.withOpacity(0.8)
+            : Colors.black.withOpacity(0.2),
         borderRadius: BorderRadius.circular(4),
       ),
     );

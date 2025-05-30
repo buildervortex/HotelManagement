@@ -7,7 +7,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final SupabaseClient client;
-  String clientId = "";
+  String clientId = "e8b2c4e6-353a-450d-ab3a-08a0676fd773";
   bool isManager = false;
   final ManagerSignUp managerSignUpUsecase;
 

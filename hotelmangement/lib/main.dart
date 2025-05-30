@@ -5,6 +5,10 @@ import 'package:hotelmangement/core/initialize.dart';
 import 'package:hotelmangement/di/dicontainer.dart';
 
 import 'package:hotelmangement/features/hotel_management/presentation/pages/manager_main_page.dart';
+import 'package:hotelmangement/navigators/authNavigator.dart';
+import 'package:hotelmangement/navigators/introNavigator.dart';
+import 'package:hotelmangement/navigators/managerNavigator.dart';
+import 'package:hotelmangement/navigators/userNavigator.dart';
 import 'package:hotelmangement/test.dart';
 
 void main() async {
@@ -54,10 +58,27 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: ManagerMainPage(
-          managerId: "e8b2c4e6-353a-450d-ab3a-08a0676fd773",
-        ),
+        navigatorKey: _navigatorKey,
+        initialRoute: "/manager",
+        onGenerateRoute: _generateRoutes,
       ),
     );
+  }
+
+  Route<dynamic> _generateRoutes(RouteSettings settings) {
+    print(settings.name);
+    switch (settings.name) {
+      case "/intro":
+        return MaterialPageRoute(builder: (_) => Intronavigator());
+      case "/login":
+        return MaterialPageRoute(builder: (_) => Authnavigator());
+      case "/manager":
+        return MaterialPageRoute(builder: (_) => Managernavigator());
+      case "/user":
+        return MaterialPageRoute(builder: (_) => Usernavigator());
+      default:
+        return MaterialPageRoute(
+            builder: (_) => Center(child: Text("unknown route")));
+    }
   }
 }
