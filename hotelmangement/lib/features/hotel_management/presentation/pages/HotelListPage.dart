@@ -23,25 +23,29 @@ class _HotellistpageState extends State<Hotellistpage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextButton(onPressed: () {
-          
-        }, child: Text("Create Hotel")),
-        BlocBuilder<HotelsBloc, HotelsState>(
-          buildWhen: (prev, curr) {
-            return curr is HotelLoaded;
-          },
-          builder: (con, state) {
-            if (state is HotelLoaded) {
-              return ListView.builder(
-                itemCount: state.hotels.length,
-                itemBuilder: (cont, index) {
-                  final hotel = state.hotels[index];
-                  return HotelListTile(hotel: hotel);
-                },
-              );
-            }
-            return CircularProgressIndicator();
-          },
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/createHotel");
+            },
+            child: Text("Create Hotel")),
+        Expanded(
+          child: BlocBuilder<HotelsBloc, HotelsState>(
+            buildWhen: (prev, curr) {
+              return curr is HotelLoaded;
+            },
+            builder: (con, state) {
+              if (state is HotelLoaded) {
+                return ListView.builder(
+                  itemCount: state.hotels.length,
+                  itemBuilder: (cont, index) {
+                    final hotel = state.hotels[index];
+                    return HotelListTile(hotel: hotel);
+                  },
+                );
+              }
+              return CircularProgressIndicator();
+            },
+          ),
         ),
       ],
     );

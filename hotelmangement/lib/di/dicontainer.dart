@@ -73,6 +73,7 @@ import 'package:hotelmangement/features/hotel_management/presentation/blocs/help
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_phone_numbers_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/helpers/cubit/hotel_room_images_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/bloc/hotels_bloc.dart';
+import 'package:hotelmangement/features/hotel_management/presentation/blocs/hotels/cubit/create_hotel_cubit.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/rooms/bloc/rooms_bloc.dart';
 import 'package:hotelmangement/features/hotel_management/presentation/blocs/tables/bloc/tables_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -247,6 +248,8 @@ void setUpLocator() {
   gi.registerFactory<HotelFoodsImagesCubit>(() => HotelFoodsImagesCubit(
       getFoodImages: gi<GetFoodImages>(),
       getFoodImageAuthUrl: gi<GetFoodImageAuthUrl>()));
+  gi.registerFactory<CreateHotelCubit>(() => CreateHotelCubit(
+      gi<CreateHotel>(), gi<AddHotelPhoneNumber>(), gi<AddHotelImage>()));
 
   // register bloc
   gi.registerFactory<HotelsBloc>(() => HotelsBloc(
